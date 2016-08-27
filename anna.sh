@@ -1,0 +1,1 @@
+ruby scripts/pic.rb --size 250x300 images/P1/Anna.raw --out images/P1/Anna.jpg
