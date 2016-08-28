@@ -17,12 +17,15 @@ public:
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void write_to_file(std::string);
   void crop(uint32_t, uint32_t, uint32_t, uint32_t);
+  void resize(uint32_t, uint32_t);
 
 private:
   void load();
   void load_rgb();
   
   void write_rgb(std::string);
+  
+  RgbPixel bilinear_interpolate(float x, float y);
   
   std::string path;
   uint32_t dim_x;

@@ -10,6 +10,7 @@
 #define main_h
 
 #include <math.h>
+#include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -21,5 +22,7 @@
 
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
+
+#define HEAVY_DEBUG   0
 
 #endif /* main_h */
