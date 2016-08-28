@@ -15,3 +15,12 @@ RgbPixel::RgbPixel(uint8_t _r, uint8_t _g, uint8_t _b) {
   b = _b;
 }
 
+CmykPixel RgbPixel::to_cmyk() {
+  uint8_t c = 255 - r;
+  uint8_t m = 255 - g;
+  uint8_t y = 255 - b;
+  
+  CmykPixel cp = *new CmykPixel(c, m, y);
+  return cp;
+}
+

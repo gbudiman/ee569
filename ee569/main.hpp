@@ -22,7 +22,14 @@
 
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
+#define COLOR_CMYK    2
 
 #define HEAVY_DEBUG   0
+
+#define CMYK_CYAN     0
+#define CMYK_MAGENTA  1
+#define CMYK_YELLOW   2
+
+#define STRIP_EXTENSION true
 
 #endif /* main_h */

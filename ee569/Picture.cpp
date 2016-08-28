@@ -21,6 +21,16 @@ Picture::Picture(string _path, uint32_t _dim_x, uint32_t _dim_y, uint32_t _type)
 void Picture::write_to_file(string _path) {
   switch(type) {
     case COLOR_RGB: write_rgb(_path); break;
+    case COLOR_CMYK: write_cmyk(_path); break;
+  }
+}
+
+void Picture::write_to_file(string _path, bool strip_extension) {
+  if (strip_extension) {
+    uint32_t dot_position = (uint32_t) _path.find_last_of('.');
+    write_to_file(_path.substr(0, dot_position));
+  } else {
+    write_to_file(_path);
   }
 }
 
@@ -179,6 +189,52 @@ void Picture::write_rgb(string out_path) {
   out.close();
   
   cout << "File written to " << out_path << "\n";
+}
+
+void Picture::write_cmyk(string out_path) {
+  string out_c = out_path + "_cyan.raw";
+  string out_m = out_path + "_magenta.raw";
+  string out_y = out_path + "_yellow.raw";
+  
+  ofstream osc;
+  ofstream osm;
+  ofstream osy;
+  
+  osc.open(out_c, ios::out | ios::binary);
+  osm.open(out_m, ios::out | ios::binary);
+  osy.open(out_y, ios::out | ios::binary);
+  
+  for (auto r = data_cmyk->begin(); r != data_cmyk->end(); ++r) {
+    for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+      osc.write((char*) &c->c, sizeof(uint8_t));
+      osm.write((char*) &c->m, sizeof(uint8_t));
+      osy.write((char*) &c->y, sizeof(uint8_t));
+    }
+  }
+  
+  osc.close();
+  osm.close();
+  osy.close();
+  
+  cout << "File written to " << out_c << "\n";
+  cout << "File written to " << out_y << "\n";
+  cout << "File written to " << out_m << "\n";
+}
+
+void Picture::to_cmyk() {
+  type = COLOR_CMYK;
+  
+  data_cmyk = new std::vector<std::vector<CmykPixel>*>();
+  std::vector<CmykPixel>* row_data = new std::vector<CmykPixel>();
+  
+  for (auto r = data->begin(); r != data->end(); ++r) {
+    row_data = new std::vector<CmykPixel>();
+    for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+      row_data->push_back(c->to_cmyk());
+    }
+    
+    data_cmyk->push_back(row_data);
+  }
 }
 
 void Picture::load_rgb() {

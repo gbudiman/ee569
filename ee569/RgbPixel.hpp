@@ -10,10 +10,12 @@
 #define RgbPixel_hpp
 
 #include "main.hpp"
+#include "CmykPixel.hpp"
 
 class RgbPixel {
 public:
   RgbPixel(uint8_t, uint8_t, uint8_t);
+  CmykPixel to_cmyk();
   
   uint8_t r;
   uint8_t g;
