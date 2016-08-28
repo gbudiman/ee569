@@ -378,7 +378,13 @@ void Picture::load_gray() {
 void Picture::debug_histogram() {
   switch(type) {
     case COLOR_GRAY:
-      hist_gray->plot();
+      if (HEAVY_DEBUG) {
+        hist_gray->debug();
+      }
+      
+      cout << "Histogram: " << path << "\n";
+      cout << "Bucket size = 4\n";
+      hist_gray->plot(4);
       break;
     case COLOR_RGB:
       hist_r->debug();
