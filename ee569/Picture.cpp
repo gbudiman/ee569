@@ -30,12 +30,27 @@ void Picture::load() {
   }
 }
 
+void Picture::crop(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
+  result = new std::vector<std::vector<RgbPixel>*>();
+  std::vector<RgbPixel>* row_data;
+  
+  for (uint32_t y = y1; y <= y2; y++) {
+    row_data = new std::vector<RgbPixel>();
+    
+    for (uint32_t x = x1; x <= x2; x++) {
+      row_data->push_back(data->at(y)->at(x));
+    }
+    
+    result->push_back(row_data);
+  }
+}
+
 void Picture::write_rgb(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);
   
-  for (auto r = data->begin(); r != data->end(); ++r) {
-    for (auto c = r->begin(); c != r->end(); ++c) {
+  for (auto r = result->begin(); r != result->end(); ++r) {
+    for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
       out.write((char*) &c->r, sizeof(uint8_t));
       out.write((char*) &c->g, sizeof(uint8_t));
       out.write((char*) &c->b, sizeof(uint8_t));
@@ -56,8 +71,8 @@ void Picture::load_rgb() {
   
   uint8_t channels[3] = {0,0,0};
   
-  data = new std::vector<std::vector<RgbPixel>>();
-  std::vector<RgbPixel> row_data;
+  data = new std::vector<std::vector<RgbPixel>*>();
+  std::vector<RgbPixel>* row_data;
   
   while (in.read((char*) &_byte, sizeof(_byte))) {
     channel_counter = byte_counter % 3;
@@ -66,13 +81,13 @@ void Picture::load_rgb() {
     
     // First pixel in row x
     if (col_counter == 0) {
-      row_data = *new std::vector<RgbPixel>();
+      row_data = new std::vector<RgbPixel>();
     }
     
     channels[channel_counter] = _byte;
     if (channel_counter == 2) {
       RgbPixel pixel = *new RgbPixel(channels[0], channels[1], channels[2]);
-      row_data.push_back(pixel);
+      row_data->push_back(pixel);
     }
     
     // Last pixel in row x
@@ -82,6 +97,4 @@ void Picture::load_rgb() {
     
     byte_counter++;
   }
-  
-  byte_counter++;
 }

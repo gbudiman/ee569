@@ -13,9 +13,24 @@ using namespace std;
 
 int main() {
   string path_anna = "images/P1/Anna.raw";
+  string path_anna_out_square = "images/P1/Anna_cropped_square.raw";
+  string path_anna_out_rect = "images/P1/Anna_cropped_rect.raw";
+  string path_rebel = "images/P1/Rebel.raw";
+  string path_rebel_out_square = "images/P1/Rebel_cropped_square.raw";
+  string path_rebel_out_rect = "images/P1/Rebel_cropped_rect.raw";
 
   Picture *anna = new Picture(path_anna, 250, 300, COLOR_RGB);
-  anna->write_to_file("images/P1/Anna_circ.raw");
+  Picture *rebel = new Picture(path_rebel, 200, 300, COLOR_RGB);
+  
+  anna->crop(55, 85, 184, 214); // 130x130
+  anna->write_to_file(path_anna_out_square);
+  anna->crop(55, 30, 184, 239); // 130x210
+  anna->write_to_file(path_anna_out_rect);
+  
+  rebel->crop(25, 25, 174, 174); // 150x150
+  rebel->write_to_file(path_rebel_out_square);
+  rebel->crop(35, 20, 164, 199); // 130x180
+  rebel->write_to_file(path_rebel_out_rect);
   
   return 0;
 }

@@ -16,6 +16,7 @@ class Picture {
 public:
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void write_to_file(std::string);
+  void crop(uint32_t, uint32_t, uint32_t, uint32_t);
 
 private:
   void load();
@@ -27,7 +28,8 @@ private:
   uint32_t dim_x;
   uint32_t dim_y;
   uint32_t type;
-  std::vector<std::vector<RgbPixel>>* data;
+  std::vector<std::vector<RgbPixel>*>* data;
+  std::vector<std::vector<RgbPixel>*>* result;
 };
 
 #endif /* Picture_hpp */
