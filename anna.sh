@@ -7,6 +7,10 @@ ruby scripts/pic.rb --size 100x100 images/P1/Anna_resize_100.raw --out images/P1
 ruby scripts/pic.rb --size 200x200 images/P1/Anna_resize_200.raw --out images/P1/Anna_resize_200.jpg
 ruby scripts/pic.rb --size 300x300 images/P1/Anna_resize_300.raw --out images/P1/Anna_resize_300.jpg
 
+ruby scripts/pic.rb --size 100x100 images/P1/Rebel_resize_100.raw --out images/P1/Rebel_resize_100.jpg
+ruby scripts/pic.rb --size 200x200 images/P1/Rebel_resize_200.raw --out images/P1/Rebel_resize_200.jpg
+ruby scripts/pic.rb --size 300x300 images/P1/Rebel_resize_300.raw --out images/P1/Rebel_resize_300.jpg
+
 ruby scripts/pic.rb --size 600x400 images/P1/Clownfish.raw --out images/P1/Clownfish.jpg
 ruby scripts/pic.rb --size 600x400 images/P1/Clownfish_cyan.raw --out images/P1/Clownfish_cyan.jpg --gray
 ruby scripts/pic.rb --size 600x400 images/P1/Clownfish_magenta.raw --out images/P1/Clownfish_magenta.jpg --gray

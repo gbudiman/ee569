@@ -17,11 +17,26 @@ void f_1_1_a_resizing() {
   string path_anna_resize_200 = "images/P1/Anna_resize_200.raw";
   string path_anna_resize_300 = "images/P1/Anna_resize_300.raw";
   
+  string path_rebel = "images/P1/Rebel_cropped_square.raw";
+  string path_rebel_resize_100 = "images/P1/Rebel_resize_100.raw";
+  string path_rebel_resize_200 = "images/P1/Rebel_resize_200.raw";
+  string path_rebel_resize_300 = "images/P1/Rebel_resize_300.raw";
+  
   Picture *anna = new Picture(path_anna, 130, 130, COLOR_RGB);
+  Picture *rebel = new Picture(path_rebel, 150, 150, COLOR_RGB);
+  
   anna->resize(100, 100);
   anna->write_to_file(path_anna_resize_100);
   anna->resize(200, 200);
   anna->write_to_file(path_anna_resize_200);
   anna->resize(300, 300);
   anna->write_to_file(path_anna_resize_300);
+  
+  rebel->resize(100, 100);
+  rebel->write_to_file(path_rebel_resize_100);
+  rebel->resize(200, 200);
+  rebel->write_to_file(path_rebel_resize_200);
+  rebel->resize(300, 300);
+  rebel->write_to_file(path_rebel_resize_300);
+
 }
