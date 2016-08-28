@@ -11,12 +11,13 @@
 using namespace std;
 
 int main() {
-  int debug = 1;
+  int debug = 3;
 
   switch(debug) {
     case 0: f_1_1_a_cropping(); break;
     case 1: f_1_1_a_resizing(); break;
     case 2: f_1_1_b_cmyk(); break;
+    case 3: f_1_1_b_hsl(); break;
   }
   
   return 0;

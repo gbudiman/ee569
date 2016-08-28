@@ -12,5 +12,6 @@
 void f_1_1_a_cropping();
 void f_1_1_a_resizing();
 void f_1_1_b_cmyk();
+void f_1_1_b_hsl();
 
 #endif /* project_inclusion_h */

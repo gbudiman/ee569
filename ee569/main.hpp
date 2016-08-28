@@ -9,6 +9,7 @@
 #ifndef main_h
 #define main_h
 
+#include <algorithm>
 #include <math.h>
 #include <cmath>
 #include <stdio.h>
@@ -23,6 +24,7 @@
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
 #define COLOR_CMYK    2
+#define COLOR_HSL     3
 
 #define HEAVY_DEBUG   0
 

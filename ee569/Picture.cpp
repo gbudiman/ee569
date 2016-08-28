@@ -22,6 +22,7 @@ void Picture::write_to_file(string _path) {
   switch(type) {
     case COLOR_RGB: write_rgb(_path); break;
     case COLOR_CMYK: write_cmyk(_path); break;
+    case COLOR_HSL: write_hsl(_path); break;
   }
 }
 
@@ -221,6 +222,36 @@ void Picture::write_cmyk(string out_path) {
   cout << "File written to " << out_m << "\n";
 }
 
+void Picture::write_hsl(string out_path) {
+  string out_h = out_path + "_hue.raw";
+  string out_s = out_path + "_saturation.raw";
+  string out_l = out_path + "_lightness.raw";
+  
+  ofstream osh;
+  ofstream oss;
+  ofstream osl;
+  
+  osh.open(out_h, ios::out | ios::binary);
+  oss.open(out_s, ios::out | ios::binary);
+  osl.open(out_l, ios::out | ios::binary);
+  
+  for (auto r = data_hsl->begin(); r != data_hsl->end(); ++r) {
+    for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+      osh.write((char*) &c->h, sizeof(uint8_t));
+      oss.write((char*) &c->s, sizeof(uint8_t));
+      osl.write((char*) &c->l, sizeof(uint8_t));
+    }
+  }
+  
+  osh.close();
+  oss.close();
+  osl.close();
+  
+  cout << "File written to " << out_h << "\n";
+  cout << "File written to " << out_s << "\n";
+  cout << "File written to " << out_l << "\n";
+}
+
 void Picture::to_cmyk() {
   type = COLOR_CMYK;
   
@@ -234,6 +265,22 @@ void Picture::to_cmyk() {
     }
     
     data_cmyk->push_back(row_data);
+  }
+}
+
+void Picture::to_hsl() {
+  type = COLOR_HSL;
+  
+  data_hsl = new std::vector<std::vector<HslPixel>*>();
+  std::vector<HslPixel>* row_data = new std::vector<HslPixel>();
+  
+  for (auto r = data->begin(); r != data->end(); ++r) {
+    row_data = new std::vector<HslPixel>();
+    for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+      row_data->push_back(c->to_hsl());
+    }
+    
+    data_hsl->push_back(row_data);
   }
 }
 

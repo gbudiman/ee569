@@ -11,11 +11,13 @@
 
 #include "main.hpp"
 #include "CmykPixel.hpp"
+#include "HslPixel.hpp"
 
 class RgbPixel {
 public:
   RgbPixel(uint8_t, uint8_t, uint8_t);
   CmykPixel to_cmyk();
+  HslPixel to_hsl();
   
   uint8_t r;
   uint8_t g;

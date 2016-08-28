@@ -22,12 +22,14 @@ public:
   void resize(uint32_t, uint32_t);
 
   void to_cmyk();
+  void to_hsl();
 private:
   void load();
   void load_rgb();
   
   void write_rgb(std::string);
   void write_cmyk(std::string);
+  void write_hsl(std::string);
   
   RgbPixel bilinear_interpolate(float x, float y);
   
@@ -38,6 +40,7 @@ private:
   std::vector<std::vector<RgbPixel>*>* data;
   std::vector<std::vector<RgbPixel>*>* result;
   std::vector<std::vector<CmykPixel>*>* data_cmyk;
+  std::vector<std::vector<HslPixel>*>* data_hsl;
 };
 
 #endif /* Picture_hpp */

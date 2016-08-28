@@ -20,3 +20,13 @@ ruby scripts/pic.rb --size 500x374 images/P1/Octopus.raw --out images/P1/Octopus
 ruby scripts/pic.rb --size 500x374 images/P1/Octopus_cyan.raw --out images/P1/Octopus_cyan.jpg --gray
 ruby scripts/pic.rb --size 500x374 images/P1/Octopus_magenta.raw --out images/P1/Octopus_magenta.jpg --gray
 ruby scripts/pic.rb --size 500x374 images/P1/Octopus_yellow.raw --out images/P1/Octopus_yellow.jpg --gray
+
+ruby scripts/pic.rb --size 400x250 images/P1/Turtle.raw --out images/P1/Turtle.jpg
+ruby scripts/pic.rb --size 400x250 images/P1/Turtle_hue.raw --out images/P1/Turtle_hue.jpg --gray
+ruby scripts/pic.rb --size 400x250 images/P1/Turtle_saturation.raw --out images/P1/Turtle_saturation.jpg --gray
+ruby scripts/pic.rb --size 400x250 images/P1/Turtle_lightness.raw --out images/P1/Turtle_lightness.jpg --gray
+
+ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish.raw --out images/P1/Jellyfish.jpg
+ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_hue.raw --out images/P1/Jellyfish_hue.jpg --gray
+ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_saturation.raw --out images/P1/Jellyfish_saturation.jpg --gray
+ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_lightness.raw --out images/P1/Jellyfish_lightness.jpg --gray
