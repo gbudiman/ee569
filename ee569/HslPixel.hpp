@@ -9,7 +9,7 @@
 #ifndef HslPixel_hpp
 #define HslPixel_hpp
 
-#include <stdio.h>
+#include "main.hpp"
 
 class HslPixel {
 public:

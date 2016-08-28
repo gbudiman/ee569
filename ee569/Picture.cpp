@@ -16,6 +16,7 @@ Picture::Picture(string _path, uint32_t _dim_x, uint32_t _dim_y, uint32_t _type)
   type = _type;
   
   load();
+  generate_histogram();
 }
 
 void Picture::write_to_file(string _path) {
@@ -38,6 +39,33 @@ void Picture::write_to_file(string _path, bool strip_extension) {
 void Picture::load() {
   switch(type) {
     case COLOR_RGB: load_rgb(); break;
+    case COLOR_GRAY: load_gray(); break;
+  }
+}
+
+void Picture::generate_histogram() {
+  switch(type) {
+    case COLOR_GRAY:
+      hist_gray = new Histogram();
+      for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
+        for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+          hist_gray->push(*c);
+        }
+      }
+      break;
+    case COLOR_RGB:
+      hist_r = new Histogram();
+      hist_g = new Histogram();
+      hist_b = new Histogram();
+      
+      for (auto r = data->begin(); r != data->end(); ++r) {
+        for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+          hist_r->push(c->r);
+          hist_g->push(c->g);
+          hist_b->push(c->b);
+        }
+      }
+      break;
   }
 }
 
@@ -318,5 +346,44 @@ void Picture::load_rgb() {
     }
     
     byte_counter++;
+  }
+}
+
+void Picture::load_gray() {
+  ifstream in(path, std::ios::binary);
+  uint8_t _byte;
+  uint32_t col_counter = 0;
+  uint32_t byte_counter = 0;
+  
+  data_gray = new std::vector<std::vector<uint8_t>*>();
+  std::vector<uint8_t>* row_data = new std::vector<uint8_t>();
+  
+  while (in.read((char*) &_byte, sizeof(_byte))) {
+    col_counter = (byte_counter / 3) % dim_x;
+    
+    if (col_counter == 0) {
+      row_data = new std::vector<uint8_t>();
+    }
+    
+    row_data->push_back(_byte);
+    
+    if (col_counter == dim_x - 1) {
+      data_gray->push_back(row_data);
+    }
+    
+    byte_counter++;
+  }
+}
+
+void Picture::debug_histogram() {
+  switch(type) {
+    case COLOR_GRAY:
+      hist_gray->plot();
+      break;
+    case COLOR_RGB:
+      hist_r->debug();
+      hist_g->debug();
+      hist_b->debug();
+      break;
   }
 }
