@@ -37,6 +37,9 @@
 #define CHANNEL_BLUE  2
 #define CHANNEL_GRAY  3
 
+#define EQUALIZE_CDF      0
+#define EQUALIZE_LINEAR   1
+
 #define STRIP_EXTENSION true
 
 #endif /* main_h */

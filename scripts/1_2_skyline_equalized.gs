@@ -10,11 +10,11 @@ set y2label "CDF (pixels)"
 
 set tics out
 
-set title "Skyline - Red Channel"
+set title "Skyline CDF Eq - Red Channel"
 plot "images/P2/Skyline_eqlz_b_hist_red_pdf.txt" smooth freq with boxes lt rgb "#FF0000" axes x1y1, "images/P2/Skyline_eqlz_b_hist_red_cdf.txt" with line axes x1y2
 
-set title "Skyline - Green Channel"
+set title "Skyline CDF Eq - Green Channel"
 plot "images/P2/Skyline_eqlz_b_hist_green_pdf.txt" smooth freq with boxes lt rgb "#00FF00" axes x1y1, "images/P2/Skyline_eqlz_b_hist_green_cdf.txt" with line axes x1y2
 
-set title "Skyline - Blue Channel"
+set title "Skyline CDF Eq - Blue Channel"
 plot "images/P2/Skyline_eqlz_b_hist_blue_pdf.txt" smooth freq with boxes lt rgb "#0000FF" axes x1y1, "images/P2/Skyline_eqlz_b_hist_blue_cdf.txt" with line axes x1y2

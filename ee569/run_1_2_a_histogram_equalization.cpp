@@ -9,11 +9,16 @@
 #include "main.hpp"
 #include "project_inclusion.hpp"
 #include "Picture.hpp"
+#include "TransferFunction.hpp"
 using namespace std;
 
 void f_1_2_a_histogram_equalization() {
   string path_bd = "images/P2/Beach_dark.raw";
   string path_bb = "images/P2/Beach_bright.raw";
+  
+  string path_bd_a = "images/P2/Beach_dark_eqlz_a.raw";
+  string path_bb_a = "images/P2/Beach_bright_eqlz_a.raw";
+  
   string path_bd_b = "images/P2/Beach_dark_eqlz_b.raw";
   string path_bb_b = "images/P2/Beach_bright_eqlz_b.raw";
   
@@ -23,15 +28,24 @@ void f_1_2_a_histogram_equalization() {
   bd->prepare_gnuplot_histogram_data(path_bd, STRIP_EXTENSION);
   bb->prepare_gnuplot_histogram_data(path_bb, STRIP_EXTENSION);
   
-  bd->equalize_using_cdf();
-  bb->equalize_using_cdf();
+  bd->equalize(EQUALIZE_LINEAR);
+  bb->equalize(EQUALIZE_LINEAR);
+  bd->write_to_file(path_bd_a);
+  bb->write_to_file(path_bb_a);
   
+  bd->equalize(EQUALIZE_CDF);
+  bb->equalize(EQUALIZE_CDF);
   bd->write_to_file(path_bd_b);
   bb->write_to_file(path_bb_b);
   
+  Picture *bd_a = new Picture(path_bd_a, 500, 375, COLOR_GRAY);
   Picture *bd_b = new Picture(path_bd_b, 500, 375, COLOR_GRAY);
+  Picture *bb_a = new Picture(path_bb_a, 500, 375, COLOR_GRAY);
   Picture *bb_b = new Picture(path_bb_b, 500, 375, COLOR_GRAY);
   
+  bd_a->prepare_gnuplot_histogram_data(path_bd_a, STRIP_EXTENSION);
   bd_b->prepare_gnuplot_histogram_data(path_bd_b, STRIP_EXTENSION);
+  bb_a->prepare_gnuplot_histogram_data(path_bb_a, STRIP_EXTENSION);
   bb_b->prepare_gnuplot_histogram_data(path_bb_b, STRIP_EXTENSION);
+  
 }

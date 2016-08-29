@@ -33,8 +33,11 @@ ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_lightness.raw --out image
 
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark.raw --out images/P2/Beach_dark.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright.raw --out images/P2/Beach_bright.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark_eqlz_a.raw --out images/P2/Beach_dark_eqlz_a.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright_eqlz_a.raw --out images/P2/Beach_bright_eqlz_a.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark_eqlz_b.raw --out images/P2/Beach_dark_eqlz_b.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright_eqlz_b.raw --out images/P2/Beach_bright_eqlz_b.jpg --gray
 
 ruby scripts/pic.rb --size 600x400 images/P2/Skyline.raw --out images/P2/Skyline.jpg
+ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_a.raw --out images/P2/Skyline_eqlz_a.jpg
 ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_b.raw --out images/P2/Skyline_eqlz_b.jpg

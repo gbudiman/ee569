@@ -302,7 +302,7 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
   }
 }
 
-void Picture::equalize_using_cdf() {
+void Picture::equalize(uint8_t method) {
   vector<int16_t>* luteq_gray;
   vector<int16_t>* luteq_red;
   vector<int16_t>* luteq_green;
@@ -311,14 +311,14 @@ void Picture::equalize_using_cdf() {
   switch(type) {
     case COLOR_GRAY:
       //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
-      luteq_gray = perform_cdf_equalization(CHANNEL_GRAY);
+      luteq_gray = perform_equalization(CHANNEL_GRAY, method);
       remap_histogram_gray(luteq_gray);
       
       break;
     case COLOR_RGB:
-      luteq_red = perform_cdf_equalization(CHANNEL_RED);
-      luteq_green = perform_cdf_equalization(CHANNEL_GREEN);
-      luteq_blue = perform_cdf_equalization(CHANNEL_BLUE);
+      luteq_red = perform_equalization(CHANNEL_RED, method);
+      luteq_green = perform_equalization(CHANNEL_GREEN, method);
+      luteq_blue = perform_equalization(CHANNEL_BLUE, method);
       
       remap_histogram_rgb(luteq_red, luteq_green, luteq_blue);
       
@@ -357,11 +357,40 @@ void Picture::get_nonzero_cdf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   }
 }
 
-std::vector<int16_t>* Picture::perform_cdf_equalization(uint8_t channel) {
+void Picture::get_nonzero_pmf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
+  Histogram *q;
+  uint8_t state = 0;
+  uint32_t max_cdf = dim_x * dim_y;
+  uint32_t min_cdf = 0xFFFFFFFF;
+  
+  switch(channel) {
+    case CHANNEL_RED:   q = cdf_r; break;
+    case CHANNEL_GREEN: q = cdf_g; break;
+    case CHANNEL_BLUE:  q = cdf_b; break;
+    default:            q = cdf_gray;
+  }
+  
+  for (auto i = 0; i < q->data->size(); i++) {
+    auto current_data = q->data->at(i);
+    
+    if (state == 0 && current_data > 0) {
+      state = 1;
+      lo = i;
+    } else if (state == 1 && current_data == max_cdf) {
+      hi = i;
+      state = 2;
+    }
+  }
+}
+
+std::vector<int16_t>* Picture::perform_equalization(uint8_t channel, uint8_t method) {
   std::vector<int16_t> *eqlz_map = new std::vector<int16_t>(256);
   uint8_t nzcdf_lo, nzcdf_hi = 0;
-  get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
   
+  
+  for (auto i = eqlz_map->begin(); i < eqlz_map->end(); i++) {
+    *i = -1;
+  }
   Histogram *multi = cdf_gray;
   
   //cout << "CDF channel " << channel << ": " << (uint32_t) nzcdf_lo << " -> " << (uint32_t) nzcdf_hi << "\n";
@@ -371,15 +400,26 @@ std::vector<int16_t>* Picture::perform_cdf_equalization(uint8_t channel) {
     case CHANNEL_BLUE:   multi = cdf_b; break;
   }
   
-  for (int i = 1; i < 256; i++) {
-    //uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
-    uint32_t res = ((float) (multi->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
-    eqlz_map->at(i) = res;
+  if (method == EQUALIZE_CDF) {
+    get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
+    for (int i = 0; i < 256; i++) {
+      //uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+      int16_t res = (int16_t) ((float) (multi->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+      eqlz_map->at(i) = res;
+    }
+  } else if (method == EQUALIZE_LINEAR) {
+    get_nonzero_pmf(channel, nzcdf_lo, nzcdf_hi);
+    cout << "Linear equalization of " << (uint32_t) nzcdf_lo << " to " << (uint32_t) nzcdf_hi << "\n";
+    for (uint16_t i = nzcdf_lo; i <= nzcdf_hi; i++) {
+      //int16_t new_index = (int16_t) ((float) i * (float) 255 / (nzcdf_hi - nzcdf_lo + 1) - (nzcdf_hi - nzcdf_lo));
+      int16_t new_index = (float) 255 / (float) (nzcdf_hi - nzcdf_lo + 1) * (float) (i - nzcdf_lo);
+      eqlz_map->at(i) = new_index;
+    }
   }
   
   if (HEAVY_DEBUG) {
     for (uint32_t i = 0; i < eqlz_map->size(); i++) {
-      printf("%d -> %d\n", i, eqlz_map->at(i));
+      printf("%d -> %X\n", i, (int16_t) eqlz_map->at(i));
     }
   }
   
