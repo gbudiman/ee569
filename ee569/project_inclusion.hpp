@@ -14,5 +14,6 @@ void f_1_1_a_resizing();
 void f_1_1_b_cmyk();
 void f_1_1_b_hsl();
 void f_1_2_a_histogram_equalization();
+void f_1_2_b_histcolor_equalization();
 
 #endif /* project_inclusion_h */

@@ -35,3 +35,6 @@ ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark.raw --out images/P2/Beac
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright.raw --out images/P2/Beach_bright.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark_eqlz_b.raw --out images/P2/Beach_dark_eqlz_b.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright_eqlz_b.raw --out images/P2/Beach_bright_eqlz_b.jpg --gray
+
+ruby scripts/pic.rb --size 600x400 images/P2/Skyline.raw --out images/P2/Skyline.jpg
+ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_b.raw --out images/P2/Skyline_eqlz_b.jpg

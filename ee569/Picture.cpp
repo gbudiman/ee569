@@ -41,7 +41,17 @@ void Picture::prepare_gnuplot_histogram_data(string out_path) {
   string out_gray_pdf = out_path + "_hist_gray_pdf.txt";
   string out_gray_cdf = out_path + "_hist_gray_cdf.txt";
   
+  string out_red_pdf = out_path + "_hist_red_pdf.txt";
+  string out_red_cdf = out_path + "_hist_red_cdf.txt";
+  string out_green_pdf = out_path + "_hist_green_pdf.txt";
+  string out_green_cdf = out_path + "_hist_green_cdf.txt";
+  string out_blue_pdf = out_path + "_hist_blue_pdf.txt";
+  string out_blue_cdf = out_path + "_hist_blue_cdf.txt";
+  
   ofstream osgp, osgc;
+  ofstream oscrp, oscrc,
+           oscgp, oscgc,
+           oscbp, oscbc;
   
   switch(type) {
     case COLOR_GRAY:
@@ -57,6 +67,28 @@ void Picture::prepare_gnuplot_histogram_data(string out_path) {
       osgc.close();
       break;
     case COLOR_RGB:
+      oscrp.open(out_red_pdf, ios::out);
+      oscrc.open(out_red_cdf, ios::out);
+      oscgp.open(out_green_pdf, ios::out);
+      oscgc.open(out_green_cdf, ios::out);
+      oscbp.open(out_blue_pdf, ios::out);
+      oscbc.open(out_blue_cdf, ios::out);
+      
+      for (int i = 0; i < hist_r->data->size(); i++) {
+        oscrp << hist_r->data->at(i) << "\n";
+        oscrc << cdf_r->data->at(i) << "\n";
+        oscgp << hist_g->data->at(i) << "\n";
+        oscgc << cdf_g->data->at(i) << "\n";
+        oscbp << hist_b->data->at(i) << "\n";
+        oscbc << cdf_b->data->at(i) << "\n";
+      }
+      
+      oscrp.close();
+      oscrc.close();
+      oscgp.close();
+      oscgc.close();
+      oscbp.close();
+      oscbc.close();
       break;
   }
 }
@@ -125,8 +157,8 @@ void Picture::generate_histogram() {
       
       for (auto i = 0; i < hist_r->data->size(); i++) {
         cdf_red += hist_r->data->at(i);
-        cdf_green += hist_r->data->at(i);
-        cdf_blue += hist_r->data->at(i);
+        cdf_green += hist_g->data->at(i);
+        cdf_blue += hist_b->data->at(i);
         
         cdf_r->update_at(i, cdf_red);
         cdf_g->update_at(i, cdf_green);
@@ -271,11 +303,24 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
 }
 
 void Picture::equalize_using_cdf() {
+  vector<int16_t>* luteq_gray;
+  vector<int16_t>* luteq_red;
+  vector<int16_t>* luteq_green;
+  vector<int16_t>* luteq_blue;
+  
   switch(type) {
     case COLOR_GRAY:
       //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
-      vector<int16_t>* luteq_gray = perform_cdf_equalization(CHANNEL_GRAY);
+      luteq_gray = perform_cdf_equalization(CHANNEL_GRAY);
       remap_histogram_gray(luteq_gray);
+      
+      break;
+    case COLOR_RGB:
+      luteq_red = perform_cdf_equalization(CHANNEL_RED);
+      luteq_green = perform_cdf_equalization(CHANNEL_GREEN);
+      luteq_blue = perform_cdf_equalization(CHANNEL_BLUE);
+      
+      remap_histogram_rgb(luteq_red, luteq_green, luteq_blue);
       
       break;
   }
@@ -317,32 +362,27 @@ std::vector<int16_t>* Picture::perform_cdf_equalization(uint8_t channel) {
   uint8_t nzcdf_lo, nzcdf_hi = 0;
   get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
   
+  Histogram *multi = cdf_gray;
+  
   //cout << "CDF channel " << channel << ": " << (uint32_t) nzcdf_lo << " -> " << (uint32_t) nzcdf_hi << "\n";
-//  
-//  for (auto i = eqlz_map->begin(); i != eqlz_map->end(); ++i) {
-//    *i = -1;
-//  }
-//  
-//  for (uint16_t i = nzcdf_lo; i <= nzcdf_hi; i++) {
-//    auto new_index = (uint8_t) ((float) i * (float) 255 / (nzcdf_hi - nzcdf_lo + 1));
-//    //cout << (uint32_t) i << " -> " << (uint32_t) new_index << "\n";
-//    eqlz_map->at(i) = new_index;
-//  }
-//  
-//  for (uint16_t i = 0; i < eqlz_map->size(); i++) {
-//    if (eqlz_map->at(i) != -1) {
-//      cout << "Mapping " << eqlz_map->at(i) << " -> " << i << "\n";
-//    }
-//  }
+  switch (channel) {
+    case CHANNEL_RED:    multi = cdf_r; break;
+    case CHANNEL_GREEN:  multi = cdf_g; break;
+    case CHANNEL_BLUE:   multi = cdf_b; break;
+  }
   
   for (int i = 1; i < 256; i++) {
-    uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+    //uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+    uint32_t res = ((float) (multi->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
     eqlz_map->at(i) = res;
   }
   
-  for (uint32_t i = 0; i < eqlz_map->size(); i++) {
-    printf("%d -> %d\n", i, eqlz_map->at(i));
+  if (HEAVY_DEBUG) {
+    for (uint32_t i = 0; i < eqlz_map->size(); i++) {
+      printf("%d -> %d\n", i, eqlz_map->at(i));
+    }
   }
+  
   return eqlz_map;
 }
 
@@ -356,11 +396,29 @@ void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
       int16_t mapped_value = luteq->at(*c);
       //printf("%d -> %d\n", *c, mapped_value);
       row_data.push_back((uint8_t) mapped_value);
-      
-      
     }
     
     result_gray->push_back(row_data);
+  }
+}
+
+void Picture::remap_histogram_rgb(std::vector<int16_t> *l_r, std::vector<int16_t> *l_g, std::vector<int16_t> *l_b) {
+  result = new vector<vector<RgbPixel>*>();
+  
+  for (uint32_t r = 0; r < data->size(); r++) {
+    vector<RgbPixel>* row_data = new vector<RgbPixel>();
+    
+    for (uint32_t c = 0; c < data->at(r)->size(); c++) {
+      RgbPixel pre_value = data->at(r)->at(c);
+      int16_t mapped_red = l_r->at(pre_value.r);
+      int16_t mapped_green = l_g->at(pre_value.g);
+      int16_t mapped_blue = l_b->at(pre_value.b);
+      
+      RgbPixel pixel = *new RgbPixel(mapped_red, mapped_green, mapped_blue);
+      row_data->push_back(pixel);
+    }
+    
+    result->push_back(row_data);
   }
 }
 

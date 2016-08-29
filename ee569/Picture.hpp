@@ -42,6 +42,7 @@ private:
   void get_nonzero_cdf(uint8_t, uint8_t&, uint8_t&);
   std::vector<int16_t>* perform_cdf_equalization(uint8_t);
   void remap_histogram_gray(std::vector<int16_t>*);
+  void remap_histogram_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   RgbPixel bilinear_interpolate(float x, float y);
   
