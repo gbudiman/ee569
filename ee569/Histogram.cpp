@@ -20,6 +20,10 @@ void Histogram::push(uint8_t value) {
   data->at(value)++;
 }
 
+void Histogram::update_at(uint8_t index, uint32_t value) {
+  data->at(index) = value;
+}
+
 void Histogram::debug() {
   for (uint16_t i = 0; i < 256; i++) {
     printf("%.3d: %.7d\n", i, data->at(i));
@@ -31,7 +35,7 @@ void Histogram::plot() {
 }
 
 void Histogram::plot(uint8_t bucket_size) {
-  uint8_t max_rows = 64;
+  uint8_t max_rows = 32;
   uint32_t cumulative = 0;
   uint32_t peak = 0;
   std::vector<uint32_t> *buckets = new std::vector<uint32_t>();

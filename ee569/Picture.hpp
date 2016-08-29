@@ -24,7 +24,8 @@ public:
 
   void to_cmyk();
   void to_hsl();
-  void debug_histogram();
+  void prepare_gnuplot_histogram_data(std::string);
+  void prepare_gnuplot_histogram_data(std::string, bool);
 private:
   void load();
   void load_rgb();
@@ -53,7 +54,12 @@ private:
   Histogram *hist_r;
   Histogram *hist_g;
   Histogram *hist_b;
+  Histogram *cdf_r;
+  Histogram *cdf_g;
+  Histogram *cdf_b;
+  
   Histogram *hist_gray;
+  Histogram *cdf_gray;
 };
 
 #endif /* Picture_hpp */

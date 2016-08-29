@@ -15,6 +15,7 @@ class Histogram {
 public:
   Histogram();
   void push(uint8_t);
+  void update_at(uint8_t, uint32_t);
   void debug();
   void plot();
   void plot(uint8_t);

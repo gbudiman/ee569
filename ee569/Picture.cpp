@@ -36,6 +36,36 @@ void Picture::write_to_file(string _path, bool strip_extension) {
   }
 }
 
+void Picture::prepare_gnuplot_histogram_data(string out_path) {
+  string out_gray_pdf = out_path + "_hist_gray_pdf.txt";
+  string out_gray_cdf = out_path + "_hist_gray_cdf.txt";
+  
+  ofstream osgp, osgc;
+  
+  switch(type) {
+    case COLOR_GRAY:
+      osgp.open(out_gray_pdf, ios::out);
+      osgc.open(out_gray_cdf, ios::out);
+      
+      for (int i = 0; i < hist_gray->data->size(); i++) {
+        osgp << hist_gray->data->at(i) << "\n";
+        osgc << cdf_gray->data->at(i) << "\n";
+      }
+      break;
+    case COLOR_RGB:
+      break;
+  }
+}
+
+void Picture::prepare_gnuplot_histogram_data(string path, bool strip_extension) {
+  if (strip_extension) {
+    uint32_t dot_position = (uint32_t) path.find_last_of('.');
+    prepare_gnuplot_histogram_data(path.substr(0, dot_position));
+  } else {
+    prepare_gnuplot_histogram_data(path);
+  }
+}
+
 void Picture::load() {
   switch(type) {
     case COLOR_RGB: load_rgb(); break;
@@ -44,26 +74,56 @@ void Picture::load() {
 }
 
 void Picture::generate_histogram() {
+  uint32_t cdf_value = 0;
+  uint32_t cdf_red = 0;
+  uint32_t cdf_green = 0;
+  uint32_t cdf_blue = 0;
+  
+  uint32_t pixel_count = 0;
+  
   switch(type) {
     case COLOR_GRAY:
       hist_gray = new Histogram();
+      cdf_gray = new Histogram();
+      
       for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
         for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
           hist_gray->push(*c);
+          pixel_count++;
         }
       }
+      
+      cdf_value = 0;
+      for (auto i = 0; i < hist_gray->data->size(); i++) {
+        cdf_value += hist_gray->data->at(i);
+        cdf_gray->update_at(i, cdf_value);
+      }
       break;
+      
     case COLOR_RGB:
       hist_r = new Histogram();
       hist_g = new Histogram();
       hist_b = new Histogram();
       
+      cdf_red = cdf_green = cdf_blue = 0;
+      
       for (auto r = data->begin(); r != data->end(); ++r) {
         for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+          
           hist_r->push(c->r);
           hist_g->push(c->g);
           hist_b->push(c->b);
         }
+      }
+      
+      for (auto i = 0; i < hist_r->data->size(); i++) {
+        cdf_red += hist_r->data->at(i);
+        cdf_green += hist_r->data->at(i);
+        cdf_blue += hist_r->data->at(i);
+        
+        cdf_r->update_at(i, cdf_red);
+        cdf_g->update_at(i, cdf_green);
+        cdf_b->update_at(i, cdf_blue);
       }
       break;
   }
@@ -359,7 +419,7 @@ void Picture::load_gray() {
   std::vector<uint8_t>* row_data = new std::vector<uint8_t>();
   
   while (in.read((char*) &_byte, sizeof(_byte))) {
-    col_counter = (byte_counter / 3) % dim_x;
+    col_counter = byte_counter % dim_x;
     
     if (col_counter == 0) {
       row_data = new std::vector<uint8_t>();
@@ -372,24 +432,5 @@ void Picture::load_gray() {
     }
     
     byte_counter++;
-  }
-}
-
-void Picture::debug_histogram() {
-  switch(type) {
-    case COLOR_GRAY:
-      if (HEAVY_DEBUG) {
-        hist_gray->debug();
-      }
-      
-      cout << "Histogram: " << path << "\n";
-      cout << "Bucket size = 4\n";
-      hist_gray->plot(4);
-      break;
-    case COLOR_RGB:
-      hist_r->debug();
-      hist_g->debug();
-      hist_b->debug();
-      break;
   }
 }

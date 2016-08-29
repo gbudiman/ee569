@@ -18,6 +18,6 @@ void f_1_2_a_histogram_equalization() {
   Picture *bd = new Picture(path_bd, 500, 375, COLOR_GRAY);
   Picture *bb = new Picture(path_bb, 500, 375, COLOR_GRAY);
   
-  bd->debug_histogram();
-  bb->debug_histogram();
+  bd->prepare_gnuplot_histogram_data(path_bd, STRIP_EXTENSION);
+  bb->prepare_gnuplot_histogram_data(path_bb, STRIP_EXTENSION);
 }
