@@ -11,7 +11,7 @@ set ylabel "PDF (pixels)"
 set y2label "CDF (pixels)"
 
 set tics out
-plot "images/P2/Beach_bright_eqlz_b_hist_gray_pdf.txt" smooth freq with boxes lt rgb "#101010" axes x1y1, "images/P2/Beach_bright_hist_gray_cdf.txt" with line axes x1y2
+plot "images/P2/Beach_bright_eqlz_b_hist_gray_pdf.txt" smooth freq with boxes lt rgb "#101010" axes x1y1, "images/P2/Beach_bright_eqlz_b_hist_gray_cdf.txt" with line axes x1y2
 
 set title "Beach dark -> equalized"
-plot "images/P2/Beach_dark_eqlz_b_hist_gray_pdf.txt" smooth freq with boxes lt rgb "#101010" axes x1y1, "images/P2/Beach_dark_hist_gray_cdf.txt" with line axes x1y2
+plot "images/P2/Beach_dark_eqlz_b_hist_gray_pdf.txt" smooth freq with boxes lt rgb "#101010" axes x1y1, "images/P2/Beach_dark_eqlz_b_hist_gray_cdf.txt" with line axes x1y2

@@ -285,6 +285,7 @@ void Picture::get_nonzero_cdf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   Histogram *q;
   uint8_t state = 0;
   uint32_t max_cdf = dim_x * dim_y;
+  uint32_t min_cdf = 0xFFFFFFFF;
   
   switch(channel) {
     case CHANNEL_RED:   q = cdf_r; break;
@@ -296,12 +297,17 @@ void Picture::get_nonzero_cdf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   for (auto i = 0; i < q->data->size(); i++) {
     auto current_data = q->data->at(i);
     
-    if (state == 0 && current_data > 0) {
-      state = 1;
-      lo = i;
-    } else if (state == 1 && current_data == max_cdf) {
-      hi = i;
-      state = 2;
+//    if (state == 0 && current_data > 0) {
+//      state = 1;
+//      lo = i;
+//    } else if (state == 1 && current_data == max_cdf) {
+//      hi = i;
+//      state = 2;
+//    }
+    
+    if (current_data > 0) {
+      lo = current_data;
+      break;
     }
   }
 }
@@ -312,23 +318,31 @@ std::vector<int16_t>* Picture::perform_cdf_equalization(uint8_t channel) {
   get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
   
   //cout << "CDF channel " << channel << ": " << (uint32_t) nzcdf_lo << " -> " << (uint32_t) nzcdf_hi << "\n";
+//  
+//  for (auto i = eqlz_map->begin(); i != eqlz_map->end(); ++i) {
+//    *i = -1;
+//  }
+//  
+//  for (uint16_t i = nzcdf_lo; i <= nzcdf_hi; i++) {
+//    auto new_index = (uint8_t) ((float) i * (float) 255 / (nzcdf_hi - nzcdf_lo + 1));
+//    //cout << (uint32_t) i << " -> " << (uint32_t) new_index << "\n";
+//    eqlz_map->at(i) = new_index;
+//  }
+//  
+//  for (uint16_t i = 0; i < eqlz_map->size(); i++) {
+//    if (eqlz_map->at(i) != -1) {
+//      cout << "Mapping " << eqlz_map->at(i) << " -> " << i << "\n";
+//    }
+//  }
   
-  for (auto i = eqlz_map->begin(); i != eqlz_map->end(); ++i) {
-    *i = -1;
+  for (int i = 1; i < 256; i++) {
+    uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+    eqlz_map->at(i) = res;
   }
   
-  for (uint16_t i = nzcdf_lo; i <= nzcdf_hi; i++) {
-    auto new_index = (uint8_t) ((float) i * (float) 255 / (nzcdf_hi - nzcdf_lo + 1));
-    //cout << (uint32_t) i << " -> " << (uint32_t) new_index << "\n";
-    eqlz_map->at(i) = new_index;
+  for (uint32_t i = 0; i < eqlz_map->size(); i++) {
+    printf("%d -> %d\n", i, eqlz_map->at(i));
   }
-  
-  for (uint16_t i = 0; i < eqlz_map->size(); i++) {
-    if (eqlz_map->at(i) != -1) {
-      cout << "Mapping " << eqlz_map->at(i) << " -> " << i << "\n";
-    }
-  }
-  
   return eqlz_map;
 }
 
