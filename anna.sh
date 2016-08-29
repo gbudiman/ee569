@@ -30,3 +30,8 @@ ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish.raw --out images/P1/Jelly
 ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_hue.raw --out images/P1/Jellyfish_hue.jpg --gray
 ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_saturation.raw --out images/P1/Jellyfish_saturation.jpg --gray
 ruby scripts/pic.rb --size 500x333 images/P1/Jellyfish_lightness.raw --out images/P1/Jellyfish_lightness.jpg --gray
+
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark.raw --out images/P2/Beach_dark.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright.raw --out images/P2/Beach_bright.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_dark_eqlz_b.raw --out images/P2/Beach_dark_eqlz_b.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Beach_bright_eqlz_b.raw --out images/P2/Beach_bright_eqlz_b.jpg --gray

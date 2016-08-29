@@ -21,6 +21,7 @@ Picture::Picture(string _path, uint32_t _dim_x, uint32_t _dim_y, uint32_t _type)
 
 void Picture::write_to_file(string _path) {
   switch(type) {
+    case COLOR_GRAY: write_gray(_path); break;
     case COLOR_RGB: write_rgb(_path); break;
     case COLOR_CMYK: write_cmyk(_path); break;
     case COLOR_HSL: write_hsl(_path); break;
@@ -51,6 +52,9 @@ void Picture::prepare_gnuplot_histogram_data(string out_path) {
         osgp << hist_gray->data->at(i) << "\n";
         osgc << cdf_gray->data->at(i) << "\n";
       }
+      
+      osgp.close();
+      osgc.close();
       break;
     case COLOR_RGB:
       break;
@@ -87,7 +91,7 @@ void Picture::generate_histogram() {
       cdf_gray = new Histogram();
       
       for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
-        for (auto c = (*r)->begin(); c != (*r)->end(); ++c) {
+        for (auto c = r->begin(); c != r->end(); ++c) {
           hist_gray->push(*c);
           pixel_count++;
         }
@@ -104,6 +108,9 @@ void Picture::generate_histogram() {
       hist_r = new Histogram();
       hist_g = new Histogram();
       hist_b = new Histogram();
+      cdf_r = new Histogram();
+      cdf_g = new Histogram();
+      cdf_b = new Histogram();
       
       cdf_red = cdf_green = cdf_blue = 0;
       
@@ -263,6 +270,105 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
   }
 }
 
+void Picture::equalize_using_cdf() {
+  switch(type) {
+    case COLOR_GRAY:
+      //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
+      vector<int16_t>* luteq_gray = perform_cdf_equalization(CHANNEL_GRAY);
+      remap_histogram_gray(luteq_gray);
+      
+      break;
+  }
+}
+
+void Picture::get_nonzero_cdf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
+  Histogram *q;
+  uint8_t state = 0;
+  uint32_t max_cdf = dim_x * dim_y;
+  
+  switch(channel) {
+    case CHANNEL_RED:   q = cdf_r; break;
+    case CHANNEL_GREEN: q = cdf_g; break;
+    case CHANNEL_BLUE:  q = cdf_b; break;
+    default:            q = cdf_gray;
+  }
+  
+  for (auto i = 0; i < q->data->size(); i++) {
+    auto current_data = q->data->at(i);
+    
+    if (state == 0 && current_data > 0) {
+      state = 1;
+      lo = i;
+    } else if (state == 1 && current_data == max_cdf) {
+      hi = i;
+      state = 2;
+    }
+  }
+}
+
+std::vector<int16_t>* Picture::perform_cdf_equalization(uint8_t channel) {
+  std::vector<int16_t> *eqlz_map = new std::vector<int16_t>(256);
+  uint8_t nzcdf_lo, nzcdf_hi = 0;
+  get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
+  
+  //cout << "CDF channel " << channel << ": " << (uint32_t) nzcdf_lo << " -> " << (uint32_t) nzcdf_hi << "\n";
+  
+  for (auto i = eqlz_map->begin(); i != eqlz_map->end(); ++i) {
+    *i = -1;
+  }
+  
+  for (uint16_t i = nzcdf_lo; i <= nzcdf_hi; i++) {
+    auto new_index = (uint8_t) ((float) i * (float) 255 / (nzcdf_hi - nzcdf_lo + 1));
+    //cout << (uint32_t) i << " -> " << (uint32_t) new_index << "\n";
+    eqlz_map->at(i) = new_index;
+  }
+  
+  for (uint16_t i = 0; i < eqlz_map->size(); i++) {
+    if (eqlz_map->at(i) != -1) {
+      cout << "Mapping " << eqlz_map->at(i) << " -> " << i << "\n";
+    }
+  }
+  
+  return eqlz_map;
+}
+
+void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
+  result_gray = new vector<vector<uint8_t>>();
+  
+  for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
+    vector<uint8_t> row_data = *new vector<uint8_t>();
+    
+    for (auto c = r->begin(); c != r->end(); ++c) {
+      int16_t mapped_value = luteq->at(*c);
+      //printf("%d -> %d\n", *c, mapped_value);
+      row_data.push_back((uint8_t) mapped_value);
+      
+      
+    }
+    
+    result_gray->push_back(row_data);
+  }
+}
+
+void Picture::write_gray(string out_path) {
+  ofstream out;
+  out.open(out_path, ios::out | ios::binary);
+  
+  
+  for (auto r = 0; r < result_gray->size(); r++) {
+    vector<uint8_t> row_data = result_gray->at(r);
+    
+    for (auto c = 0; c < row_data.size(); c++) {
+      uint8_t byte = row_data.at(c);
+      out.write((char*) &byte, sizeof(uint8_t));
+    }
+  }
+
+  out.close();
+  
+  cout << "File written to " << out_path << "\n";
+}
+
 void Picture::write_rgb(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);
@@ -415,17 +521,17 @@ void Picture::load_gray() {
   uint32_t col_counter = 0;
   uint32_t byte_counter = 0;
   
-  data_gray = new std::vector<std::vector<uint8_t>*>();
-  std::vector<uint8_t>* row_data = new std::vector<uint8_t>();
+  data_gray = new std::vector<std::vector<uint8_t>>();
+  std::vector<uint8_t> row_data = *new std::vector<uint8_t>();
   
   while (in.read((char*) &_byte, sizeof(_byte))) {
     col_counter = byte_counter % dim_x;
     
     if (col_counter == 0) {
-      row_data = new std::vector<uint8_t>();
+      row_data = *new std::vector<uint8_t>();
     }
     
-    row_data->push_back(_byte);
+    row_data.push_back(_byte);
     
     if (col_counter == dim_x - 1) {
       data_gray->push_back(row_data);

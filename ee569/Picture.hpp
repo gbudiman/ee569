@@ -26,16 +26,22 @@ public:
   void to_hsl();
   void prepare_gnuplot_histogram_data(std::string);
   void prepare_gnuplot_histogram_data(std::string, bool);
+  void equalize_using_cdf();
 private:
   void load();
   void load_rgb();
   void load_gray();
   
+  void write_gray(std::string);
   void write_rgb(std::string);
   void write_cmyk(std::string);
   void write_hsl(std::string);
   
   void generate_histogram();
+  
+  void get_nonzero_cdf(uint8_t, uint8_t&, uint8_t&);
+  std::vector<int16_t>* perform_cdf_equalization(uint8_t);
+  void remap_histogram_gray(std::vector<int16_t>*);
   
   RgbPixel bilinear_interpolate(float x, float y);
   
@@ -48,8 +54,8 @@ private:
   std::vector<std::vector<CmykPixel>*>* data_cmyk;
   std::vector<std::vector<HslPixel>*>* data_hsl;
   
-  std::vector<std::vector<uint8_t>*>* data_gray;
-  std::vector<std::vector<uint8_t>*>* result_gray;
+  std::vector<std::vector<uint8_t>>* data_gray;
+  std::vector<std::vector<uint8_t>>* result_gray;
   
   Histogram *hist_r;
   Histogram *hist_g;
