@@ -20,8 +20,8 @@ void f_1_2_d_histogram_transform() {
   string path_s2m = "images/P2/Student_2_matched.raw";
   Histogram *h1 = new Histogram();
   Histogram *h2 = new Histogram();
-  h1->generate_gaussian(70, 20, 500, 332);
-  h2->generate_gaussian(70, 20, 500, 375);
+  h1->generate_gaussian(125, 40, 500, 332);
+  h2->generate_gaussian(125, 40, 500, 375);
  
   Picture *pseudo1 = new Picture();
   Picture *pseudo2 = new Picture();

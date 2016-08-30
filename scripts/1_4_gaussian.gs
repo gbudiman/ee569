@@ -5,8 +5,8 @@ set y2tics
 set key off
 
 set boxwidth 0
-set ylabel "PDF (pixels)"
-set y2label "CDF (pixels)"
+#set ylabel "PDF (pixels)"
+#set y2label "CDF (pixels)"
 
 set tics out
 

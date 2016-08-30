@@ -11,7 +11,7 @@
 using namespace std;
 
 int main() {
-  int debug = 7;
+  int debug = 4;
 
   switch(debug) {
     case 0: f_1_1_a_cropping(); break;

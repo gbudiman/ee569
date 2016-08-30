@@ -30,6 +30,8 @@ void f_1_2_a_histogram_equalization() {
   
   bd->equalize(EQUALIZE_LINEAR);
   bb->equalize(EQUALIZE_LINEAR);
+  bd->prepare_gnuplot_transfer_function(path_bd, STRIP_EXTENSION);
+  bb->prepare_gnuplot_transfer_function(path_bb, STRIP_EXTENSION);
   bd->write_to_file(path_bd_a);
   bb->write_to_file(path_bb_a);
   

@@ -42,6 +42,49 @@ void Picture::write_to_file(string _path, bool strip_extension) {
   }
 }
 
+void Picture::prepare_gnuplot_transfer_function(string out_path) {
+  string out_gray_tf = out_path + "_tf_gray.txt";
+  string out_red_tf = out_path + "_tf_red.txt";
+  string out_green_tf = out_path + "_tf_green.txt";
+  string out_blue_tf = out_path + "_tf_blue.txt";
+  
+  switch (type) {
+    case COLOR_GRAY:
+      dump_transfer_function(out_gray_tf, tf_gray);
+      break;
+    case COLOR_RGB:
+      dump_transfer_function(out_red_tf, tf_red);
+      dump_transfer_function(out_green_tf, tf_green);
+      dump_transfer_function(out_blue_tf, tf_blue);
+      break;
+  }
+}
+
+void Picture::dump_transfer_function(string out_path, vector<int16_t> *data) {
+  ofstream osmulti;
+  uint8_t state = 0;
+  
+  osmulti.open(out_path, ios::out);
+  for (int i = 0; i < data->size(); i++) {
+    if (data->at(i) >= 0 && data->at(i) < 256) {
+      if (state == 0 && data->at(i) >= 0) {
+        state = 1;
+      }
+      
+      osmulti << data->at(i);
+    } else {
+      if (state == 1) {
+        osmulti << 255;
+      } else {
+        osmulti << 0;
+      }
+    }
+    
+    osmulti << "\n";
+  }
+  osmulti.close();
+}
+
 void Picture::prepare_gnuplot_histogram_data(string out_path) {
   string out_gray_pdf = out_path + "_hist_gray_pdf.txt";
   string out_gray_cdf = out_path + "_hist_gray_cdf.txt";
@@ -104,6 +147,15 @@ void Picture::prepare_gnuplot_histogram_data(string path, bool strip_extension) 
     prepare_gnuplot_histogram_data(path.substr(0, dot_position));
   } else {
     prepare_gnuplot_histogram_data(path);
+  }
+}
+
+void Picture::prepare_gnuplot_transfer_function(string path, bool strip_extension) {
+  if (strip_extension) {
+    uint32_t dot_position = (uint32_t) path.find_last_of('.');
+    prepare_gnuplot_transfer_function(path.substr(0, dot_position));
+  } else {
+    prepare_gnuplot_transfer_function(path);
   }
 }
 
@@ -345,29 +397,24 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
   }
 }
 
-void Picture::equalize(uint8_t method) {
-  vector<int16_t>* luteq_gray;
-  vector<int16_t>* luteq_red;
-  vector<int16_t>* luteq_green;
-  vector<int16_t>* luteq_blue;
-  
+void Picture::equalize(uint8_t method) {  
   switch(type) {
     case COLOR_GRAY:
       //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
-      luteq_gray = perform_equalization(CHANNEL_GRAY, method);
+      tf_gray = perform_equalization(CHANNEL_GRAY, method);
       
       if (is_pseudo) {
       } else {
-        remap_histogram_gray(luteq_gray);
+        remap_histogram_gray(tf_gray);
       }
       
       break;
     case COLOR_RGB:
-      luteq_red = perform_equalization(CHANNEL_RED, method);
-      luteq_green = perform_equalization(CHANNEL_GREEN, method);
-      luteq_blue = perform_equalization(CHANNEL_BLUE, method);
+      tf_red = perform_equalization(CHANNEL_RED, method);
+      tf_green = perform_equalization(CHANNEL_GREEN, method);
+      tf_blue = perform_equalization(CHANNEL_BLUE, method);
       
-      remap_histogram_rgb(luteq_red, luteq_green, luteq_blue);
+      remap_histogram_rgb(tf_red, tf_green, tf_blue);
       
       break;
   }
@@ -388,14 +435,6 @@ void Picture::get_nonzero_cdf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   
   for (auto i = 0; i < q->data->size(); i++) {
     auto current_data = q->data->at(i);
-    
-//    if (state == 0 && current_data > 0) {
-//      state = 1;
-//      lo = i;
-//    } else if (state == 1 && current_data == max_cdf) {
-//      hi = i;
-//      state = 2;
-//    }
     
     if (current_data > 0) {
       lo = current_data;

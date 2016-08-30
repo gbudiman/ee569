@@ -27,6 +27,9 @@ public:
   void to_hsl();
   void prepare_gnuplot_histogram_data(std::string);
   void prepare_gnuplot_histogram_data(std::string, bool);
+  void prepare_gnuplot_transfer_function(std::string);
+  void prepare_gnuplot_transfer_function(std::string, bool);
+  
   void equalize(uint8_t);
   void histogram_match_gray(Histogram*);
   
@@ -62,6 +65,8 @@ private:
   
   RgbPixel bilinear_interpolate(float x, float y);
   
+  void dump_transfer_function(std::string, std::vector<int16_t>*);
+  
   std::string path;
   uint32_t dim_x;
   uint32_t dim_y;
@@ -73,6 +78,11 @@ private:
   
   std::vector<std::vector<uint8_t>>* data_gray;
   std::vector<std::vector<uint8_t>>* result_gray;
+  
+  std::vector<int16_t> *tf_gray;
+  std::vector<int16_t> *tf_red;
+  std::vector<int16_t> *tf_green;
+  std::vector<int16_t> *tf_blue;
   
   bool is_pseudo;
 };
