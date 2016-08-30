@@ -21,6 +21,7 @@ void f_1_2_b_histcolor_equalization() {
   s->prepare_gnuplot_histogram_data(path_s, STRIP_EXTENSION);
   
   s->equalize(EQUALIZE_LINEAR);
+  s->prepare_gnuplot_transfer_function(path_s, STRIP_EXTENSION);
   s->write_to_file(path_sza);
   
   s->equalize(EQUALIZE_CDF);
