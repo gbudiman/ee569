@@ -44,3 +44,5 @@ ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_b.raw --out images/P2/
 
 ruby scripts/pic.rb --size 500x332 images/P2/Student_1.raw --out images/P2/Student_1.jpg --gray
 ruby scripts/pic.rb --size 500x332 images/P2/Student_1_matched.raw --out images/P2/Student_1_matched.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Student_2.raw --out images/P2/Student_2.jpg --gray
+ruby scripts/pic.rb --size 500x375 images/P2/Student_2_matched.raw --out images/P2/Student_2_matched.jpg --gray

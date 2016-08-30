@@ -126,6 +126,8 @@ void Histogram::generate_gaussian(uint32_t mu, uint32_t delta, uint32_t dim_x, u
     cdf += data->at(i);
   }
   
-  printf("Unsacled CDF: %f\n", unscaled_cdf);
-  printf("CDF: %d / %d\n", cdf, pixel_count);
+  if (HEAVY_DEBUG) {
+    printf("Unscaled CDF: %f\n", unscaled_cdf);
+    printf("CDF: %d / %d\n", cdf, pixel_count);
+  }
 }

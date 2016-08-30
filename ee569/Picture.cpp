@@ -356,7 +356,6 @@ void Picture::equalize(uint8_t method) {
       //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
       luteq_gray = perform_equalization(CHANNEL_GRAY, method);
       
-      equalization_map_gray = luteq_gray;
       if (is_pseudo) {
       } else {
         remap_histogram_gray(luteq_gray);
@@ -512,98 +511,30 @@ void Picture::remap_histogram_rgb(std::vector<int16_t> *l_r, std::vector<int16_t
   }
 }
 
-vector<vector<uint8_t>>* Picture::invert_table(std::vector<int16_t> *ref) {
-  vector<vector<uint8_t>> *inv = new vector<vector<uint8_t>>(ref->size());
+void Picture::histogram_match_gray(Histogram *ref) {
+  std::vector<int16_t> *luteq = new std::vector<int16_t>();
+  int prev_minima = 0;
   
-  for (int i = 0; i < ref->size(); i++) {
-    auto key = i;
-    auto val = 255 - ref->at(i);
-    
-    inv->at(val).push_back(key);
-  }
-  
-  return inv;
-}
-
-void Picture::histogram_match(std::vector<int16_t> *ref) {
-  printf("Reference histogram\n");
   for (int i = 0; i < 256; i++) {
-    printf("%.3d -> %.3d\n", i, ref->at(i));
-  }
-  
-  printf("Source histogram\n");
-  for (int i = 0; i < 256; i++) {
-    printf("%.3d -> %.3d\n", i, equalization_map_gray->at(i));
-  }
-  
-  result_gray = new vector<vector<uint8_t>>();
-  vector<vector<uint8_t>> *inv = invert_table(ref);
-  vector<uint8_t> *lut = new vector<uint8_t>(256);
-  
-  for (int i = 0; i < hist_gray->data->size(); i++) {
-    auto ori_to_oriql = equalization_map_gray->at(i);
-    
-    if (ori_to_oriql < 0 || ori_to_oriql > 255) {
-      continue;
-    }
-    
-    auto oriql_to_refql = ref->at(ori_to_oriql);
-    int ref = search_closest(inv, oriql_to_refql, i);
-    
-    //printf("%.3d: %.3d | %.3d\n", i, ori_to_oriql, oriql_to_refql);
-    printf("%.3d => %.3d\n", i, ref);
-    lut->at(i) = ref;
-  }
-  
-  for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
-    vector<uint8_t> row_data = *new vector<uint8_t>();
-    
-    for (auto c = r->begin(); c != r->end(); ++c) {
-      row_data.push_back(lut->at(*c));
-    }
-    
-    result_gray->push_back(row_data);
-  }
-}
+    int j = 0;
+    uint32_t cdf_data = cdf_gray->data->at(i);
 
-uint8_t Picture::search_closest(std::vector<std::vector<uint8_t>> *inv, uint8_t seek, uint8_t original_index) {
-  int target = seek;
-  
-  if (inv->at(seek).size() == 0) {
-    // no exact match
-    int member_size = 0;
-    int current_index_search_shift = 1;
-    
-    while (member_size == 0) {
-      if (seek + current_index_search_shift < 256) {
-        member_size = inv->at(seek + current_index_search_shift).size();
-        if (member_size > 0) {
-          target = seek + current_index_search_shift;
-          break;
-        }
-      }
-      
-      if (seek - current_index_search_shift >= 0) {
-        member_size = inv->at(seek - current_index_search_shift).size();
-        if (member_size > 0) {
-          target = seek - current_index_search_shift;
-          break;
-        }
+    for (j = prev_minima; j < 256; j++) {
+      uint32_t ref_data = ref->data->at(j);
+      if (ref_data > cdf_data) {
+        prev_minima = j;
+        break;
       }
     }
-  }
-  
-  int diff = 0xFF;
-  int closest_index = 0;
-  for (int i = 0; i < inv->at(target).size(); i++) {
-    int current_diff = abs(i - original_index);
-    if (current_diff < diff) {
-      diff = current_diff;
-      closest_index = inv->at(target).at(i);
+    
+    if (HEAVY_DEBUG) {
+      printf("%.3d: %.7d | %.7d < %d\n", i, cdf_gray->data->at(i), ref->data->at(i), (uint32_t) prev_minima);
     }
+    
+    luteq->push_back(prev_minima);
   }
   
-  return closest_index;
+  remap_histogram_gray(luteq);
 }
 
 void Picture::write_gray(string out_path) {
