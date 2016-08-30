@@ -16,6 +16,7 @@
 
 class Picture {
 public:
+  Picture();
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -27,6 +28,9 @@ public:
   void prepare_gnuplot_histogram_data(std::string);
   void prepare_gnuplot_histogram_data(std::string, bool);
   void equalize(uint8_t);
+  void histogram_match(std::vector<int16_t>*);
+  
+  void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
   
   Histogram *hist_r;
   Histogram *hist_g;
@@ -37,6 +41,8 @@ public:
   
   Histogram *hist_gray;
   Histogram *cdf_gray;
+  
+  std::vector<int16_t> *equalization_map_gray;
 private:
   void load();
   void load_rgb();
@@ -48,6 +54,7 @@ private:
   void write_hsl(std::string);
   
   void generate_histogram();
+  void generate_cdf_from_histogram(uint8_t);
   
   void get_nonzero_cdf(uint8_t, uint8_t&, uint8_t&);
   void get_nonzero_pmf(uint8_t, uint8_t&, uint8_t&);
@@ -56,6 +63,9 @@ private:
   void remap_histogram_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   RgbPixel bilinear_interpolate(float x, float y);
+  
+  std::vector<std::vector<uint8_t>>* invert_table(std::vector<int16_t>*);
+  uint8_t search_closest(std::vector<std::vector<uint8_t>>*, uint8_t, uint8_t);
   
   std::string path;
   uint32_t dim_x;
@@ -68,6 +78,8 @@ private:
   
   std::vector<std::vector<uint8_t>>* data_gray;
   std::vector<std::vector<uint8_t>>* result_gray;
+  
+  bool is_pseudo;
 };
 
 #endif /* Picture_hpp */

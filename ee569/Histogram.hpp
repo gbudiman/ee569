@@ -20,6 +20,8 @@ public:
   void plot();
   void plot(uint8_t);
   
+  void generate_gaussian(uint32_t, uint32_t, uint32_t, uint32_t);
+  
   std::vector<uint32_t> *data;
 };
 

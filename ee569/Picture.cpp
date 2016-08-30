@@ -9,7 +9,12 @@
 #include "Picture.hpp"
 using namespace std;
 
+Picture::Picture() {
+  is_pseudo = true;
+}
+
 Picture::Picture(string _path, uint32_t _dim_x, uint32_t _dim_y, uint32_t _type) {
+  is_pseudo = false;
   path = _path;
   dim_x = _dim_x;
   dim_y = _dim_y;
@@ -106,6 +111,44 @@ void Picture::load() {
   switch(type) {
     case COLOR_RGB: load_rgb(); break;
     case COLOR_GRAY: load_gray(); break;
+  }
+}
+
+void Picture::assign_histogram(Histogram *h, uint8_t hist_type, uint32_t x, uint32_t y) {
+  type = hist_type;
+  dim_x = x;
+  dim_y = y;
+  switch(hist_type) {
+    case COLOR_GRAY:
+      hist_gray = h;
+      cdf_gray = new Histogram();
+      generate_cdf_from_histogram(CHANNEL_GRAY);
+      break;
+  }
+}
+
+void Picture::generate_cdf_from_histogram(uint8_t channel) {
+  uint32_t cdf = 0;
+  Histogram *multi = hist_gray;
+  Histogram *cdfm = cdf_gray;
+  switch (channel) {
+    case CHANNEL_RED:
+      multi = hist_r;
+      cdfm = cdf_r;
+      break;
+    case CHANNEL_GREEN:
+      multi = hist_g;
+      cdfm = cdf_g;
+      break;
+    case CHANNEL_BLUE:
+      multi = hist_b;
+      cdfm = cdf_b;
+      break;
+  }
+  
+  for (auto i = 0; i != multi->data->size(); i++) {
+    cdf += multi->data->at(i);
+    cdfm->data->at(i) = cdf;
   }
 }
 
@@ -312,7 +355,12 @@ void Picture::equalize(uint8_t method) {
     case COLOR_GRAY:
       //get_nonzero_cdf(CHANNEL_GRAY, nzcdf_gray_lo, nzcdf_gray_hi);
       luteq_gray = perform_equalization(CHANNEL_GRAY, method);
-      remap_histogram_gray(luteq_gray);
+      
+      equalization_map_gray = luteq_gray;
+      if (is_pseudo) {
+      } else {
+        remap_histogram_gray(luteq_gray);
+      }
       
       break;
     case COLOR_RGB:
@@ -403,8 +451,10 @@ std::vector<int16_t>* Picture::perform_equalization(uint8_t channel, uint8_t met
   if (method == EQUALIZE_CDF) {
     get_nonzero_cdf(channel, nzcdf_lo, nzcdf_hi);
     for (int i = 0; i < 256; i++) {
+      uint16_t res = 0;
       //uint32_t res = ((float) (cdf_gray->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
-      int16_t res = (int16_t) ((float) (multi->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
+      
+      res = (int16_t) ((float) (multi->data->at(i) - nzcdf_lo) / (float) (dim_x * dim_y - nzcdf_lo) * (256 - 2)) + 1;
       eqlz_map->at(i) = res;
     }
   } else if (method == EQUALIZE_LINEAR) {
@@ -460,6 +510,100 @@ void Picture::remap_histogram_rgb(std::vector<int16_t> *l_r, std::vector<int16_t
     
     result->push_back(row_data);
   }
+}
+
+vector<vector<uint8_t>>* Picture::invert_table(std::vector<int16_t> *ref) {
+  vector<vector<uint8_t>> *inv = new vector<vector<uint8_t>>(ref->size());
+  
+  for (int i = 0; i < ref->size(); i++) {
+    auto key = i;
+    auto val = 255 - ref->at(i);
+    
+    inv->at(val).push_back(key);
+  }
+  
+  return inv;
+}
+
+void Picture::histogram_match(std::vector<int16_t> *ref) {
+  printf("Reference histogram\n");
+  for (int i = 0; i < 256; i++) {
+    printf("%.3d -> %.3d\n", i, ref->at(i));
+  }
+  
+  printf("Source histogram\n");
+  for (int i = 0; i < 256; i++) {
+    printf("%.3d -> %.3d\n", i, equalization_map_gray->at(i));
+  }
+  
+  result_gray = new vector<vector<uint8_t>>();
+  vector<vector<uint8_t>> *inv = invert_table(ref);
+  vector<uint8_t> *lut = new vector<uint8_t>(256);
+  
+  for (int i = 0; i < hist_gray->data->size(); i++) {
+    auto ori_to_oriql = equalization_map_gray->at(i);
+    
+    if (ori_to_oriql < 0 || ori_to_oriql > 255) {
+      continue;
+    }
+    
+    auto oriql_to_refql = ref->at(ori_to_oriql);
+    int ref = search_closest(inv, oriql_to_refql, i);
+    
+    //printf("%.3d: %.3d | %.3d\n", i, ori_to_oriql, oriql_to_refql);
+    printf("%.3d => %.3d\n", i, ref);
+    lut->at(i) = ref;
+  }
+  
+  for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
+    vector<uint8_t> row_data = *new vector<uint8_t>();
+    
+    for (auto c = r->begin(); c != r->end(); ++c) {
+      row_data.push_back(lut->at(*c));
+    }
+    
+    result_gray->push_back(row_data);
+  }
+}
+
+uint8_t Picture::search_closest(std::vector<std::vector<uint8_t>> *inv, uint8_t seek, uint8_t original_index) {
+  int target = seek;
+  
+  if (inv->at(seek).size() == 0) {
+    // no exact match
+    int member_size = 0;
+    int current_index_search_shift = 1;
+    
+    while (member_size == 0) {
+      if (seek + current_index_search_shift < 256) {
+        member_size = inv->at(seek + current_index_search_shift).size();
+        if (member_size > 0) {
+          target = seek + current_index_search_shift;
+          break;
+        }
+      }
+      
+      if (seek - current_index_search_shift >= 0) {
+        member_size = inv->at(seek - current_index_search_shift).size();
+        if (member_size > 0) {
+          target = seek - current_index_search_shift;
+          break;
+        }
+      }
+    }
+  }
+  
+  int diff = 0xFF;
+  int closest_index = 0;
+  for (int i = 0; i < inv->at(target).size(); i++) {
+    int current_diff = abs(i - original_index);
+    if (current_diff < diff) {
+      diff = current_diff;
+      closest_index = inv->at(target).at(i);
+    }
+  }
+  
+  return closest_index;
 }
 
 void Picture::write_gray(string out_path) {

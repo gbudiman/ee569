@@ -7,6 +7,7 @@
 //
 
 #include "Histogram.hpp"
+using namespace std;
 
 Histogram::Histogram() {
   data = new std::vector<uint32_t>();
@@ -95,4 +96,36 @@ void Histogram::plot(uint8_t bucket_size) {
   }
   
   printf("\n");
+}
+
+void Histogram::generate_gaussian(uint32_t mu, uint32_t delta, uint32_t dim_x, uint32_t dim_y) {
+  const float pi = 3.1415927;
+  const uint32_t pixel_count = dim_x * dim_y;
+  vector<float> *unscaled = new vector<float>(256);
+  float peak = 0;
+  float unscaled_cdf = 0;
+  uint32_t cdf = 0;
+  
+  for (uint32_t i = 0; i < 256; i++) {
+    float t1 = 1.0f / sqrt(2 * pi * delta);
+    float t2_up = pow(((int32_t) i - (int32_t) mu), 2.0);
+    float t2_bot = 2 * pow(delta, 2);
+    float t2 = t2_up / t2_bot;
+    float t = t1 * exp(-t2);
+    
+    if (t > peak) {
+      peak = t;
+    }
+    
+    unscaled->at(i) = t;
+    unscaled_cdf += t;
+  }
+  
+  for (int i = 0; i < unscaled->size(); i++) {
+    data->at(i) = round(unscaled->at(i) / unscaled_cdf * pixel_count);
+    cdf += data->at(i);
+  }
+  
+  printf("Unsacled CDF: %f\n", unscaled_cdf);
+  printf("CDF: %d / %d\n", cdf, pixel_count);
 }

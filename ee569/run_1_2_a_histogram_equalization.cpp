@@ -47,5 +47,4 @@ void f_1_2_a_histogram_equalization() {
   bd_b->prepare_gnuplot_histogram_data(path_bd_b, STRIP_EXTENSION);
   bb_a->prepare_gnuplot_histogram_data(path_bb_a, STRIP_EXTENSION);
   bb_b->prepare_gnuplot_histogram_data(path_bb_b, STRIP_EXTENSION);
-  
 }

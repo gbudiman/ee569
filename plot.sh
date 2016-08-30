@@ -4,9 +4,11 @@ gnuplot scripts/1_2_beach_equalized.gs > plots/1_2_beach_equalized.gif
 gnuplot scripts/1_2_skyline.gs > plots/1_2_skyline.gif
 gnuplot scripts/1_2_skyline_linear_eq.gs > plots/1_2_skyline_linear_eq.gif
 gnuplot scripts/1_2_skyline_equalized.gs > plots/1_2_skyline_equalized.gif
+gnuplot scripts/1_4_gaussian.gs > plots/1_4_gaussian.gif
 open -a Preview plots/1_2_beach.gif
 open -a Preview plots/1_2_beach_linear_eq.gif
 open -a Preview plots/1_2_beach_equalized.gif
 open -a Preview plots/1_2_skyline.gif
 open -a Preview plots/1_2_skyline_linear_eq.gif
 open -a Preview plots/1_2_skyline_equalized.gif
+open -a Preview plots/1_4_gaussian.gif
