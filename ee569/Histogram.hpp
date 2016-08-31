@@ -19,6 +19,7 @@ public:
   void debug();
   void plot();
   void plot(uint8_t);
+  void rescale(float);
   
   void generate_gaussian(uint32_t, uint32_t, uint32_t, uint32_t);
   

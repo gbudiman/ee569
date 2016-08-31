@@ -32,6 +32,7 @@ public:
   
   void equalize(uint8_t);
   void histogram_match_gray(Histogram*);
+  void histogram_match_rgb(Histogram*, Histogram*, Histogram*);
   
   void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);

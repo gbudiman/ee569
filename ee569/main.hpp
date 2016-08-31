@@ -42,4 +42,8 @@
 
 #define STRIP_EXTENSION true
 
+#define SFX_CURVING 0
+#define SFX_MATCHING_PREVIOUS 1
+#define SFX_MATCHING_FORMULA 2
+
 #endif /* main_h */

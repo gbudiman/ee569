@@ -131,3 +131,11 @@ void Histogram::generate_gaussian(uint32_t mu, uint32_t delta, uint32_t dim_x, u
     printf("CDF: %d / %d\n", cdf, pixel_count);
   }
 }
+
+void Histogram::rescale(float scale) {
+  uint32_t cdf = 0;
+  for (int i = 0; i < data->size(); i++) {
+    uint32_t rescaled_value = data->at(i) * scale;
+    data->at(i) = rescaled_value;
+  }
+}

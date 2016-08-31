@@ -28,12 +28,13 @@ void f_1_2_d_histogram_transform() {
   Picture *s1 = new Picture(path_s1, 500, 332, COLOR_GRAY);
   Picture *s2 = new Picture(path_s2, 500, 375, COLOR_GRAY);
   
-  pseudo1->assign_histogram(h1, COLOR_GRAY, 500, 332);
+  pseudo1->assign_histogram(h1, CHANNEL_GRAY, 500, 332);
   pseudo1->prepare_gnuplot_histogram_data(path_gaussian_1, STRIP_EXTENSION);
   pseudo1->equalize(EQUALIZE_CDF);
 
-  pseudo2->assign_histogram(h2, COLOR_GRAY, 500, 375);
+  pseudo2->assign_histogram(h2, CHANNEL_GRAY, 500, 375);
   pseudo2->prepare_gnuplot_histogram_data(path_gaussian_2, STRIP_EXTENSION);
+  pseudo2->equalize(EQUALIZE_CDF);
   
   s1->prepare_gnuplot_histogram_data(path_s1, STRIP_EXTENSION);
   s2->prepare_gnuplot_histogram_data(path_s2, STRIP_EXTENSION);

@@ -167,14 +167,35 @@ void Picture::load() {
 }
 
 void Picture::assign_histogram(Histogram *h, uint8_t hist_type, uint32_t x, uint32_t y) {
-  type = hist_type;
+  if (hist_type == CHANNEL_GRAY) {
+    type = COLOR_GRAY;
+  } else {
+    type = COLOR_RGB;
+  }
+  
   dim_x = x;
   dim_y = y;
+  
   switch(hist_type) {
-    case COLOR_GRAY:
+    case CHANNEL_GRAY:
       hist_gray = h;
       cdf_gray = new Histogram();
       generate_cdf_from_histogram(CHANNEL_GRAY);
+      break;
+    case CHANNEL_RED:
+      hist_r = h;
+      cdf_r = new Histogram();
+      generate_cdf_from_histogram(CHANNEL_RED);
+      break;
+    case CHANNEL_GREEN:
+      hist_g = h;
+      cdf_g = new Histogram();
+      generate_cdf_from_histogram(CHANNEL_GREEN);
+      break;
+    case CHANNEL_BLUE:
+      hist_b = h;
+      cdf_b = new Histogram();
+      generate_cdf_from_histogram(CHANNEL_BLUE);
       break;
   }
 }
@@ -414,7 +435,10 @@ void Picture::equalize(uint8_t method) {
       tf_green = perform_equalization(CHANNEL_GREEN, method);
       tf_blue = perform_equalization(CHANNEL_BLUE, method);
       
-      remap_histogram_rgb(tf_red, tf_green, tf_blue);
+      if (is_pseudo) {
+      } else {
+        remap_histogram_rgb(tf_red, tf_green, tf_blue);
+      }
       
       break;
   }
@@ -582,6 +606,64 @@ void Picture::histogram_match_gray(Histogram *ref) {
   }
   
   remap_histogram_gray(luteq);
+}
+
+void Picture::histogram_match_rgb(Histogram *rr, Histogram *rg, Histogram *rb) {
+  std::vector<int16_t> *luteq_r = new std::vector<int16_t>();
+  std::vector<int16_t> *luteq_g = new std::vector<int16_t>();
+  std::vector<int16_t> *luteq_b = new std::vector<int16_t>();
+  
+  int prev_minima;
+  
+  prev_minima = 0;
+  for (int i = 0; i < 256; i++) {
+    int j = 0;
+    uint32_t cdf_data = cdf_r->data->at(i);
+    
+    for (j = prev_minima; j < 256; j++) {
+      uint32_t ref_data = rr->data->at(j);
+      if (ref_data > cdf_data) {
+        prev_minima = j;
+        break;
+      }
+    }
+    
+    luteq_r->push_back(prev_minima);
+  }
+  
+  prev_minima = 0;
+  for (int i = 0; i < 256; i++) {
+    int j = 0;
+    uint32_t cdf_data = cdf_g->data->at(i);
+    
+    for (j = prev_minima; j < 256; j++) {
+      uint32_t ref_data = rg->data->at(j);
+      if (ref_data > cdf_data) {
+        prev_minima = j;
+        break;
+      }
+    }
+    
+    luteq_g->push_back(prev_minima);
+  }
+  
+  prev_minima = 0;
+  for (int i = 0; i < 256; i++) {
+    int j = 0;
+    uint32_t cdf_data = cdf_b->data->at(i);
+    
+    for (j = prev_minima; j < 256; j++) {
+      uint32_t ref_data = rb->data->at(j);
+      if (ref_data > cdf_data) {
+        prev_minima = j;
+        break;
+      }
+    }
+    
+    luteq_b->push_back(prev_minima);
+  }
+  
+  remap_histogram_rgb(luteq_r, luteq_g, luteq_b);
 }
 
 void Picture::write_gray(string out_path) {
