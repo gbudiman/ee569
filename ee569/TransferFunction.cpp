@@ -9,22 +9,26 @@
 #include "TransferFunction.hpp"
 using namespace std;
 
-TransferFunction::TransferFunction(string _path, Picture *_a, Picture *_b, uint8_t _type) {
-  a = _a;
-  b = _b;
-  path = _path;
-  type = _type;
+TransferFunction::TransferFunction() {
+  initialize(256);
 }
 
-void TransferFunction::prepare_gnu_plot() {
-  switch (type) {
-    case COLOR_GRAY:
-      generate_transfer_function_gray();
+TransferFunction::TransferFunction(uint32_t bin_size) {
+  initialize(bin_size);
+}
+
+void TransferFunction::initialize(uint32_t bin_size) {
+  data = new vector<int16_t>(bin_size);
+  
+  for (uint32_t i = 0; i < bin_size; i++) {
+    data->at(i) = -1;
   }
 }
 
-void TransferFunction::generate_transfer_function_gray() {
-  for (int i = 0; i < a->hist_gray->data->size(); i++) {
-    printf("(%d) %d -> %d\n", i, a->hist_gray->data->at(i), b->hist_gray->data->at(i));
+void TransferFunction::generate_linear(int a, int b, int x, int y) {
+  float gradient = (float) (y - b) / (float) (x - a);
+  
+  for (int i = a; i <= x; i++) {
+    data->at(i) = b + (i - a) * gradient;
   }
 }

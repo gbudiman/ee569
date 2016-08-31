@@ -14,20 +14,13 @@
 
 class TransferFunction {
 public:
-  TransferFunction(std::string path, Picture*, Picture*, uint8_t);
-  void prepare_gnu_plot();
+  TransferFunction();
+  TransferFunction(uint32_t);
+  void generate_linear(int, int, int, int);
+  
+  std::vector<int16_t> *data;
 private:
-  void generate_transfer_function_gray();
-  
-  std::vector<float> *tf_gray;
-  std::vector<float> *tf_red;
-  std::vector<float> *tf_green;
-  std::vector<float> *tf_blue;
-  
-  Picture *a;
-  Picture *b;
-  std::string path;
-  uint8_t type;
+  void initialize(uint32_t);
 };
 
 #endif /* TransferFunction_hpp */

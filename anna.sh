@@ -42,6 +42,11 @@ ruby scripts/pic.rb --size 600x400 images/P2/Skyline.raw --out images/P2/Skyline
 ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_a.raw --out images/P2/Skyline_eqlz_a.jpg
 ruby scripts/pic.rb --size 600x400 images/P2/Skyline_eqlz_b.raw --out images/P2/Skyline_eqlz_b.jpg
 
+ruby scripts/pic.rb --size 450x300 images/P2/Trojan.raw --out images/P2/Trojan.jpg
+ruby scripts/pic.rb --size 450x300 images/P2/Trojan_sfx.raw --out images/P2/Trojan_sfx.jpg
+ruby scripts/pic.rb --size 259x194 images/P2/Park.raw --out images/P2/Park.jpg
+ruby scripts/pic.rb --size 259x194 images/P2/Park_sfx.raw --out images/P2/Park_sfx.jpg
+
 ruby scripts/pic.rb --size 500x332 images/P2/Student_1.raw --out images/P2/Student_1.jpg --gray
 ruby scripts/pic.rb --size 500x332 images/P2/Student_1_matched.raw --out images/P2/Student_1_matched.jpg --gray
 ruby scripts/pic.rb --size 500x375 images/P2/Student_2.raw --out images/P2/Student_2.jpg --gray

@@ -514,6 +514,14 @@ std::vector<int16_t>* Picture::perform_equalization(uint8_t channel, uint8_t met
   return eqlz_map;
 }
 
+void Picture::apply_transfer_function_rgb(vector<int16_t> *l_r, vector<int16_t> *l_g, vector<int16_t> *l_b) {
+  tf_red = l_r;
+  tf_green = l_g;
+  tf_blue = l_b;
+  
+  remap_histogram_rgb(tf_red, tf_green, tf_blue);
+}
+
 void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
   result_gray = new vector<vector<uint8_t>>();
   

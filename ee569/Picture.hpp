@@ -34,6 +34,7 @@ public:
   void histogram_match_gray(Histogram*);
   
   void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
+  void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   Histogram *hist_r;
   Histogram *hist_g;

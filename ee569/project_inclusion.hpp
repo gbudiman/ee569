@@ -15,6 +15,7 @@ void f_1_1_b_cmyk();
 void f_1_1_b_hsl();
 void f_1_2_a_histogram_equalization();
 void f_1_2_b_histcolor_equalization();
+void f_1_2_c_sfx();
 void f_1_2_d_histogram_transform();
 
 #endif /* project_inclusion_h */

@@ -27,6 +27,7 @@ runs:
 	$(CC) -c run_1_1_b_hsl.cpp
 	$(CC) -c run_1_2_a_histogram_equalization.cpp
 	$(CC) -c run_1_2_b_histcolor_equalization.cpp
+	$(CC) -c run_1_2_c_sfx.cpp
 	$(CC) -c run_1_2_d_histogram_transform.cpp
 
 clean:

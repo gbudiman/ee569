@@ -11,7 +11,7 @@
 using namespace std;
 
 int main() {
-  int debug = 5;
+  int debug = 6;
 
   switch(debug) {
     case 0: f_1_1_a_cropping(); break;
@@ -20,6 +20,7 @@ int main() {
     case 3: f_1_1_b_hsl(); break;
     case 4: f_1_2_a_histogram_equalization(); break;
     case 5: f_1_2_b_histcolor_equalization(); break;
+    case 6: f_1_2_c_sfx(); break;
     case 7: f_1_2_d_histogram_transform(); break;
   }
   
