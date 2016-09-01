@@ -19,5 +19,5 @@ plot "images/P2/Skyline_hist_red_pdf.txt" smooth freq with boxes lt rgb "#FF0000
 set title "Skyline Ref - Green"
 plot "images/P2/Skyline_hist_green_pdf.txt" smooth freq with boxes lt rgb "#00FF00" axes x1y1
 
-set title "Trojan Ref - Blue"
+set title "Skyline Ref - Blue"
 plot "images/P2/Skyline_hist_blue_pdf.txt" smooth freq with boxes lt rgb "#0000FF" axes x1y1
