@@ -44,6 +44,7 @@ void Psnr::compute() {
       psnr_green = 10 * log10(MAX_SQUARED / mse_sum_green);
       psnr_blue = 10 * log10(MAX_SQUARED / mse_sum_blue);
       
+      printf("PSNR R: %.3f G: %.3f B: %.3f\n", psnr_red, psnr_green, psnr_blue);
       break;
   }
   

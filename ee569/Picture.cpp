@@ -528,7 +528,7 @@ void Picture::get_nonzero_pmf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   }
 }
 
-RgbPixel* Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c) {
+RgbPixel* Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask) {
   vector<vector<RgbPixel>*> *kernel = new vector<vector<RgbPixel>*>();
   int pos_r = 0;
   int pos_c = 0;
@@ -578,9 +578,9 @@ RgbPixel* Picture::create_kernel_and_overwrite_median(int kernel_size, int cente
   sort(flattened_g->begin(), flattened_g->begin() + pow(kernel_size, 2));
   sort(flattened_b->begin(), flattened_b->begin() + pow(kernel_size, 2));
   
-  uint8_t medianed_r = flattened_r->at(kernel_size / 2);
-  uint8_t medianed_g = flattened_g->at(kernel_size / 2);
-  uint8_t medianed_b = flattened_b->at(kernel_size / 2);
+  uint8_t medianed_r = ((channel_mask & FILTER_RED) == FILTER_RED) ? flattened_r->at(kernel_size / 2) : data->at(center_r)->at(center_c).r;
+  uint8_t medianed_g = ((channel_mask & FILTER_GREEN) == FILTER_GREEN) ? flattened_g->at(kernel_size / 2) : data->at(center_r)->at(center_c).g;
+  uint8_t medianed_b = ((channel_mask & FILTER_BLUE) == FILTER_BLUE) ? flattened_b->at(kernel_size / 2) : data->at(center_r)->at(center_c).b;
   RgbPixel *medianed = new RgbPixel(medianed_r, medianed_g, medianed_b);
   
   return medianed;
@@ -655,7 +655,7 @@ void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
   }
 }
 
-void Picture::apply_median_filter(uint32_t filter_size) {
+void Picture::apply_median_filter(uint32_t filter_size, uint32_t channel_mask) {
   result = new vector<vector<RgbPixel>*>();
   
   for (uint32_t r = 0; r < dim_y; r++) {
@@ -663,7 +663,7 @@ void Picture::apply_median_filter(uint32_t filter_size) {
 
     for (uint32_t c = 0; c < dim_x; c++) {
       //cout << r << ", " << c << "\n";
-      row_data->push_back(*create_kernel_and_overwrite_median(filter_size, r, c));
+      row_data->push_back(*create_kernel_and_overwrite_median(filter_size, r, c, channel_mask));
     }
     
     result->push_back(row_data);

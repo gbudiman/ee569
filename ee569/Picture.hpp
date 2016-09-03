@@ -38,7 +38,7 @@ public:
   void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
-  void apply_median_filter(uint32_t);
+  void apply_median_filter(uint32_t, uint32_t);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -76,7 +76,7 @@ private:
   
   RgbPixel bilinear_interpolate(float x, float y);
   
-  RgbPixel* create_kernel_and_overwrite_median(int, int, int);
+  RgbPixel* create_kernel_and_overwrite_median(int, int, int, uint32_t);
   
   void dump_transfer_function(std::string, std::vector<int16_t>*);
   

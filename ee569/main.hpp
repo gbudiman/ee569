@@ -47,6 +47,9 @@
 #define SFX_MATCHING_FORMULA 2
 
 #define MAX_SQUARED pow(255, 2)
+#define FILTER_RED 0x1
+#define FILTER_GREEN 0x10
+#define FILTER_BLUE 0x100
 
 #define RUN_ALL false
 

@@ -62,3 +62,4 @@ ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out im
 ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
 ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
 ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
