@@ -46,6 +46,6 @@
 #define SFX_MATCHING_PREVIOUS 1
 #define SFX_MATCHING_FORMULA 2
 
-#define RUN_ALL true
+#define RUN_ALL false
 
 #endif /* main_h */

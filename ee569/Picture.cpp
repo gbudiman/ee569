@@ -856,3 +856,19 @@ void Picture::load_gray() {
     byte_counter++;
   }
 }
+
+uint32_t Picture::get_dim_x() {
+  return dim_x;
+}
+
+uint32_t Picture::get_dim_y() {
+  return dim_y;
+}
+
+uint32_t Picture::get_type() {
+  return type;
+}
+
+vector<vector<RgbPixel>*>* Picture::get_rgb_data() {
+  return data;
+}

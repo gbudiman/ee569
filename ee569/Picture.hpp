@@ -37,6 +37,11 @@ public:
   void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
+  uint32_t get_dim_x();
+  uint32_t get_dim_y();
+  uint32_t get_type();
+  std::vector<std::vector<RgbPixel>*>* get_rgb_data();
+  
   Histogram *hist_r;
   Histogram *hist_g;
   Histogram *hist_b;
