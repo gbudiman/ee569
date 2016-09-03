@@ -1,5 +1,5 @@
 CC=g++-6
-all: picture rgbpixel cmykpixel hslpixel histogram tfh runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel runs
 	$(CC) *.o main.cpp -o main
 
 picture:
@@ -20,6 +20,12 @@ histogram:
 tfh:
 	$(CC) -c TransferFunction.cpp
 
+psnr:
+	$(CC) -c Psnr.cpp
+
+kernel:
+	$(CC) -c Kernel.cpp
+
 runs:
 	$(CC) -c run_1_1_a_cropping.cpp
 	$(CC) -c run_1_1_a_resizing.cpp
@@ -29,6 +35,7 @@ runs:
 	$(CC) -c run_1_2_b_histcolor_equalization.cpp
 	$(CC) -c run_1_2_c_sfx.cpp
 	$(CC) -c run_1_2_d_histogram_transform.cpp
+	$(CC) -c run_1_3_a_median_filtering.cpp
 
 clean:
 	rm *.o main

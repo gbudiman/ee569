@@ -20,6 +20,7 @@ public:
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
+  void write_separate_rgb_channel(std::string);
   void crop(uint32_t, uint32_t, uint32_t, uint32_t);
   void resize(uint32_t, uint32_t);
 
@@ -36,6 +37,8 @@ public:
   
   void assign_histogram(Histogram*, uint8_t, uint32_t, uint32_t);
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
+  
+  void apply_median_filter(uint32_t);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -57,6 +60,7 @@ private:
   void load_gray();
   
   void write_gray(std::string);
+  void write_gray(std::string, std::vector<std::vector<uint8_t>*>*);
   void write_rgb(std::string);
   void write_cmyk(std::string);
   void write_hsl(std::string);
@@ -71,6 +75,8 @@ private:
   void remap_histogram_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   RgbPixel bilinear_interpolate(float x, float y);
+  
+  RgbPixel* create_kernel_and_overwrite_median(int, int, int);
   
   void dump_transfer_function(std::string, std::vector<int16_t>*);
   

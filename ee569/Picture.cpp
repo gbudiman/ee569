@@ -42,6 +42,41 @@ void Picture::write_to_file(string _path, bool strip_extension) {
   }
 }
 
+void Picture::write_separate_rgb_channel(string _path) {
+  if (type != COLOR_RGB) {
+    cout << "ERROR: RGB channel separation can only be done on COLOR_RGB Picture" << "\n";
+  }
+  
+  uint32_t dot_position = (uint32_t) _path.find_last_of('.');
+  string base_path = _path.substr(0, dot_position);
+  string out_red = base_path + "_channel_red.raw";
+  string out_green = base_path + "_channel_green.raw";
+  string out_blue = base_path + "_channel_blue.raw";
+  vector<vector<uint8_t>*>* split_red = new vector<vector<uint8_t>*>();
+  vector<vector<uint8_t>*>* split_green = new vector<vector<uint8_t>*>();
+  vector<vector<uint8_t>*>* split_blue = new vector<vector<uint8_t>*>();
+  
+  for (uint32_t r = 0; r < data->size(); r++) {
+    vector<uint8_t> *row_data_red = new vector<uint8_t>();
+    vector<uint8_t> *row_data_green = new vector<uint8_t>();
+    vector<uint8_t> *row_data_blue = new vector<uint8_t>();
+    
+    for (uint32_t c = 0; c < data->at(r)->size(); c++) {
+      row_data_red->push_back(data->at(r)->at(c).r);
+      row_data_green->push_back(data->at(r)->at(c).g);
+      row_data_blue->push_back(data->at(r)->at(c).b);
+    }
+    
+    split_red->push_back(row_data_red);
+    split_green->push_back(row_data_green);
+    split_blue->push_back(row_data_blue);
+  }
+  
+  write_gray(out_red, split_red);
+  write_gray(out_green, split_green);
+  write_gray(out_blue, split_blue);
+}
+
 void Picture::prepare_gnuplot_transfer_function(string out_path) {
   string out_gray_tf = out_path + "_tf_gray.txt";
   string out_red_tf = out_path + "_tf_red.txt";
@@ -493,6 +528,64 @@ void Picture::get_nonzero_pmf(uint8_t channel, uint8_t &lo, uint8_t &hi) {
   }
 }
 
+RgbPixel* Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c) {
+  vector<vector<RgbPixel>*> *kernel = new vector<vector<RgbPixel>*>();
+  int pos_r = 0;
+  int pos_c = 0;
+  
+  int x_spread = (int) dim_x;
+  int y_spread = (int) dim_y;
+  
+  for (int r = center_r - kernel_size/2; r <= center_r + kernel_size/2; r++) {
+    vector<RgbPixel> *row_data = new vector<RgbPixel>();
+    if (r >= y_spread) {
+      uint32_t y_limit = y_spread - 1;
+      uint32_t overshoot = r - y_limit;
+      pos_r = y_limit - overshoot;
+    } else {
+      pos_r = abs(r);
+    }
+    
+    for (int c = center_c - kernel_size/2; c <= center_c + kernel_size/2; c++) {
+      if (c >= x_spread) {
+        uint32_t x_limit = x_spread - 1;
+        uint32_t overshoot = c - x_limit;
+        pos_c = x_limit - overshoot;
+      } else {
+        pos_c = abs(c);
+      }
+      
+      //cout << "== " << pos_r << ", " << pos_c << "\n";
+      row_data->push_back(data->at(pos_r)->at(pos_c));
+    }
+    
+    kernel->push_back(row_data);
+  }
+  
+  vector<uint8_t> *flattened_r = new vector<uint8_t>();
+  vector<uint8_t> *flattened_g = new vector<uint8_t>();
+  vector<uint8_t> *flattened_b = new vector<uint8_t>();
+  
+  for (auto i = 0; i < kernel->size(); i++) {
+    for (auto j = 0; j < kernel->at(i)->size(); j++) {
+      flattened_r->push_back(kernel->at(i)->at(j).r);
+      flattened_g->push_back(kernel->at(i)->at(j).g);
+      flattened_b->push_back(kernel->at(i)->at(j).b);
+    }
+  }
+  
+  sort(flattened_r->begin(), flattened_r->begin() + pow(kernel_size, 2));
+  sort(flattened_g->begin(), flattened_g->begin() + pow(kernel_size, 2));
+  sort(flattened_b->begin(), flattened_b->begin() + pow(kernel_size, 2));
+  
+  uint8_t medianed_r = flattened_r->at(kernel_size / 2);
+  uint8_t medianed_g = flattened_g->at(kernel_size / 2);
+  uint8_t medianed_b = flattened_b->at(kernel_size / 2);
+  RgbPixel *medianed = new RgbPixel(medianed_r, medianed_g, medianed_b);
+  
+  return medianed;
+}
+
 std::vector<int16_t>* Picture::perform_equalization(uint8_t channel, uint8_t method) {
   std::vector<int16_t> *eqlz_map = new std::vector<int16_t>(256);
   uint8_t nzcdf_lo, nzcdf_hi = 0;
@@ -559,6 +652,21 @@ void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
     }
     
     result_gray->push_back(row_data);
+  }
+}
+
+void Picture::apply_median_filter(uint32_t filter_size) {
+  result = new vector<vector<RgbPixel>*>();
+  
+  for (uint32_t r = 0; r < dim_y; r++) {
+    vector<RgbPixel> *row_data = new vector<RgbPixel>();
+
+    for (uint32_t c = 0; c < dim_x; c++) {
+      //cout << r << ", " << c << "\n";
+      row_data->push_back(*create_kernel_and_overwrite_median(filter_size, r, c));
+    }
+    
+    result->push_back(row_data);
   }
 }
 
@@ -680,6 +788,24 @@ void Picture::write_gray(string out_path) {
     }
   }
 
+  out.close();
+  
+  cout << "File written to " << out_path << "\n";
+}
+
+void Picture::write_gray(string out_path, vector<vector<uint8_t>*> *in) {
+  ofstream out;
+  out.open(out_path, ios::out | ios::binary);
+  
+  for (auto r = 0; r < in->size(); r++) {
+    vector<uint8_t> *row_data = in->at(r);
+    
+    for (auto c = 0; c < row_data->size(); c++) {
+      uint8_t byte = row_data->at(c);
+      out.write((char*) &byte, sizeof(uint8_t));
+    }
+  }
+  
   out.close();
   
   cout << "File written to " << out_path << "\n";
