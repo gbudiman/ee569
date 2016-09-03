@@ -17,6 +17,10 @@ class Psnr {
 public:
   Psnr(Picture*, Picture*);
   void compute();
+  
+  float psnr_red;
+  float psnr_green;
+  float psnr_blue;
 private:
   Picture *a;
   Picture *b;

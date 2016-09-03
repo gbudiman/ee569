@@ -35,10 +35,17 @@ void Psnr::compute() {
           mse_sum_blue += pow((pixel_a.b - pixel_b.b), 2);
         }
       }
+      
+      mse_sum_red = mse_sum_red / (dim_x * dim_y);
+      mse_sum_green = mse_sum_green / (dim_x * dim_y);
+      mse_sum_blue = mse_sum_blue / (dim_x * dim_y);
+      
+      psnr_red = 10 * log10(MAX_SQUARED / mse_sum_red);
+      psnr_green = 10 * log10(MAX_SQUARED / mse_sum_green);
+      psnr_blue = 10 * log10(MAX_SQUARED / mse_sum_blue);
+      
       break;
   }
   
-  mse_sum_red = mse_sum_red / (dim_x * dim_y);
-  mse_sum_green = mse_sum_green / (dim_x * dim_y);
-  mse_sum_blue = mse_sum_blue / (dim_x * dim_y);
+  
 }

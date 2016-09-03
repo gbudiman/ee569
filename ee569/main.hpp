@@ -46,6 +46,8 @@
 #define SFX_MATCHING_PREVIOUS 1
 #define SFX_MATCHING_FORMULA 2
 
+#define MAX_SQUARED pow(255, 2)
+
 #define RUN_ALL false
 
 #endif /* main_h */
