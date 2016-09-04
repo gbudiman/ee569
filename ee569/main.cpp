@@ -11,7 +11,7 @@
 using namespace std;
 
 int main() {
-  int debug = 8;
+  int debug = 9;
 
   if (RUN_ALL) {
     f_1_1_a_cropping();
@@ -34,6 +34,7 @@ int main() {
       case 6: f_1_2_c_sfx(); break;
       case 7: f_1_2_d_histogram_transform(); break;
       case 8: f_1_3_a_median_filtering(); break;
+      case 9: f_1_3_b_nlm(); break;
     }
   }
   

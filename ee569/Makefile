@@ -1,5 +1,5 @@
 CC=g++-6
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map runs
 	$(CC) *.o main.cpp -o main
 
 picture:
@@ -25,6 +25,9 @@ psnr:
 
 kernel:
 	$(CC) -c Kernel.cpp
+
+patch_map:
+	$(CC) -c PatchMap.cpp
 
 runs:
 	$(CC) -c run_1_1_a_cropping.cpp

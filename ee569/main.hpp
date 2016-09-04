@@ -51,6 +51,9 @@
 #define FILTER_GREEN 0x10
 #define FILTER_BLUE 0x100
 
+#define NLM_H 0.001
+#define NLM_H_SQUARED 2.0 * NLM_H * NLM_H
+
 #define RUN_ALL false
 
 #endif /* main_h */

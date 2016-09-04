@@ -639,6 +639,23 @@ void Picture::apply_transfer_function_rgb(vector<int16_t> *l_r, vector<int16_t> 
   remap_histogram_rgb(tf_red, tf_green, tf_blue);
 }
 
+void Picture::apply_nlm_filter(int search_radius, int patch_radius) {
+  result = new vector<vector<RgbPixel>*>();
+  
+  for (int r = 0; r < dim_y; r++) {
+    vector<RgbPixel>* row_data = new vector<RgbPixel>();
+    
+    printf("Computing row %d\n", r);
+    for (int c = 0; c < dim_x; c++) {
+      
+      PatchMap *pm = new PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
+      row_data->push_back(*pm->result);
+    }
+    
+    result->push_back(row_data);
+  }
+}
+
 void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
   result_gray = new vector<vector<uint8_t>>();
   

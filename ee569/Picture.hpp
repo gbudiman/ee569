@@ -13,6 +13,7 @@
 #include "RgbPixel.hpp"
 #include "CmykPixel.hpp"
 #include "Histogram.hpp"
+#include "PatchMap.hpp"
 
 class Picture {
 public:
@@ -39,6 +40,7 @@ public:
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   void apply_median_filter(uint32_t, uint32_t);
+  void apply_nlm_filter(int, int);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

@@ -56,10 +56,17 @@
 
 ## Part 3
 
-ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
+
+## Part 3B
+
+ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small.raw --out images/P3/Buildings_small.jpg
+ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise.raw --out images/P3/Buildings_small_denoise.jpg
+
+
