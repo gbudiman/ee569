@@ -642,17 +642,54 @@ void Picture::apply_transfer_function_rgb(vector<int16_t> *l_r, vector<int16_t> 
 void Picture::apply_nlm_filter(int search_radius, int patch_radius) {
   result = new vector<vector<RgbPixel>*>();
   
+//  int threads_available = thread::hardware_concurrency();
+//  int work_chunk = dim_y /threads_available;
+//  thread *tt = new thread[threads_available];
+//  vector<vector<RgbPixel>*>* result_thread = new vector<vector<RgbPixel>*>(threads_available);
+//  
+//  printf("%d threads available\n", threads_available);
+//  
+//  for (int t = 0; t < threads_available; t++) {
+//    int lower_limit = t * work_chunk;
+//    int upper_limit = (t + 1) * work_chunk > dim_y ? dim_y : (t + 1) * work_chunk;
+//    
+//    thread (&Picture::threaded_nlm_filter, lower_limit, upper_limit, ref(result_thread->at(t)), t, search_radius, patch_radius);
+//  }
+//  
+//  for (int t = 0; t < threads_available; t++) {
+//    tt[t].join();
+//  }
+//  
+//  printf("All threads joined\n");
+  
+  // non-threading impelemntation
   for (int r = 0; r < dim_y; r++) {
     vector<RgbPixel>* row_data = new vector<RgbPixel>();
     
     printf("Computing row %d\n", r);
     for (int c = 0; c < dim_x; c++) {
       
+      PatchMap pm = PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
+      row_data->push_back(*pm.result);
+    }
+    
+    result->push_back(row_data);
+    //delete row_data;
+  }
+  // end non-threading implementation
+}
+
+void Picture::threaded_nlm_filter(int lower_limit, int upper_limit, vector<vector<RgbPixel>*>* temp, int thread_id, int search_radius, int patch_radius) {
+  for (int r = lower_limit; r < upper_limit; r++) {
+    vector<RgbPixel>* row_data = new vector<RgbPixel>();
+    
+    printf("Thread %d computing row %d\n", thread_id, r);
+    for (int c = 0; c < dim_x; c++) {
       PatchMap *pm = new PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
       row_data->push_back(*pm->result);
     }
     
-    result->push_back(row_data);
+    temp->push_back(row_data);
   }
 }
 

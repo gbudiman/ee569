@@ -20,6 +20,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <thread>
 
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
@@ -51,7 +52,7 @@
 #define FILTER_GREEN 0x10
 #define FILTER_BLUE 0x100
 
-#define NLM_H 0.001
+#define NLM_H 0.001 // 0.001
 #define NLM_H_SQUARED 2.0 * NLM_H * NLM_H
 
 #define RUN_ALL false

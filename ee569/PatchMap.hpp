@@ -18,14 +18,15 @@ class PatchMap {
 public:
   PatchMap(int, int, int, int, int, int, std::vector<std::vector<RgbPixel>*>*);
   std::vector<std::vector<RgbPixel>*>* picture_data;
-  std::vector<PatchCell>* cells;
   int dim_x;
   int dim_y;
   int patch_radius;
   RgbPixel* result;
   
-  std::vector<std::vector<RgbPixel>*>* create_base_patch(int, int);
-  int compute_patch_difference(std::vector<std::vector<RgbPixel>*>*, std::vector<std::vector<RgbPixel>*>*);
+  std::vector<std::vector<RgbPixel>> create_base_patch(int, int);
+  int compute_patch_difference(std::vector<std::vector<RgbPixel>>, std::vector<std::vector<RgbPixel>>);
+  
+  ~PatchMap();
 };
 
 

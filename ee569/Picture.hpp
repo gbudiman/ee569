@@ -80,6 +80,8 @@ private:
   
   RgbPixel* create_kernel_and_overwrite_median(int, int, int, uint32_t);
   
+  void threaded_nlm_filter(int, int, std::vector<std::vector<RgbPixel>*>*, int, int, int);
+  
   void dump_transfer_function(std::string, std::vector<int16_t>*);
   
   std::string path;
