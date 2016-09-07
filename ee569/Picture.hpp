@@ -14,6 +14,7 @@
 #include "CmykPixel.hpp"
 #include "Histogram.hpp"
 #include "PatchMap.hpp"
+#include "Kernel.hpp"
 
 class Picture {
 public:
@@ -40,6 +41,8 @@ public:
   void apply_transfer_function_rgb(std::vector<int16_t>*, std::vector<int16_t>*, std::vector<int16_t>*);
   
   void apply_median_filter(uint32_t, uint32_t);
+  void apply_mean_filter(uint32_t, uint32_t);
+  void apply_gaussian_filter(int, float);
   void apply_nlm_filter(int, int);
   
   uint32_t get_dim_x();
@@ -79,6 +82,9 @@ private:
   RgbPixel bilinear_interpolate(float x, float y);
   
   RgbPixel* create_kernel_and_overwrite_median(int, int, int, uint32_t);
+  RgbPixel* create_kernel_and_overwrite_mean(int, int, int, uint32_t);
+  
+  std::vector<std::vector<uint8_t>> create_patch_matrix(int, int, int, int);
   
   void threaded_nlm_filter(int, int, std::vector<std::vector<RgbPixel>*>*, int, int, int);
   

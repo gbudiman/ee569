@@ -577,14 +577,89 @@ RgbPixel* Picture::create_kernel_and_overwrite_median(int kernel_size, int cente
   sort(flattened_r->begin(), flattened_r->begin() + pow(kernel_size, 2));
   sort(flattened_g->begin(), flattened_g->begin() + pow(kernel_size, 2));
   sort(flattened_b->begin(), flattened_b->begin() + pow(kernel_size, 2));
+  int midpoint = pow(kernel_size, 2) / 2;
   
-  uint8_t medianed_r = ((channel_mask & FILTER_RED) == FILTER_RED) ? flattened_r->at(kernel_size / 2) : data->at(center_r)->at(center_c).r;
-  uint8_t medianed_g = ((channel_mask & FILTER_GREEN) == FILTER_GREEN) ? flattened_g->at(kernel_size / 2) : data->at(center_r)->at(center_c).g;
-  uint8_t medianed_b = ((channel_mask & FILTER_BLUE) == FILTER_BLUE) ? flattened_b->at(kernel_size / 2) : data->at(center_r)->at(center_c).b;
+  uint8_t medianed_r = ((channel_mask & FILTER_RED) == FILTER_RED) ? flattened_r->at(midpoint) : data->at(center_r)->at(center_c).r;
+  uint8_t medianed_g = ((channel_mask & FILTER_GREEN) == FILTER_GREEN) ? flattened_g->at(midpoint) : data->at(center_r)->at(center_c).g;
+  uint8_t medianed_b = ((channel_mask & FILTER_BLUE) == FILTER_BLUE) ? flattened_b->at(midpoint) : data->at(center_r)->at(center_c).b;
   RgbPixel *medianed = new RgbPixel(medianed_r, medianed_g, medianed_b);
+  
+  if (HEAVY_DEBUG) {
+    int s = pow(kernel_size, 2);
+    for (int i = 0; i < s; i++) {
+      printf("%d ", flattened_r->at(i));
+    }
+    printf("\n");
+    for (int i = 0; i < s; i++) {
+      printf("%d ", flattened_g->at(i));
+    }
+    printf("\n");
+    for (int i = 0; i < s; i++) {
+      printf("%d ", flattened_b->at(i));
+    }
+    printf("\n");
+
+    cout << "-->" << (int) medianed_r << "," << (int) medianed_g << "," << (int) medianed_b << endl;
+  }
   
   return medianed;
 }
+
+RgbPixel* Picture::create_kernel_and_overwrite_mean(int kernel_size, int center_r, int center_c, uint32_t channel_mask) {
+  vector<vector<RgbPixel>*> *kernel = new vector<vector<RgbPixel>*>();
+  int pos_r = 0;
+  int pos_c = 0;
+  
+  int x_spread = (int) dim_x;
+  int y_spread = (int) dim_y;
+  
+  for (int r = center_r - kernel_size/2; r <= center_r + kernel_size/2; r++) {
+    vector<RgbPixel> *row_data = new vector<RgbPixel>();
+    if (r >= y_spread) {
+      uint32_t y_limit = y_spread - 1;
+      uint32_t overshoot = r - y_limit;
+      pos_r = y_limit - overshoot;
+    } else {
+      pos_r = abs(r);
+    }
+    
+    for (int c = center_c - kernel_size/2; c <= center_c + kernel_size/2; c++) {
+      if (c >= x_spread) {
+        uint32_t x_limit = x_spread - 1;
+        uint32_t overshoot = c - x_limit;
+        pos_c = x_limit - overshoot;
+      } else {
+        pos_c = abs(c);
+      }
+      
+      //cout << "== " << pos_r << ", " << pos_c << "\n";
+      row_data->push_back(data->at(pos_r)->at(pos_c));
+    }
+    
+    kernel->push_back(row_data);
+  }
+  
+  uint32_t sum_r = 0;
+  uint32_t sum_g = 0;
+  uint32_t sum_b = 0;
+  uint32_t div = kernel->size() * kernel->size();
+  
+  for (auto i = 0; i < kernel->size(); i++) {
+    for (auto j = 0; j < kernel->at(i)->size(); j++) {
+      sum_r += kernel->at(i)->at(j).r;
+      sum_g += kernel->at(i)->at(j).g;
+      sum_b += kernel->at(i)->at(j).b;
+    }
+  }
+  
+  uint8_t mean_r = ((channel_mask & FILTER_RED) == FILTER_RED) ? sum_r / div : data->at(center_r)->at(center_c).r;
+  uint8_t mean_g = ((channel_mask & FILTER_GREEN) == FILTER_GREEN) ? sum_g / div : data->at(center_r)->at(center_c).g;
+  uint8_t mean_b = ((channel_mask & FILTER_BLUE) == FILTER_BLUE) ? sum_b / div : data->at(center_r)->at(center_c).b;
+  RgbPixel *meaned = new RgbPixel(mean_r, mean_g, mean_b);
+  
+  return meaned;
+}
+
 
 std::vector<int16_t>* Picture::perform_equalization(uint8_t channel, uint8_t method) {
   std::vector<int16_t> *eqlz_map = new std::vector<int16_t>(256);
@@ -709,6 +784,76 @@ void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
   }
 }
 
+void Picture::apply_gaussian_filter(int radius, float sigma) {
+  Kernel k = Kernel(radius, sigma);
+  result = new vector<vector<RgbPixel>*>();
+  
+  vector<vector<uint8_t>> mat_r = vector<vector<uint8_t>>();
+  vector<vector<uint8_t>> mat_g = vector<vector<uint8_t>>();
+  vector<vector<uint8_t>> mat_b = vector<vector<uint8_t>>();
+  
+  for (uint32_t r = 0; r < dim_y; r++) {
+    vector<RgbPixel> *row_data = new vector<RgbPixel>();
+
+    for (uint32_t c = 0; c < dim_x; c++) {
+      mat_r = create_patch_matrix(r, c, radius, CHANNEL_RED);
+      mat_g = create_patch_matrix(r, c, radius, CHANNEL_GREEN);
+      mat_b = create_patch_matrix(r, c, radius, CHANNEL_BLUE);
+      
+      k.convolve(mat_r);
+      k.convolve(mat_g);
+      k.convolve(mat_b);
+      
+      RgbPixel p = RgbPixel(k.convolve(mat_r), k.convolve(mat_g), k.convolve(mat_b));
+      row_data->push_back(p);
+    }
+    
+    result->push_back(row_data);
+  }
+}
+
+vector<vector<uint8_t>> Picture::create_patch_matrix(int r, int c, int radius, int channel) {
+  vector<vector<uint8_t>> result = vector<vector<uint8_t>>();
+  int pos_r, pos_c = 0;
+  int i_dim_x = (int) dim_x;
+  int i_dim_y = (int) dim_y;
+  
+  for (int rr = r - radius; rr <= r + radius; rr++) {
+    vector<uint8_t> row_data = vector<uint8_t>();
+    
+    if (rr >= i_dim_y) {
+      int y_limit = i_dim_y - 1;
+      int overshoot = rr - y_limit;
+      pos_r = y_limit - overshoot;
+    } else {
+      pos_r = abs(rr);
+    }
+    
+    for (int cc = c - radius; cc <= c + radius; cc++) {
+      
+      
+      
+      if (cc >= i_dim_x) {
+        int x_limit = i_dim_x - 1;
+        int overshoot = cc - x_limit;
+        pos_c = x_limit - overshoot;
+      } else {
+        pos_c = abs(cc);
+      }
+      
+      switch(channel) {
+        case CHANNEL_RED: row_data.push_back(data->at(pos_r)->at(pos_c).r); break;
+        case CHANNEL_GREEN: row_data.push_back(data->at(pos_r)->at(pos_c).g); break;
+        case CHANNEL_BLUE: row_data.push_back(data->at(pos_r)->at(pos_c).b); break;
+      }
+    }
+    
+    result.push_back(row_data);
+  }
+  
+  return result;
+}
+
 void Picture::apply_median_filter(uint32_t filter_size, uint32_t channel_mask) {
   result = new vector<vector<RgbPixel>*>();
   
@@ -718,6 +863,20 @@ void Picture::apply_median_filter(uint32_t filter_size, uint32_t channel_mask) {
     for (uint32_t c = 0; c < dim_x; c++) {
       //cout << r << ", " << c << "\n";
       row_data->push_back(*create_kernel_and_overwrite_median(filter_size, r, c, channel_mask));
+    }
+    
+    result->push_back(row_data);
+  }
+}
+
+void Picture::apply_mean_filter(uint32_t filter_size, uint32_t channel_mask) {
+  result = new vector<vector<RgbPixel>*>();
+  
+  for (uint32_t r = 0; r < dim_y; r++) {
+    vector<RgbPixel> *row_data = new vector<RgbPixel>();
+    
+    for (uint32_t c = 0; c < dim_x; c++) {
+      row_data->push_back(*create_kernel_and_overwrite_mean(filter_size, r, c, channel_mask));
     }
     
     result->push_back(row_data);

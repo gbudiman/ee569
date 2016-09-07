@@ -33,8 +33,12 @@ void f_1_3_b_nlm() {
   Picture *lena = new Picture(path_lena, 512, 512, COLOR_RGB);
   
   cout << "Lena" << endl;
-  Psnr(lena_ref, lena_denoised).compute();
-  Psnr(lena_ref, lena).compute();
+  //Psnr(lena_ref, lena_denoised).compute();
+  //Psnr(lena_ref, lena).compute();
+  lena->apply_nlm_filter(NLM_SEARCH_RADIUS, NLM_PATCH_RADIUS);
+  lena->write_to_file(path_lena_denoise);
+  
+  
 //  lena->apply_nlm_filter(17, 3);
 //  lena->write_to_file(path_lena_denoise);
   
@@ -58,8 +62,11 @@ void f_1_3_b_nlm() {
   Picture *buildings = new Picture(path_buildings, 512, 512, COLOR_RGB);
   
   cout << "Buildings" << endl;
-  Psnr(buildings_ref, buildings_denoised).compute();
-  Psnr(buildings_ref, buildings).compute();
+  //Psnr(buildings_ref, buildings_denoised).compute();
+  //Psnr(buildings_ref, buildings).compute();
+  buildings->apply_nlm_filter(NLM_SEARCH_RADIUS, NLM_PATCH_RADIUS);
+  buildings->write_to_file(path_buildings_denoise);
+  
 //  buildings->apply_nlm_filter(10, 3);
 //  buildings->write_to_file(path_buildings_denoise);
   
@@ -76,8 +83,10 @@ void f_1_3_b_nlm() {
   Picture *trees = new Picture(path_trees, 774, 518, COLOR_RGB);
   
   cout << "Trees" << endl;
-  Psnr(trees_ref, trees_denoised).compute();
-  Psnr(trees_ref, trees).compute();
+  //Psnr(trees_ref, trees_denoised).compute();
+  //Psnr(trees_ref, trees).compute();
+  trees->apply_nlm_filter(NLM_SEARCH_RADIUS, NLM_PATCH_RADIUS);
+  trees->write_to_file(path_trees_denoise);
 //  trees->apply_nlm_filter(17, 3);
 //  trees->write_to_file(path_trees_denoise);
 }

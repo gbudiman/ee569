@@ -56,26 +56,26 @@
 
 ## Part 3
 
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
-# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
 
 ## Part 3B
 
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_denoise_nlm.raw --out images/P3/Lena_denoise_nlm.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Buildings_noisy.raw --out images/P3/Buildings_noisy.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Buildings.raw --out images/P3/Buildings.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Buildings_denoise.raw --out images/P3/Buildings_denoise.jpg
-ruby scripts/pic.rb --size 774x518 images/P3/Trees_noisy.raw --out images/P3/Trees_noisy.jpg
-ruby scripts/pic.rb --size 64x64 images/P3/Trees_small_denoise.raw --out images/P3/Trees_small_denoise.jpg
-ruby scripts/pic.rb --size 774x518 images/P3/Trees.raw --out images/P3/Trees.jpg
-ruby scripts/pic.rb --size 774x518 images/P3/Trees_denoise.raw --out images/P3/Trees_denoise.jpg
-ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_0.raw --out images/P3/Buildings_small_0.jpg
-ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_0.raw --out images/P3/Buildings_small_denoise_0.jpg
-ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_1.raw --out images/P3/Buildings_small_1.jpg
-ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_1.raw --out images/P3/Buildings_small_denoise_1.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_denoise_nlm.raw --out images/P3/Lena_denoise_nlm.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Buildings_noisy.raw --out images/P3/Buildings_noisy.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Buildings.raw --out images/P3/Buildings.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Buildings_denoise.raw --out images/P3/Buildings_denoise.jpg
+# ruby scripts/pic.rb --size 774x518 images/P3/Trees_noisy.raw --out images/P3/Trees_noisy.jpg
+# ruby scripts/pic.rb --size 64x64 images/P3/Trees_small_denoise.raw --out images/P3/Trees_small_denoise.jpg
+# ruby scripts/pic.rb --size 774x518 images/P3/Trees.raw --out images/P3/Trees.jpg
+# ruby scripts/pic.rb --size 774x518 images/P3/Trees_denoise.raw --out images/P3/Trees_denoise.jpg
+# ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_0.raw --out images/P3/Buildings_small_0.jpg
+# ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_0.raw --out images/P3/Buildings_small_denoise_0.jpg
+# ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_1.raw --out images/P3/Buildings_small_1.jpg
+# ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_1.raw --out images/P3/Buildings_small_denoise_1.jpg
 

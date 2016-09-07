@@ -18,5 +18,6 @@ void f_1_2_b_histcolor_equalization();
 void f_1_2_c_sfx();
 void f_1_2_d_histogram_transform();
 void f_1_3_a_median_filtering();
+void f_1_3_a_cascaded_filter();
 void f_1_3_b_nlm();
 #endif /* project_inclusion_h */
