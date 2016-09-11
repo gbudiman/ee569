@@ -32,3 +32,12 @@ void f_1_1_a_cropping() {
   rebel->crop(35, 20, 164, 199); // 130x180
   rebel->write_to_file(path_rebel_out_rect);
 }
+
+void f_crop(char *in, int x, int y, int mode, char *out, int x1, int y1, int x2, int y2) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  Picture *picture_in = new Picture(path_in, x, y, mode);
+  picture_in->crop(x1, y1, x2, y2);
+  picture_in->write_to_file(path_out);
+}

@@ -56,13 +56,13 @@
 
 ## Part 3
 
-ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
-ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena.raw --out images/P3/Lena.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy.raw --out images/P3/Lena_noisy.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_red.raw --out images/P3/Lena_noisy_channel_red.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_green.raw --out images/P3/Lena_noisy_channel_green.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_noisy_channel_blue.raw --out images/P3/Lena_noisy_channel_blue.jpg --gray
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised.raw --out images/P3/Lena_median_denoised.jpg
+# ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out images/P3/Lena_median_denoised_2.jpg
 
 ## Part 3B
 
@@ -79,3 +79,42 @@ ruby scripts/pic.rb --size 512x512 images/P3/Lena_median_denoised_2.raw --out im
 # ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_1.raw --out images/P3/Buildings_small_1.jpg
 # ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_1.raw --out images/P3/Buildings_small_denoise_1.jpg
 
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_1_0.001/Buildings_denoise.raw --out images/P3/Experiments_7_1_0.001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_1_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_7_1_0.001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_1_0.001/Trees_denoise.raw --out images/P3/Experiments_7_1_0.001/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.01/Buildings_denoise.raw --out images/P3/Experiments_7_3_0.01/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.01/Lena_denoise_nlm.raw --out images/P3/Experiments_7_3_0.01/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_3_0.01/Trees_denoise.raw --out images/P3/Experiments_7_3_0.01/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.001/Buildings_denoise.raw --out images/P3/Experiments_7_3_0.001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_7_3_0.001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_3_0.001/Trees_denoise.raw --out images/P3/Experiments_7_3_0.001/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.0001/Buildings_denoise.raw --out images/P3/Experiments_7_3_0.0001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_3_0.0001/Lena_denoise_nlm.raw --out images/P3/Experiments_7_3_0.0001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_3_0.0001/Trees_denoise.raw --out images/P3/Experiments_7_3_0.0001/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_5_0.0025/Buildings_denoise.raw --out images/P3/Experiments_7_5_0.0025/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_5_0.0025/Lena_denoise_nlm.raw --out images/P3/Experiments_7_5_0.0025/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_5_0.0025/Trees_denoise.raw --out images/P3/Experiments_7_5_0.0025/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_1_0.001/Buildings_denoise.raw --out images/P3/Experiments_15_1_0.001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_1_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_15_1_0.001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_15_1_0.001/Trees_denoise.raw --out images/P3/Experiments_15_1_0.001/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.001/Buildings_denoise.raw --out images/P3/Experiments_15_3_0.001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_15_3_0.001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_15_3_0.001/Trees_denoise.raw --out images/P3/Experiments_15_3_0.001/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.005/Buildings_denoise.raw --out images/P3/Experiments_15_3_0.005/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.005/Lena_denoise_nlm.raw --out images/P3/Experiments_15_3_0.005/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_15_3_0.005/Trees_denoise.raw --out images/P3/Experiments_15_3_0.005/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.0025/Buildings_denoise.raw --out images/P3/Experiments_15_3_0.0025/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_3_0.0025/Lena_denoise_nlm.raw --out images/P3/Experiments_15_3_0.0025/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_15_3_0.0025/Trees_denoise.raw --out images/P3/Experiments_15_3_0.0025/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_5_0.0025/Buildings_denoise.raw --out images/P3/Experiments_15_5_0.0025/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_15_5_0.0025/Lena_denoise_nlm.raw --out images/P3/Experiments_15_5_0.0025/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_15_5_0.0025/Trees_denoise.raw --out images/P3/Experiments_15_5_0.0025/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_3_0.0025/Buildings_denoise.raw --out images/P3/Experiments_21_3_0.0025/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_3_0.0025/Lena_denoise_nlm.raw --out images/P3/Experiments_21_3_0.0025/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_21_3_0.0025/Trees_denoise.raw --out images/P3/Experiments_21_3_0.0025/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_5_0.0025/Buildings_denoise.raw --out images/P3/Experiments_21_5_0.0025/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_5_0.0025/Lena_denoise_nlm.raw --out images/P3/Experiments_21_5_0.0025/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_21_5_0.0025/Trees_denoise.raw --out images/P3/Experiments_21_5_0.0025/Trees_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_7_0.001/Buildings_denoise.raw --out images/P3/Experiments_21_7_0.001/Buildings_denoise.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/Experiments_21_7_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_21_7_0.001/Lena_denoise_nlm.jpg
+ruby scripts/pic.rb --size 774x518 images/P3/Experiments_21_7_0.001/Trees_denoise.raw --out images/P3/Experiments_21_7_0.001/Trees_denoise.jpg

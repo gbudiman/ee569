@@ -10,8 +10,8 @@
 #include "project_inclusion.hpp"
 using namespace std;
 
-int main() {
-  int debug = 10;
+int main(int argc, char* argv[]) {
+  int debug = -1;
 
   if (RUN_ALL) {
     f_1_1_a_cropping();
@@ -38,10 +38,46 @@ int main() {
       case 8: f_1_3_a_median_filtering(); break;
       case 9: f_1_3_b_nlm(); break;
       case 10: f_1_3_a_cascaded_filter(); break;
+      case 11: f_1_3_b_cascaded_filter(); break;
+      case 12: f_1_3_psnr_calculator(); break;
     }
   }
-  
-  
+
+  if (xcmp(argv[1], "crop")) {
+    int x, y, mode, x1, y1, x2, y2;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    sscanf(argv[7], "%d", &x1);
+    sscanf(argv[8], "%d", &y1);
+    sscanf(argv[9], "%d", &x2);
+    sscanf(argv[10], "%d", &y2);
+    f_crop(argv[2], x, y, mode, argv[6], x1, y1, x2, y2);
+  } else if (xcmp(argv[1], "resize")) {
+    int x, y, mode, ox, oy;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    sscanf(argv[7], "%d", &ox);
+    sscanf(argv[8], "%d", &oy);
+    f_resize(argv[2], x, y, mode, argv[6], ox, oy);
+  } else if (xcmp(argv[1], "rgb2cmy")) {
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_cmyk(argv[2], x, y, mode, argv[6]);
+  } else if (xcmp(argv[1], "rgb2hsl")) {
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_hsl(argv[2], x, y, mode, argv[6]);
+  }
   
   return 0;
+}
+
+bool xcmp(char* a, const char* b) {
+  return (strcmp(a, b) == 0);
 }

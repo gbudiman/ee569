@@ -1,5 +1,5 @@
 CC=g++-6
-CFLAGS=-Ofast
+CFLAGS=-O0
 all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
@@ -43,7 +43,10 @@ runs:
 	$(CC) $(CFLAGS) -c run_1_2_c_sfx.cpp
 	$(CC) $(CFLAGS) -c run_1_2_d_histogram_transform.cpp
 	$(CC) $(CFLAGS) -c run_1_3_a_median_filtering.cpp
+	$(CC) $(CFLAGS) -c run_1_3_a_cascaded_filter.cpp
 	$(CC) $(CFLAGS) -c run_1_3_b_nlm.cpp
+	$(CC) $(CFLAGS) -c run_1_3_b_cascaded_filter.cpp
+	$(CC) $(CFLAGS) -c run_1_3_psnr_calculator.cpp
 
 clean:
 	rm *.o main

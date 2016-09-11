@@ -40,3 +40,12 @@ void f_1_1_a_resizing() {
   rebel->write_to_file(path_rebel_resize_300);
 
 }
+
+void f_resize(char *in, int x, int y, int mode, char *out, int ox, int oy) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  Picture *picture_in = new Picture(path_in, x, y, mode);
+  picture_in->resize(ox, oy);
+  picture_in->write_to_file(path_out);
+}

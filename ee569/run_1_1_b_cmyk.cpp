@@ -24,3 +24,12 @@ void f_1_1_b_cmyk() {
   octopus->to_cmyk();
   octopus->write_to_file(path_octopus, STRIP_EXTENSION);
 }
+
+void f_cmyk(char* in, int x, int y, int mode, char* out) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  Picture *picture_in = new Picture(path_in, x, y, mode);
+  picture_in->to_cmyk();
+  picture_in->write_to_file(path_out, STRIP_EXTENSION);
+}
