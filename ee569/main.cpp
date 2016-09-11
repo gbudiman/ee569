@@ -85,6 +85,21 @@ int main(int argc, char* argv[]) {
     sscanf(argv[4], "%d", &y);
     sscanf(argv[5], "%d", &mode);
     f_histogram_equalization(argv[2], x, y, mode, argv[6], EQUALIZE_CDF);
+  } else if (xcmp(argv[1], "sfx")) {
+    int ix, iy, rx, ry;
+    sscanf(argv[3], "%d", &ix);
+    sscanf(argv[4], "%d", &iy);
+    sscanf(argv[6], "%d", &rx);
+    sscanf(argv[7], "%d", &ry);
+    f_sfx(argv[2], ix, iy, argv[5], rx, ry, argv[8]);
+  } else if (xcmp(argv[1], "hist_match")) {
+    int x, y, mode, mean, dist;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    sscanf(argv[7], "%d", &mean);
+    sscanf(argv[8], "%d", &dist);
+    f_hist_match(argv[2], x, y, mode, argv[6], mean, dist);
   }
   
   return 0;

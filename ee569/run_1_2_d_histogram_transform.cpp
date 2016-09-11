@@ -52,3 +52,18 @@ void f_1_2_d_histogram_transform() {
   Picture *s2m = new Picture(path_s2m, 500, 375, COLOR_GRAY);
   s2m->prepare_gnuplot_histogram_data(path_s2m, STRIP_EXTENSION);
 }
+
+void f_hist_match(char* in, int x, int y, int mode, char* out, int _mean, int _dist) {
+  string path_in = string(in);
+  string path_out = string(out);
+  Histogram *h1 = new Histogram();
+  h1->generate_gaussian(_mean, _dist, x, y);
+  
+  Picture *pseudo = new Picture();
+  Picture *picture = new Picture(path_in, x, y, mode);
+  pseudo->assign_histogram(h1, CHANNEL_GRAY, x, y);
+  pseudo->equalize(EQUALIZE_CDF);
+  picture->equalize(EQUALIZE_CDF);
+  picture->histogram_match_gray(pseudo->cdf_gray);
+  picture->write_to_file(path_out);
+}

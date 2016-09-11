@@ -95,6 +95,30 @@ void f_1_2_c_sfx() {
   Picture *p2x = new Picture(path_2_out, 259, 194, COLOR_RGB);
   p1x->prepare_gnuplot_histogram_data(path_1_out, STRIP_EXTENSION);
   p2x->prepare_gnuplot_histogram_data(path_2_out, STRIP_EXTENSION);
-  
+}
 
+void f_sfx(char* in, int ix, int iy, char* ref, int rx, int ry, char* out) {
+  string path_in = string(in);
+  string path_ref = string(ref);
+  string path_out = string(out);
+  
+  Picture *picture_ref = new Picture(path_ref, rx, ry, COLOR_RGB);
+  Picture *picture_in = new Picture(path_in, ix, iy, COLOR_RGB);
+  
+  Picture *pseudo = new Picture();
+  Histogram *ref_r = picture_ref->hist_r;
+  Histogram *ref_g = picture_ref->hist_g;
+  Histogram *ref_b = picture_ref->hist_b;
+  
+  float scaling_factor = (float) (ix * iy) / (float) (rx * ry);
+  ref_r->rescale(scaling_factor);
+  ref_g->rescale(scaling_factor);
+  ref_b->rescale(scaling_factor);
+  pseudo->assign_histogram(ref_r, CHANNEL_RED, ix, iy);
+  pseudo->assign_histogram(ref_g, CHANNEL_GREEN, ix, iy);
+  pseudo->assign_histogram(ref_b, CHANNEL_BLUE, ix, iy);
+  pseudo->equalize(EQUALIZE_CDF);
+  picture_in->equalize(EQUALIZE_CDF);
+  picture_in->histogram_match_rgb(pseudo->cdf_r, pseudo->cdf_g, pseudo->cdf_b);
+  picture_in->write_to_file(path_out);
 }
