@@ -50,3 +50,17 @@ void f_1_2_a_histogram_equalization() {
   bb_a->prepare_gnuplot_histogram_data(path_bb_a, STRIP_EXTENSION);
   bb_b->prepare_gnuplot_histogram_data(path_bb_b, STRIP_EXTENSION);
 }
+
+void f_histogram_equalization(char* in, int x, int y, int mode, char* out, int he_mode) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  Picture *picture = new Picture(path_in, x, y, mode);
+  picture->prepare_gnuplot_histogram_data(path_in, STRIP_EXTENSION);
+  picture->equalize(he_mode);
+  picture->prepare_gnuplot_transfer_function(path_in, STRIP_EXTENSION);
+  picture->write_to_file(path_out);
+  
+  Picture *result = new Picture(path_out, x, y, mode);
+  result->prepare_gnuplot_histogram_data(path_out, STRIP_EXTENSION);
+}

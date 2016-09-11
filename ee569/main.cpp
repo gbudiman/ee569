@@ -73,6 +73,18 @@ int main(int argc, char* argv[]) {
     sscanf(argv[4], "%d", &y);
     sscanf(argv[5], "%d", &mode);
     f_hsl(argv[2], x, y, mode, argv[6]);
+  } else if (xcmp(argv[1], "hist_equalize_linear")) {
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_histogram_equalization(argv[2], x, y, mode, argv[6], EQUALIZE_LINEAR);
+  } else if (xcmp(argv[1], "hist_equalize_cdf")) {
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_histogram_equalization(argv[2], x, y, mode, argv[6], EQUALIZE_CDF);
   }
   
   return 0;

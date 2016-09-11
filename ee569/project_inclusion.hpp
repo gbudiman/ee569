@@ -18,6 +18,7 @@ void f_cmyk(char*, int, int, int, char*);
 void f_1_1_b_hsl();
 void f_hsl(char*, int, int, int, char*);
 void f_1_2_a_histogram_equalization();
+void f_histogram_equalization(char*, int, int, int, char*, int);
 void f_1_2_b_histcolor_equalization();
 void f_1_2_c_sfx();
 void f_1_2_d_histogram_transform();
