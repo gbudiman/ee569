@@ -44,3 +44,51 @@ void f_1_3_a_median_filtering() {
   lena_noisy->apply_mean_filter(7, FILTER_RED | FILTER_GREEN | FILTER_BLUE );
   lena_noisy->write_to_file(path_lena_mean_filter);
 }
+
+void f_denoise_mean(char *in, int x, int y, int mode, char *out, int window_size) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  printf("Denoising using mean filter with window size %dx%d\n", window_size, window_size);
+  Picture *picture = new Picture(path_in, x, y, mode);
+  picture->apply_mean_filter(window_size, FILTER_RED | FILTER_GREEN | FILTER_BLUE);
+  picture->write_to_file(path_out);
+}
+
+void f_denoise_median(char *in, int x, int y, int mode, char *out, int window_size) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  printf("Denoising using median filter with window size %dx%d\n", window_size, window_size);
+  Picture *picture = new Picture(path_in, x, y, mode);
+  picture->apply_median_filter(window_size, FILTER_RED | FILTER_GREEN | FILTER_BLUE);
+  picture->write_to_file(path_out);
+}
+
+void f_denoise_gaussian(char *in, int x, int y, int mode, char *out, int radius, float factor) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  printf("Denoising using gaussian filter with window size %dx%d and decay factor of %f\n", radius * 2 + 1, radius * 2 + 1, factor);
+  
+  Picture *picture = new Picture(path_in, x, y, mode);
+  picture->apply_gaussian_filter(radius, factor);
+  picture->write_to_file(path_out);
+}
+
+void f_denoise_nlm(char *in, int x, int y, int mode, char *out, int search_radius, int window_radius, float factor) {
+  string path_in = string(in);
+  string path_out = string(out);
+  
+  printf("Denoising using mean filter with search_radius = %d, window_radius = %d, and decay_factor = %f\n", search_radius, window_radius, factor);
+  Picture *picture = new Picture(path_in, x, y, mode);
+  picture->apply_nlm_filter(search_radius, window_radius, factor);
+  picture->write_to_file(path_out);
+}
+
+void f_psnr(char *a, char *b, int x, int y, int mode) {
+  cout << "Comparing " << a << " against " << b << endl;
+  Picture *picture_a = new Picture(string(a), x, y, mode);
+  Picture *picture_b = new Picture(string(b), x, y, mode);
+  Psnr(picture_a, picture_b).compute();
+}

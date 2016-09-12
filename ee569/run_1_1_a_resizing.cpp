@@ -45,6 +45,7 @@ void f_resize(char *in, int x, int y, int mode, char *out, int ox, int oy) {
   string path_in = string(in);
   string path_out = string(out);
   
+  printf("Resizing %s to %dx%d\n", in, ox, oy);
   Picture *picture_in = new Picture(path_in, x, y, mode);
   picture_in->resize(ox, oy);
   picture_in->write_to_file(path_out);

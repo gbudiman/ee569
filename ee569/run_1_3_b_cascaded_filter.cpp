@@ -19,12 +19,12 @@ void f_1_3_b_cascaded_filter() {
   buildings_median_3->write_to_file("images/P3/Buildings_median_3_mean_3.raw");
   
   Picture* base = new Picture("images/P3/Buildings_median_3_mean_3.raw", 512, 512, COLOR_RGB);
-  base->apply_nlm_filter(7, 3);
+  base->apply_nlm_filter(7, 3, 0.001);
   base->write_to_file("images/P3/Buildings_stack_nlm_7_3.raw");
-  base->apply_nlm_filter(7, 5);
+  base->apply_nlm_filter(7, 5, 0.001);
   base->write_to_file("images/P3/Buildings_stack_nlm_7_5.raw");
-  base->apply_nlm_filter(15, 3);
+  base->apply_nlm_filter(15, 3, 0.001);
   base->write_to_file("images/P3/Buildings_stack_nlm_15_3.raw");
-  base->apply_nlm_filter(15, 5);
+  base->apply_nlm_filter(15, 5, 0.001);
   base->write_to_file("images/P3/Buildings_stack_nlm_15_5.raw");
 }

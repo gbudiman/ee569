@@ -9,7 +9,7 @@
 #include "PatchMap.hpp"
 using namespace std;
 
-PatchMap::PatchMap(int row, int col, int _dim_x, int _dim_y, int search_radius, int _patch_radius, vector<vector<RgbPixel>*>* data) {
+PatchMap::PatchMap(int row, int col, int _dim_x, int _dim_y, int search_radius, int _patch_radius, vector<vector<RgbPixel>*>* data, float decay_factor) {
   picture_data = data;
   //cells = new vector<PatchCell>();
   dim_x = _dim_x;
@@ -20,6 +20,7 @@ PatchMap::PatchMap(int row, int col, int _dim_x, int _dim_y, int search_radius, 
   
   vector<vector<RgbPixel>> base_patch = create_base_patch(row, col);
   
+  float nlm_h_squared = 2.0 * decay_factor * decay_factor;
   for (int r = row - search_radius; r <= row + search_radius; r++) {
     if (r < 0 || r > dim_y - 1) {
       continue;
@@ -47,7 +48,8 @@ PatchMap::PatchMap(int row, int col, int _dim_x, int _dim_y, int search_radius, 
       vector<vector<RgbPixel>> comp_patch = create_base_patch(r, c);
       float difference = (float) compute_patch_difference(base_patch, comp_patch);
       float diff_squared_negated = - difference * difference;
-      float r_side = diff_squared_negated / NLM_H_SQUARED;
+      float r_side = diff_squared_negated / nlm_h_squared; //NLM_H_SQUARED;
+      //float r_side_alt = diff_squared_negated / NLM_H_SQUARED;
       float weight = exp(r_side);
       weight_cumulative += weight;
       

@@ -54,7 +54,7 @@
 
 #define NLM_SEARCH_RADIUS 15
 #define NLM_PATCH_RADIUS 3
-#define NLM_H 0.0025 // 0.001 // don't use 0.01
+#define NLM_H 0.001 // 0.001 // don't use 0.01
 #define NLM_H_SQUARED 2.0 * NLM_H * NLM_H
 
 #define RUN_ALL false

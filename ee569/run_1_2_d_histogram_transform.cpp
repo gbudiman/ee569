@@ -59,6 +59,8 @@ void f_hist_match(char* in, int x, int y, int mode, char* out, int _mean, int _d
   Histogram *h1 = new Histogram();
   h1->generate_gaussian(_mean, _dist, x, y);
   
+  cout << "Matching histogram of " << in << " to Gaussian distribution with mean = " << _mean << " and distribution = " << _dist << endl;
+  
   Picture *pseudo = new Picture();
   Picture *picture = new Picture(path_in, x, y, mode);
   pseudo->assign_histogram(h1, CHANNEL_GRAY, x, y);
@@ -66,4 +68,7 @@ void f_hist_match(char* in, int x, int y, int mode, char* out, int _mean, int _d
   picture->equalize(EQUALIZE_CDF);
   picture->histogram_match_gray(pseudo->cdf_gray);
   picture->write_to_file(path_out);
+  
+  Picture *result = new Picture(path_out, x, y, mode);
+  result->prepare_gnuplot_histogram_data(path_out, STRIP_EXTENSION);
 }

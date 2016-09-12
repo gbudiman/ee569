@@ -102,6 +102,7 @@ void f_sfx(char* in, int ix, int iy, char* ref, int rx, int ry, char* out) {
   string path_ref = string(ref);
   string path_out = string(out);
   
+  cout << "Creating special effects on " << in << " using CDF histogram matching of image " << ref << endl;
   Picture *picture_ref = new Picture(path_ref, rx, ry, COLOR_RGB);
   Picture *picture_in = new Picture(path_in, ix, iy, COLOR_RGB);
   
@@ -121,4 +122,7 @@ void f_sfx(char* in, int ix, int iy, char* ref, int rx, int ry, char* out) {
   picture_in->equalize(EQUALIZE_CDF);
   picture_in->histogram_match_rgb(pseudo->cdf_r, pseudo->cdf_g, pseudo->cdf_b);
   picture_in->write_to_file(path_out);
+  
+  Picture *picture_out = new Picture(path_out, ix, iy, COLOR_RGB);
+  picture_out->prepare_gnuplot_histogram_data(path_out, STRIP_EXTENSION);
 }

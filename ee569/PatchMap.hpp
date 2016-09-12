@@ -16,7 +16,7 @@
 
 class PatchMap {
 public:
-  PatchMap(int, int, int, int, int, int, std::vector<std::vector<RgbPixel>*>*);
+  PatchMap(int, int, int, int, int, int, std::vector<std::vector<RgbPixel>*>*, float);
   std::vector<std::vector<RgbPixel>*>* picture_data;
   int dim_x;
   int dim_y;

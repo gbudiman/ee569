@@ -37,6 +37,7 @@ void f_crop(char *in, int x, int y, int mode, char *out, int x1, int y1, int x2,
   string path_in = string(in);
   string path_out = string(out);
   
+  printf("Cropping %s to (%d, %d) (%d, %d)\n", in, x1, y1, x2, y2);
   Picture *picture_in = new Picture(path_in, x, y, mode);
   picture_in->crop(x1, y1, x2, y2);
   picture_in->write_to_file(path_out);

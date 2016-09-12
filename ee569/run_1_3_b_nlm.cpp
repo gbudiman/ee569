@@ -110,8 +110,8 @@ void f_1_3_b_nlm() {
 //  cout << "Trees" << endl;
   //Psnr(trees_ref, trees_denoised).compute();
   //Psnr(trees_ref, trees).compute();
-  trees->apply_nlm_filter(NLM_SEARCH_RADIUS, NLM_PATCH_RADIUS);
-  trees->write_to_file(path_trees_denoise);
+  //trees->apply_nlm_filter(NLM_SEARCH_RADIUS, NLM_PATCH_RADIUS);
+  //trees->write_to_file(path_trees_denoise);
 //  trees->apply_nlm_filter(17, 3);
 //  trees->write_to_file(path_trees_denoise);
 }

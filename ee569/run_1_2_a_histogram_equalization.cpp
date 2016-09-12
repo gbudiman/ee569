@@ -55,6 +55,8 @@ void f_histogram_equalization(char* in, int x, int y, int mode, char* out, int h
   string path_in = string(in);
   string path_out = string(out);
   
+  printf("Equalizing histogram using method %s\n", he_mode == EQUALIZE_LINEAR ? "linear" : "CDF");
+  
   Picture *picture = new Picture(path_in, x, y, mode);
   picture->prepare_gnuplot_histogram_data(path_in, STRIP_EXTENSION);
   picture->equalize(he_mode);

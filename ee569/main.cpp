@@ -100,6 +100,33 @@ int main(int argc, char* argv[]) {
     sscanf(argv[7], "%d", &mean);
     sscanf(argv[8], "%d", &dist);
     f_hist_match(argv[2], x, y, mode, argv[6], mean, dist);
+  } else if (xcmp(argv[1], "denoise")) {
+    int x, y, mode, arg1;
+    sscanf(argv[4], "%d", &x);
+    sscanf(argv[5], "%d", &y);
+    sscanf(argv[6], "%d", &mode);
+    sscanf(argv[8], "%d", &arg1);
+    if (xcmp(argv[2], "mean")) {
+      f_denoise_mean(argv[3], x, y, mode, argv[7], arg1);
+    } else if (xcmp(argv[2], "median")) {
+      f_denoise_median(argv[3], x, y, mode, argv[7], arg1);
+    } else if (xcmp(argv[2], "gaussian")) {
+      float arg2;
+      sscanf(argv[9], "%f", &arg2);
+      f_denoise_gaussian(argv[3], x, y, mode, argv[7], arg1, arg2);
+    } else if (xcmp(argv[2], "nlm")) {
+      int arg2;
+      float arg3;
+      sscanf(argv[9], "%d", &arg2);
+      sscanf(argv[10], "%f", &arg3);
+      f_denoise_nlm(argv[3], x, y, mode, argv[7], arg1, arg2, arg3);
+    }
+  } else if (xcmp(argv[1], "psnr")) {
+    int x, y, mode;
+    sscanf(argv[4], "%d", &x);
+    sscanf(argv[5], "%d", &y);
+    sscanf(argv[6], "%d", &mode);
+    f_psnr(argv[2], argv[3], x, y, mode);
   }
   
   return 0;

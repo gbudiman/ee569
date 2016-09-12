@@ -714,7 +714,7 @@ void Picture::apply_transfer_function_rgb(vector<int16_t> *l_r, vector<int16_t> 
   remap_histogram_rgb(tf_red, tf_green, tf_blue);
 }
 
-void Picture::apply_nlm_filter(int search_radius, int patch_radius) {
+void Picture::apply_nlm_filter(int search_radius, int patch_radius, float decay_factor) {
   result = new vector<vector<RgbPixel>*>();
   
 //  int threads_available = thread::hardware_concurrency();
@@ -744,7 +744,7 @@ void Picture::apply_nlm_filter(int search_radius, int patch_radius) {
     printf("Computing row %d\n", r);
     for (int c = 0; c < dim_x; c++) {
       
-      PatchMap pm = PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
+      PatchMap pm = PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data, decay_factor);
       row_data->push_back(*pm.result);
     }
     
@@ -754,19 +754,20 @@ void Picture::apply_nlm_filter(int search_radius, int patch_radius) {
   // end non-threading implementation
 }
 
-void Picture::threaded_nlm_filter(int lower_limit, int upper_limit, vector<vector<RgbPixel>*>* temp, int thread_id, int search_radius, int patch_radius) {
-  for (int r = lower_limit; r < upper_limit; r++) {
-    vector<RgbPixel>* row_data = new vector<RgbPixel>();
-    
-    printf("Thread %d computing row %d\n", thread_id, r);
-    for (int c = 0; c < dim_x; c++) {
-      PatchMap *pm = new PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
-      row_data->push_back(*pm->result);
-    }
-    
-    temp->push_back(row_data);
-  }
-}
+// NO!!!
+//void Picture::threaded_nlm_filter(int lower_limit, int upper_limit, vector<vector<RgbPixel>*>* temp, int thread_id, int search_radius, int patch_radius) {
+//  for (int r = lower_limit; r < upper_limit; r++) {
+//    vector<RgbPixel>* row_data = new vector<RgbPixel>();
+//    
+//    printf("Thread %d computing row %d\n", thread_id, r);
+//    for (int c = 0; c < dim_x; c++) {
+//      PatchMap *pm = new PatchMap(r, c, dim_x, dim_y, search_radius, patch_radius, data);
+//      row_data->push_back(*pm->result);
+//    }
+//    
+//    temp->push_back(row_data);
+//  }
+//}
 
 void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
   result_gray = new vector<vector<uint8_t>>();

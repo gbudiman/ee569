@@ -43,7 +43,7 @@ public:
   void apply_median_filter(uint32_t, uint32_t);
   void apply_mean_filter(uint32_t, uint32_t);
   void apply_gaussian_filter(int, float);
-  void apply_nlm_filter(int, int);
+  void apply_nlm_filter(int, int, float);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

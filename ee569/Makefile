@@ -1,5 +1,5 @@
 CC=g++-6
-CFLAGS=-O0
+CFLAGS=-Ofast
 all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
