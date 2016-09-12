@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/9/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -105,7 +107,7 @@ void f_1_3_psnr_calculator() {
   Psnr(trees, we_trees(15,1,"0.001")).compute();
   Psnr(trees, we_trees(15,3,"0.001")).compute();
   Psnr(trees, we_trees(15,3,"0.005")).compute();
-  //Psnr(trees, we_trees(15,3,"0.0025")).compute();
+  Psnr(trees, we_trees(15,3,"0.0025")).compute();
   Psnr(trees, we_trees(15,5,"0.0025")).compute();
   Psnr(trees, we_trees(21,3,"0.0025")).compute();
   Psnr(trees, we_trees(21,5,"0.0025")).compute();

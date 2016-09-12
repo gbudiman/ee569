@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/3/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -80,7 +82,7 @@ void f_denoise_nlm(char *in, int x, int y, int mode, char *out, int search_radiu
   string path_in = string(in);
   string path_out = string(out);
   
-  printf("Denoising using mean filter with search_radius = %d, window_radius = %d, and decay_factor = %f\n", search_radius, window_radius, factor);
+  printf("Denoising using NLM filter with search_radius = %d, window_radius = %d, and decay_factor = %f\n", search_radius, window_radius, factor);
   Picture *picture = new Picture(path_in, x, y, mode);
   picture->apply_nlm_filter(search_radius, window_radius, factor);
   picture->write_to_file(path_out);

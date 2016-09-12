@@ -17,5 +17,5 @@
 ./main psnr "../images/P3/Lena.raw" "../images/tests/Lena_median_3.raw" 512 512 1
 ./main psnr "../images/P3/Lena.raw" "../images/tests/Lena_median_3_mean_3.raw" 512 512 1
 ./main psnr "../images/P3/Lena.raw" "../images/tests/Lena_gaussian_2_1.raw" 512 512 1
-# ./main denoise nlm "../images/P3/Buildings.raw" 512 512 1 "../images/tests/Buildings_7_3_1000.raw" 7 3 1000
-# ./main psnr "../images/P3/Buildings.raw" "../images/tests/Buildings_7_3_1000.raw" 512 512 1
+./main denoise nlm "../images/P3/Buildings.raw" 512 512 1 "../images/tests/Buildings_7_3_1000.raw" 7 3 1000
+./main psnr "../images/P3/Buildings.raw" "../images/tests/Buildings_7_3_1000.raw" 512 512 1

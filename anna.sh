@@ -79,6 +79,20 @@
 # ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_1.raw --out images/P3/Buildings_small_1.jpg
 # ruby scripts/pic.rb --size 64x64 images/P3/Buildings_small_denoise_1.raw --out images/P3/Buildings_small_denoise_1.jpg
 
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_7_3.raw --out images/P3/lena_stack_0.001/Lena_nlm_7_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_7_5.raw --out images/P3/lena_stack_0.001/Lena_nlm_7_5.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_15_3.raw --out images/P3/lena_stack_0.001/Lena_nlm_15_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_15_5.raw --out images/P3/lena_stack_0.001/Lena_nlm_15_5.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_21_3.raw --out images/P3/lena_stack_0.001/Lena_nlm_21_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.001/Lena_nlm_21_5.raw --out images/P3/lena_stack_0.001/Lena_nlm_21_5.jpg
+
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.005/Lena_nlm_7_3.raw --out images/P3/lena_stack_0.005/Lena_nlm_7_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.005/Lena_nlm_15_3.raw --out images/P3/lena_stack_0.005/Lena_nlm_15_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.005/Lena_nlm_21_3.raw --out images/P3/lena_stack_0.005/Lena_nlm_21_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.0025/Lena_nlm_7_3.raw --out images/P3/lena_stack_0.0025/Lena_nlm_7_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.0025/Lena_nlm_15_3.raw --out images/P3/lena_stack_0.0025/Lena_nlm_15_3.jpg
+ruby scripts/pic.rb --size 512x512 images/P3/lena_stack_0.0025/Lena_nlm_21_3.raw --out images/P3/lena_stack_0.0025/Lena_nlm_21_3.jpg
+
 ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_1_0.001/Buildings_denoise.raw --out images/P3/Experiments_7_1_0.001/Buildings_denoise.jpg
 ruby scripts/pic.rb --size 512x512 images/P3/Experiments_7_1_0.001/Lena_denoise_nlm.raw --out images/P3/Experiments_7_1_0.001/Lena_denoise_nlm.jpg
 ruby scripts/pic.rb --size 774x518 images/P3/Experiments_7_1_0.001/Trees_denoise.raw --out images/P3/Experiments_7_1_0.001/Trees_denoise.jpg

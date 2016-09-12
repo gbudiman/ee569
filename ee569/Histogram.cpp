@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 8/28/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -133,6 +135,7 @@ void Histogram::generate_gaussian(uint32_t mu, uint32_t delta, uint32_t dim_x, u
 }
 
 void Histogram::rescale(float scale) {
+  // Rescale to fit target CDF using the provided scale as scaling factor
   uint32_t cdf = 0;
   for (int i = 0; i < data->size(); i++) {
     uint32_t rescaled_value = data->at(i) * scale;

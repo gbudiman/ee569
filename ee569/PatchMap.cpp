@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/3/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -10,6 +12,8 @@
 using namespace std;
 
 PatchMap::PatchMap(int row, int col, int _dim_x, int _dim_y, int search_radius, int _patch_radius, vector<vector<RgbPixel>*>* data, float decay_factor) {
+  // generate new pixel value as a linear combination of NLM algorithm result
+  // from surrounding patches
   picture_data = data;
   //cells = new vector<PatchCell>();
   dim_x = _dim_x;
@@ -92,6 +96,7 @@ PatchMap::~PatchMap() {
 
 vector<vector<RgbPixel>> PatchMap::create_base_patch(int row, int col) {
   int pos_r, pos_c = 0;
+  // create patch for base comparison
   vector<vector<RgbPixel>> base_patch = vector<vector<RgbPixel>>();
   
   //printf("Creating patch centered around (%d, %d)\n", row, col);

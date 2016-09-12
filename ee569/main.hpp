@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 8/27/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -60,5 +62,6 @@
 #define RUN_ALL false
 
 bool xcmp(char*, const char*);
+void print_help();
 
 #endif /* main_h */

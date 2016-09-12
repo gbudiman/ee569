@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 8/27/16.
+//  Finalized on 9/12/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -34,6 +36,10 @@ void Picture::write_to_file(string _path) {
 }
 
 void Picture::write_to_file(string _path, bool strip_extension) {
+  // strip extension will remove the extension
+  // thus making it possible to append anything before the extension
+  // the extension must be added back and it's the caller's responsibility to do so
+  
   if (strip_extension) {
     uint32_t dot_position = (uint32_t) _path.find_last_of('.');
     write_to_file(_path.substr(0, dot_position));
@@ -78,6 +84,8 @@ void Picture::write_separate_rgb_channel(string _path) {
 }
 
 void Picture::prepare_gnuplot_transfer_function(string out_path) {
+  // Dump raw data for plotting transfer function
+  
   string out_gray_tf = out_path + "_tf_gray.txt";
   string out_red_tf = out_path + "_tf_red.txt";
   string out_green_tf = out_path + "_tf_green.txt";
@@ -121,6 +129,8 @@ void Picture::dump_transfer_function(string out_path, vector<int16_t> *data) {
 }
 
 void Picture::prepare_gnuplot_histogram_data(string out_path) {
+  // Dump raw data for CDF/PDF histogram plotting
+  
   string out_gray_pdf = out_path + "_hist_gray_pdf.txt";
   string out_gray_cdf = out_path + "_hist_gray_cdf.txt";
   
@@ -380,6 +390,7 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
 //  float y_right;
   float y_val = 0;
   
+  // Case 1: X is whole-integer
   if (x_floor == x_ceil) {
     x_exact = true;
     if (x_floor == 0) {
@@ -392,6 +403,7 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
 //    x_right = x_ceil - x;
   }
   
+  // Case 2: Y is whole-integer
   if (y_floor == y_ceil) {
     y_exact = true;
     if (y_floor == 0) {
@@ -404,6 +416,7 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
 //    y_right = y_ceil - y;
   }
   
+  // Case 3: Both X and Y are whole-integer
   if (x_exact && y_exact) {
     if (HEAVY_DEBUG) {
       printf("[X] [Y](% 7.2f, % 7.2f) -> (% 7.2f, % 7.2f)\n", x, y, x_val, y_val);
@@ -435,6 +448,8 @@ RgbPixel Picture::bilinear_interpolate(float x, float y) {
       cg = ((uint32_t) a.g + (uint32_t) b.g) / 2;
       cb = ((uint32_t) a.b + (uint32_t) b.b) / 2;
     } else {
+      // Implicit case 4 where neither X nor Y are whole-integer
+      
       if (HEAVY_DEBUG) {
         printf("(% 7.2f, % 7.2f) -> (% 7.2f, % 7.2f)(% 7.2f, % 7.2f)(% 7.2f, % 7.2f)(% 7.2f, % 7.2f)\n", x, y, x_floor, y_floor, x_floor, y_ceil, x_ceil, y_floor, x_ceil, y_ceil);
       }
@@ -749,7 +764,6 @@ void Picture::apply_nlm_filter(int search_radius, int patch_radius, float decay_
     }
     
     result->push_back(row_data);
-    //delete row_data;
   }
   // end non-threading implementation
 }
@@ -770,6 +784,8 @@ void Picture::apply_nlm_filter(int search_radius, int patch_radius, float decay_
 //}
 
 void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
+  // Use provided equalization table to re-map values
+  
   result_gray = new vector<vector<uint8_t>>();
   
   for (auto r = data_gray->begin(); r != data_gray->end(); ++r) {
@@ -831,9 +847,6 @@ vector<vector<uint8_t>> Picture::create_patch_matrix(int r, int c, int radius, i
     }
     
     for (int cc = c - radius; cc <= c + radius; cc++) {
-      
-      
-      
       if (cc >= i_dim_x) {
         int x_limit = i_dim_x - 1;
         int overshoot = cc - x_limit;
