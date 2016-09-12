@@ -1,3 +1,12 @@
+# EE569 HW1
+# Date: 9/12/2016
+# Name: Gloria Budiman
+# ID: 6528-1836-50
+# email: gbudiman@usc.edu
+#
+# Compiled on Mac El Capitan using g++-6 version 6.1.0
+# C++14 is required. C++11 will not work
+
 CC=g++-6
 CFLAGS=-Ofast
 all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight runs
