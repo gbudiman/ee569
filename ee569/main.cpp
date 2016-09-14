@@ -13,6 +13,9 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+  // Main entry
+  // Set debug to value between 0 to 12 to run each function separately
+  // without command line arguments
   int debug = -1;
 
   if (RUN_ALL) {
@@ -45,6 +48,9 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  // Entry point when debug is disabled
+  // This will process command line arguments and call appropriate functions
+  // accodring to input arguments
   if (argc < 2) {
     print_help();
     return -1;
@@ -320,6 +326,7 @@ int main(int argc, char* argv[]) {
 }
 
 bool xcmp(char* a, const char* b) {
+  // syntactic sugar for string comparison
   return (strcmp(a, b) == 0);
 }
 

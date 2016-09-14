@@ -36,6 +36,8 @@
 # P3A
 ./main denoise mean "../images/P3/Lena_noisy.raw" 512 512 1 "../images/tests/Lena_mean_3.raw" 3
 ./main denoise median "../images/P3/Lena_noisy.raw" 512 512 1 "../images/tests/Lena_median_3.raw" 3
+
+# to cascade filter, simply call another denoising command on output as follows
 ./main denoise mean "../images/tests/Lena_median_3.raw" 512 512 1 "../images/tests/Lena_median_3_mean_3.raw" 3
 ./main denoise gaussian "../images/P3/Lena_noisy.raw" 512 512 1 "../images/tests/Lena_gaussian_2_1.raw" 2 1
 ./main psnr "../images/P3/Lena_noisy.raw" "../images/P3/Lena.raw" 512 512 1

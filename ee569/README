@@ -1,10 +1,39 @@
 EE569 HW1
 Gloria Budiman gbudiman@usc.edu
+6528-1836-50
 Finalized on 9/12/2016
+
+########################
+### Project Organization
+########################
+Xcode is used as IDE
+.xcodeproj file is included
+
+images folder are typically stored in the same level as ee569 folder.
+Folder structure looks like the following during development:
+- root
+  + ee569
+    - main.cpp
+    - Picture.cpp
+    - Picture.hpp
+    - ...
+    - Makefile
+    - README
+    - test.sh
+  + images
+    - P1/
+    - P2/
+    - P3/
+    - tests/
+  + plots # GnuPlot output from various .gs scripts
+  + scripts
 
 ###############
 ### Compilation
 ###############
+Compiled on Mac El Capitan using g++-6 version 6.1.0
+C++14 is required. C++11 will not work
+
 As simple as
 > make
 
@@ -32,3 +61,34 @@ BM3D code is acquired from http://www.cs.tut.fi/~foi/GCF-BM3D/ and slightly modi
 ### Miscellaneous
 #################
 Gnuplot scripts are included to generate histogram data. They are located in scripts/ folder.
+Folder plots/ includes some sample histogram output
+
+#########################
+### Source Code Structure
+#########################
+- main.*
+  Entry point. Allow command-line execution or surgical operation targeting specific functions
+- run*.cpp
+  Used in tandem for surgical operation. Typically used during development and testing.
+- Picture class
+  Primary payload. Does heavy-lifting of I/O operation, PDF/CDF calculation, equalization, denoising, color space transformation, etc
+- RgbPixel class
+  Implements conversion to CMY and HSL
+- CmykPixel, HslPixel class
+  CMY and HSL color space
+- Histogram class
+  Histogram data structure. Also implements rescaling, gaussian generation
+- TransferFunction class
+  Implements linear transfer function
+- Psnr class
+  PSNR calculation
+- Kernel class
+  Gaussian kernel and convolution
+- PatchMap class
+  Used during NLM for patch comparison and pixel recalculation
+- PatchCell class
+  Not used
+- NlmWeight class
+  NLM weighting function - simple data structure
+- project_inclusion.hpp
+  Global function declaration
