@@ -1080,61 +1080,56 @@ void Picture::find_piece() {
   int c1r, c1c, c2r, c2c, c3r, c3c, c4r, c4c;
 
   int state = SCAN_OUTSIDE_IMAGE;
-  for (int row = 0; row < dim_y; row++) {
+  for (int row = 1; row < dim_y - 1; row++) {
     bool is_blank_line = true;
     
     for (int col = 1; col < dim_x - 1; col++) {
-      RgbPixel left = data->at(row)->at(col-1);
-      RgbPixel right = data->at(row)->at(col);
+      RgbPixel a0 = data->at(row-1)->at(col-1);
+      RgbPixel a1 = data->at(row-1)->at(col);
+      RgbPixel a2 = data->at(row-1)->at(col+1);
+      RgbPixel a3 = data->at(row)->at(col-1);
+      RgbPixel a4 = data->at(row)->at(col);
+      RgbPixel a5 = data->at(row)->at(col+1);
+      RgbPixel a6 = data->at(row+1)->at(col-1);
+      RgbPixel a7 = data->at(row+1)->at(col);
+      RgbPixel a8 = data->at(row+1)->at(col+1);
       
-      if (left.r == 255 && left.g == 255 && left.b == 255 &&
-          right.r != 255 && right.g != 255 && right.b != 255) {
-        
-        if (row < min_row) {
-          cout << "First corner detected\n";
-          min_row = row;
-          c1r = row; c1c = col + 1;
-        }
-        
-        if (col < min_col) {
-          cout << "Third corner detected\n";
-          min_col = col;
-          c3r = row + 1, c3c = col + 1;
-        }
-        
-        cout << "enter edges " << row << ", " << col;
-        is_blank_line = false;
+      
+      if (!a8.is_white() &&
+          a0.is_white() && a1.is_white() && a2.is_white() && a3.is_white() &&
+          a4.is_white() && a5.is_white() && a6.is_white() && a7.is_white()) {
+        // Find top-left corner
         state = SCAN_INSIDE_IMAGE;
-      } else if (left.r != 255 && left.g != 255 && left.b != 255 &&
-                 right.r == 255 && right.g == 255 && right.b == 255) {
-        cout << " --> " << row << ", " << col-1 << endl;
+        cout << "Top left corner found at " << row + 1 << ", " << col + 1 << endl;
+      } else if (!a2.is_white() &&
+                 a0.is_white() && a1.is_white() && a3.is_white() && a4.is_white() &&
+                 a5.is_white() && a6.is_white() && a7.is_white() && a8.is_white()) {
+        // bottom-left corner
+        cout << "Bottom left corner found at " << row - 1 << ", " << col + 1 << endl;
+      } else if (!a6.is_white() &&
+                 a0.is_white() && a1.is_white() && a2.is_white() && a3.is_white() &&
+                 a4.is_white() && a5.is_white() && a7.is_white() && a8.is_white()) {
+        cout << "Top right corner found at " << row + 1 << ", " << col - 1 << endl;
+      } else if (!a0.is_white() &&
+                 a1.is_white() && a2.is_white() && a3.is_white() && a4.is_white() &&
+                 a5.is_white() && a6.is_white() && a7.is_white() && a8.is_white()) {
+        cout << "Bottom right corner found at " << row - 1 << ", " << col - 1 << endl;
+      }
+      
+      if (!a4.is_white() || !a1.is_white() || !a7.is_white()) {
         is_blank_line = false;
-        
-        if (col > max_col) {
-          cout << "Second corner detectd\n";
-          max_col = col;
-          c2r = row; c2c = col - 1;
-        }
-        
-        if (row > max_row) {
-          cout << "Fourth corner detected\n";
-          max_row = row;
-          c4r = row - 1; c4c = col - 1;
-        }
       }
     }
     
     if (is_blank_line && state == SCAN_INSIDE_IMAGE) {
       state = SCAN_OUTSIDE_IMAGE;
       cout << "Termination detected ===========================" << endl;
-      cout << "Corners: " << endl
-      << c1r << ", " << c1c << endl
-      << c2r << ", " << c2c << endl
-      << c3r << ", " << c3c << endl
-      << c4r << ", " << c4c << endl;
-      
-      min_row = dim_y; max_row = 0;
-      min_col = dim_x; max_col = 0;
+//      cout << "Corners: " << endl
+//      << c1r << ", " << c1c << endl
+//      << c2r << ", " << c2c << endl
+//      << c3r << ", " << c3c << endl
+//      << c4r << ", " << c4c << endl;
+
     }
     
     // cout << "----\n" << endl;
