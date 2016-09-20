@@ -48,6 +48,7 @@ public:
   void apply_nlm_filter(int, int, float);
   
   void diamond_warp();
+  void find_piece();
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

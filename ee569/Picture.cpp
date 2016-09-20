@@ -1070,8 +1070,76 @@ void Picture::remap_diamond_warp(int row, int col, int region) {
       out_row = y_quart3 + (float) (col - dim_y) / 2;
       break;
   }
-  
+}
 
+void Picture::find_piece() {
+  int min_row, max_row, min_col, max_col;
+  min_row = dim_y; max_row = 0;
+  min_col = dim_x; max_col = 0;
+  
+  int c1r, c1c, c2r, c2c, c3r, c3c, c4r, c4c;
+
+  int state = SCAN_OUTSIDE_IMAGE;
+  for (int row = 0; row < dim_y; row++) {
+    bool is_blank_line = true;
+    
+    for (int col = 1; col < dim_x - 1; col++) {
+      RgbPixel left = data->at(row)->at(col-1);
+      RgbPixel right = data->at(row)->at(col);
+      
+      if (left.r == 255 && left.g == 255 && left.b == 255 &&
+          right.r != 255 && right.g != 255 && right.b != 255) {
+        
+        if (row < min_row) {
+          cout << "First corner detected\n";
+          min_row = row;
+          c1r = row; c1c = col + 1;
+        }
+        
+        if (col < min_col) {
+          cout << "Third corner detected\n";
+          min_col = col;
+          c3r = row + 1, c3c = col + 1;
+        }
+        
+        cout << "enter edges " << row << ", " << col;
+        is_blank_line = false;
+        state = SCAN_INSIDE_IMAGE;
+      } else if (left.r != 255 && left.g != 255 && left.b != 255 &&
+                 right.r == 255 && right.g == 255 && right.b == 255) {
+        cout << " --> " << row << ", " << col-1 << endl;
+        is_blank_line = false;
+        
+        if (col > max_col) {
+          cout << "Second corner detectd\n";
+          max_col = col;
+          c2r = row; c2c = col - 1;
+        }
+        
+        if (row > max_row) {
+          cout << "Fourth corner detected\n";
+          max_row = row;
+          c4r = row - 1; c4c = col - 1;
+        }
+      }
+    }
+    
+    if (is_blank_line && state == SCAN_INSIDE_IMAGE) {
+      state = SCAN_OUTSIDE_IMAGE;
+      cout << "Termination detected ===========================" << endl;
+      cout << "Corners: " << endl
+      << c1r << ", " << c1c << endl
+      << c2r << ", " << c2c << endl
+      << c3r << ", " << c3c << endl
+      << c4r << ", " << c4c << endl;
+      
+      min_row = dim_y; max_row = 0;
+      min_col = dim_x; max_col = 0;
+    }
+    
+    // cout << "----\n" << endl;
+  }
+  
   
 }
 

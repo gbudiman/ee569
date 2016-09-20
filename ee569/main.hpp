@@ -66,6 +66,9 @@
 #define DIAMOND_REGION_C 2
 #define DIAMOND_REGION_D 3
 
+#define SCAN_OUTSIDE_IMAGE 0
+#define SCAN_INSIDE_IMAGE 1
+
 bool xcmp(char*, const char*);
 void print_help();
 

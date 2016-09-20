@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 21;
+  int debug = 22;
 
   if (RUN_ALL) {
     f_1_1_a_cropping();
@@ -47,6 +47,7 @@ int main(int argc, char* argv[]) {
       case 12: f_1_3_psnr_calculator(); break;
         
       case 21: f_2_1_a_diamond_warp(); break;
+      case 22: f_2_1_b_puzzle_matching(); break;
     }
     
     return 0;
