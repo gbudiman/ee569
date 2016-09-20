@@ -47,6 +47,8 @@ public:
   void apply_gaussian_filter(int, float);
   void apply_nlm_filter(int, int, float);
   
+  void diamond_warp();
+  
   uint32_t get_dim_x();
   uint32_t get_dim_y();
   uint32_t get_type();
@@ -91,6 +93,8 @@ private:
   void threaded_nlm_filter(int, int, std::vector<std::vector<RgbPixel>*>*, int, int, int);
   
   void dump_transfer_function(std::string, std::vector<int16_t>*);
+  
+  void remap_diamond_warp(int, int, int);
   
   std::string path;
   uint32_t dim_x;

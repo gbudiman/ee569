@@ -838,6 +838,8 @@ vector<vector<uint8_t>> Picture::create_patch_matrix(int r, int c, int radius, i
   for (int rr = r - radius; rr <= r + radius; rr++) {
     vector<uint8_t> row_data = vector<uint8_t>();
     
+    // Handle edge cases
+    // img[-1] == img[1], img[-2] == img[2] so on
     if (rr >= i_dim_y) {
       int y_limit = i_dim_y - 1;
       int overshoot = rr - y_limit;
@@ -999,6 +1001,78 @@ void Picture::histogram_match_rgb(Histogram *rr, Histogram *rg, Histogram *rb) {
   }
   
   remap_histogram_rgb(luteq_r, luteq_g, luteq_b);
+}
+
+void Picture::diamond_warp() {
+  int x_quart1, x_quart2, x_quart3;
+  int y_quart1, y_quart2, y_quart3;
+  
+  x_quart1 = dim_x / 4;
+  x_quart2 = dim_x / 2;
+  x_quart3 = dim_x * 3 / 4;
+  y_quart1 = dim_y / 4;
+  y_quart2 = dim_y / 2;
+  y_quart3 = dim_y * 3 / 4;
+  
+  for (int row = 0; row < y_quart2; row++) {
+    for (int col = 0; col < x_quart2; col++) {
+      remap_diamond_warp(row, col, DIAMOND_REGION_A);
+    }
+    
+    for (int col = x_quart2; col < dim_x; col++) {
+      remap_diamond_warp(row, col, DIAMOND_REGION_B);
+    }
+  }
+  
+  for (int row = y_quart2; row < dim_y; row++) {
+    for (int col = 0; col < x_quart2; col++) {
+      remap_diamond_warp(row, col, DIAMOND_REGION_C);
+    }
+    
+    for (int col = x_quart1; col < dim_x; col++) {
+      remap_diamond_warp(row, col, DIAMOND_REGION_D);
+    }
+  }
+}
+
+void Picture::remap_diamond_warp(int row, int col, int region) {
+  int x_quart1, x_quart2, x_quart3;
+  int y_quart1, y_quart2, y_quart3;
+  
+  x_quart1 = dim_x / 4;
+  x_quart2 = dim_x / 2;
+  x_quart3 = dim_x * 3 / 4;
+  y_quart1 = dim_y / 4;
+  y_quart2 = dim_y / 2;
+  y_quart3 = dim_y * 3 / 4;
+  
+  float out_row, out_col;
+  
+  switch(region) {
+    case DIAMOND_REGION_A:
+      out_col = x_quart1 + (float) col / 2;
+      out_row = y_quart1 + (float) row / 2; // - (float) col / 2;
+      
+      cout << "(" << row << ", " << col << ") falls in region " << region
+      << " maps to (" << out_row << ", " << out_col << ")"
+      << endl;
+      break;
+    case DIAMOND_REGION_B:
+      out_col = x_quart3 + (float) (col - dim_x) / 2;
+      out_row = y_quart1 + (float) row / 2;
+      break;
+    case DIAMOND_REGION_C:
+      out_col = x_quart1 + (float) col / 2;
+      out_row = y_quart3 + (float) (row - dim_y) / 2;
+      break;
+    case DIAMOND_REGION_D:
+      out_col = x_quart3 + (float) (col - dim_x) / 2;
+      out_row = y_quart3 + (float) (col - dim_y) / 2;
+      break;
+  }
+  
+
+  
 }
 
 void Picture::write_gray(string out_path) {

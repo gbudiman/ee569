@@ -36,4 +36,6 @@ void f_psnr(char*, char*, int, int, int);
 void f_1_3_b_nlm();
 void f_1_3_b_cascaded_filter();
 void f_1_3_psnr_calculator();
+
+void f_2_1_a_diamond_warp();
 #endif /* project_inclusion_h */

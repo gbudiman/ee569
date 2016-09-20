@@ -47,5 +47,7 @@
 ./main psnr "../images/P3/Lena.raw" "../images/tests/Lena_gaussian_2_1.raw" 512 512 1
 
 # P3B
+# !!! WARNING !!!
+# NLM is expensive algorithm. Depending input parameters, it may take between minutes to hours
 ./main denoise nlm "../images/P3/Buildings.raw" 512 512 1 "../images/tests/Buildings_7_3_1000.raw" 7 3 1000
 ./main psnr "../images/P3/Buildings.raw" "../images/tests/Buildings_7_3_1000.raw" 512 512 1

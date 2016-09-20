@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = -1;
+  int debug = 21;
 
   if (RUN_ALL) {
     f_1_1_a_cropping();
@@ -45,7 +45,11 @@ int main(int argc, char* argv[]) {
       case 10: f_1_3_a_cascaded_filter(); break;
       case 11: f_1_3_b_cascaded_filter(); break;
       case 12: f_1_3_psnr_calculator(); break;
+        
+      case 21: f_2_1_a_diamond_warp(); break;
     }
+    
+    return 0;
   }
 
   // Entry point when debug is disabled

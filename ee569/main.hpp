@@ -61,6 +61,11 @@
 
 #define RUN_ALL false
 
+#define DIAMOND_REGION_A 0
+#define DIAMOND_REGION_B 1
+#define DIAMOND_REGION_C 2
+#define DIAMOND_REGION_D 3
+
 bool xcmp(char*, const char*);
 void print_help();
 
