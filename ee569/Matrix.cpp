@@ -31,7 +31,7 @@ Matrix Matrix::multiply(Matrix other) {
       float acc = 0;
       for (int iter_c = iter_b; iter_c <= iter_b; iter_c++) {
         for (int iter_d = 0; iter_d < result_row_length; iter_d++) {
-          printf("([%d, %d] = [%d, %d] X [%d, %d]\n", iter_a, iter_b, iter_c, iter_d, iter_d, iter_a);
+          //printf("([%d, %d] = [%d, %d] X [%d, %d]\n", iter_a, iter_b, iter_c, iter_d, iter_d, iter_a);
           acc += data.at(iter_c).at(iter_d) * other.data.at(iter_d).at(iter_a);
         }
         

@@ -1174,14 +1174,14 @@ void Picture::find_piece(string piece_one, string piece_two) {
         
         vector<vector<float>> base_matrix = vector<vector<float>>();
         vector<float> row = vector<float>();
-        row.push_back(1.4489);
-        row.push_back(0.3882);
-        row.push_back(56.6118);
+        row.push_back(1.4292);
+        row.push_back(0.3843);
+        row.push_back(56.6157);
         base_matrix.push_back(row);
         row = vector<float>();
-        row.push_back(-0.3882);
-        row.push_back(1.4489);
-        row.push_back(94.5511);
+        row.push_back(-0.3843);
+        row.push_back(1.4292);
+        row.push_back(94.5708);
         base_matrix.push_back(row);
         row = vector<float>();
         row.push_back(0);
@@ -1191,21 +1191,32 @@ void Picture::find_piece(string piece_one, string piece_two) {
         
         Matrix bm = Matrix(base_matrix);
         
-        vector<vector<float>> t_matrix = vector<vector<float>>();
-        row = vector<float>();
-        row.push_back(0);
-        t_matrix.push_back(row);
-        row = vector<float>();
-        row.push_back(0);
-        t_matrix.push_back(row);
-        row = vector<float>();
-        row.push_back(1);
-        t_matrix.push_back(row);
+        result = new vector<vector<RgbPixel>*>();
+        for (int res_row = 0; res_row < 101; res_row++) {
+          vector<RgbPixel>* row_result = new vector<RgbPixel>();
+          for (int res_col = 0; res_col < 101; res_col++) {
+            vector<vector<float>> t_matrix = vector<vector<float>>();
+            row = vector<float>();
+            row.push_back(res_row + 1);
+            t_matrix.push_back(row);
+            row = vector<float>();
+            row.push_back(res_col + 2);
+            t_matrix.push_back(row);
+            row = vector<float>();
+            row.push_back(1);
+            t_matrix.push_back(row);
+            
+            Matrix tm = Matrix(t_matrix);
+            Matrix res = bm.multiply(tm);
+            //printf("(%.2f, %.2f) <- (%d, %d)\n", res.data.at(0).at(0), res.data.at(1).at(0), res_row, res_col);
+            RgbPixel rp = bilinear_interpolate(res.data.at(1).at(0), res.data.at(0).at(0));
+            
+            row_result->push_back(rp);
+          }
+          result->push_back(row_result);
+        }
         
-        Matrix tm = Matrix(t_matrix);
-        Matrix res = bm.multiply(tm);
-        
-        int i = 1;
+        write_rgb(piece_one);
       } else {
         cout << "Type 2 detected" << endl;
         cout << "Top left: " << x1r << ", " << x1c << endl;
@@ -1216,6 +1227,52 @@ void Picture::find_piece(string piece_one, string piece_two) {
         float rowdiff = c2r - x1r;
         float length = sqrt(coldiff * coldiff + rowdiff * rowdiff);
         cout << "Length = " << length << endl;
+        
+        vector<vector<float>> base_matrix = vector<vector<float>>();
+        vector<float> row = vector<float>();
+        row.push_back(-0.0653);
+        row.push_back(-0.7170);
+        row.push_back(369.2030);
+        base_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(0.7170);
+        row.push_back(-0.0653);
+        row.push_back(307.9390);
+        base_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(0);
+        row.push_back(0);
+        row.push_back(1);
+        base_matrix.push_back(row);
+        
+        Matrix bm = Matrix(base_matrix);
+        
+        result = new vector<vector<RgbPixel>*>();
+        for (int res_row = 0; res_row < 101; res_row++) {
+          vector<RgbPixel>* row_result = new vector<RgbPixel>();
+          for (int res_col = 0; res_col < 101; res_col++) {
+            vector<vector<float>> t_matrix = vector<vector<float>>();
+            row = vector<float>();
+            row.push_back(res_row + 3);
+            t_matrix.push_back(row);
+            row = vector<float>();
+            row.push_back(res_col + 0);
+            t_matrix.push_back(row);
+            row = vector<float>();
+            row.push_back(1);
+            t_matrix.push_back(row);
+            
+            Matrix tm = Matrix(t_matrix);
+            Matrix res = bm.multiply(tm);
+            //printf("(%.2f, %.2f) <- (%d, %d)\n", res.data.at(0).at(0), res.data.at(1).at(0), res_row, res_col);
+            RgbPixel rp = bilinear_interpolate(res.data.at(1).at(0), res.data.at(0).at(0));
+            
+            row_result->push_back(rp);
+          }
+          result->push_back(row_result);
+        }
+        
+        write_rgb(piece_two);
       }
 
       top_left_started = false;
