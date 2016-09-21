@@ -11,5 +11,5 @@
 
 void f_2_1_b_puzzle_matching() {
   Picture* puzzles = new Picture("hw2_images/Piece.raw", 500, 500, COLOR_RGB);
-  puzzles->find_piece();
+  puzzles->find_piece("hw2_out/hillary_piece.raw", "hw2_out/trump_piece.raw");
 }

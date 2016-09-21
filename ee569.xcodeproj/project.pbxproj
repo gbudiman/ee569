@@ -34,6 +34,7 @@
 		07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A489D01D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp */; };
 		07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB87E1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp */; };
 		07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8801D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp */; };
+		07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8821D92595B00AFC522 /* Matrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -120,6 +121,8 @@
 		07DBE8181D72403E0082F3D7 /* main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hpp; sourceTree = "<group>"; };
 		07DCB87E1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_1_a_diamond_warp.cpp; sourceTree = "<group>"; };
 		07DCB8801D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_f_2_1_b_puzzle_matching.cpp; sourceTree = "<group>"; };
+		07DCB8821D92595B00AFC522 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		07DCB8831D92595B00AFC522 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 				07872F1F1D7BC7A400A2C487 /* PatchCell.hpp */,
 				07A489C91D7BE308009C1FD1 /* NlmWeight.cpp */,
 				07A489CA1D7BE308009C1FD1 /* NlmWeight.hpp */,
+				07DCB8821D92595B00AFC522 /* Matrix.cpp */,
+				07DCB8831D92595B00AFC522 /* Matrix.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */,
 				07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */,
 				07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */,
 				07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */,

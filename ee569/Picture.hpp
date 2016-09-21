@@ -17,6 +17,7 @@
 #include "Histogram.hpp"
 #include "PatchMap.hpp"
 #include "Kernel.hpp"
+#include "Matrix.hpp"
 
 class Picture {
 public:
@@ -48,7 +49,7 @@ public:
   void apply_nlm_filter(int, int, float);
   
   void diamond_warp();
-  void find_piece();
+  void find_piece(std::string, std::string);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

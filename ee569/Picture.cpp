@@ -1072,7 +1072,7 @@ void Picture::remap_diamond_warp(int row, int col, int region) {
   }
 }
 
-void Picture::find_piece() {
+void Picture::find_piece(string piece_one, string piece_two) {
   int c1r, c1c, c2r, c2c, c3r, c3c, c4r, c4c;
   int x1r, x1c, x2r, x2c, x3r, x3c, x4r, x4c;
 
@@ -1155,17 +1155,11 @@ void Picture::find_piece() {
     if (is_blank_line && state == SCAN_INSIDE_IMAGE) {
       state = SCAN_OUTSIDE_IMAGE;
       cout << "Termination detected ===========================" << endl;
-//      if (left_detected) {
-//        cout << "Top left: " << c1r << ", " << c1c << endl;
-//        cout << "Top right: " << x2r << ", " << x2c << endl;
-//        cout << "Bottom left: " << c3r << ", " << c3c << endl;
-//        cout << "Bottom right: " << x4r << ", " << x4c << endl;
-//      }
-      cout << "Possible corner pairs: " << endl
-      << c1r << ", " << c1c << " | " << x1r << ", " << x1c << endl
-      << c2r << ", " << c2c << " | " << x2r << ", " << x2c << endl
-      << c3r << ", " << c3c << " | " << x3r << ", " << x3c << endl
-      << c4r << ", " << c4c << " | " << x4r << ", " << x4c << endl;
+//      cout << "Possible corner pairs: " << endl
+//      << c1r << ", " << c1c << " | " << x1r << ", " << x1c << endl
+//      << c2r << ", " << c2c << " | " << x2r << ", " << x2c << endl
+//      << c3r << ", " << c3c << " | " << x3r << ", " << x3c << endl
+//      << c4r << ", " << c4c << " | " << x4r << ", " << x4c << endl;
       
       if (c1r < x2r && c1c < x2c && x1r > x2r) {
         cout << "Type 1 detected" << endl;
@@ -1173,12 +1167,55 @@ void Picture::find_piece() {
         cout << "Top right: " << x2r << ", " << x2c << endl;
         cout << "Bottom left: " << c3r << ", " << c3c << endl;
         cout << "Bottom right: " << x4r << ", " << x4c << endl;
+        float coldiff = x2c - c1c;
+        float rowdiff = x2r - c1r;
+        float length = sqrt(coldiff * coldiff + rowdiff * rowdiff);
+        cout << "Length = " << length << endl;
+        
+        vector<vector<float>> base_matrix = vector<vector<float>>();
+        vector<float> row = vector<float>();
+        row.push_back(1.4489);
+        row.push_back(0.3882);
+        row.push_back(56.6118);
+        base_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(-0.3882);
+        row.push_back(1.4489);
+        row.push_back(94.5511);
+        base_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(0);
+        row.push_back(0);
+        row.push_back(1);
+        base_matrix.push_back(row);
+        
+        Matrix bm = Matrix(base_matrix);
+        
+        vector<vector<float>> t_matrix = vector<vector<float>>();
+        row = vector<float>();
+        row.push_back(0);
+        t_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(0);
+        t_matrix.push_back(row);
+        row = vector<float>();
+        row.push_back(1);
+        t_matrix.push_back(row);
+        
+        Matrix tm = Matrix(t_matrix);
+        Matrix res = bm.multiply(tm);
+        
+        int i = 1;
       } else {
         cout << "Type 2 detected" << endl;
         cout << "Top left: " << x1r << ", " << x1c << endl;
         cout << "Top right: " << c2r << ", " << c2c << endl;
         cout << "Bottom left: " << x3r << ", " << x3c << endl;
         cout << "Bottom right: " << c4r << ", " << c4c << endl;
+        float coldiff = c2c - x1c;
+        float rowdiff = c2r - x1r;
+        float length = sqrt(coldiff * coldiff + rowdiff * rowdiff);
+        cout << "Length = " << length << endl;
       }
 
       top_left_started = false;
@@ -1195,8 +1232,6 @@ void Picture::find_piece() {
     
     // cout << "----\n" << endl;
   }
-  
-  
 }
 
 void Picture::write_gray(string out_path) {
