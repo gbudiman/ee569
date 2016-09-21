@@ -1073,13 +1073,14 @@ void Picture::remap_diamond_warp(int row, int col, int region) {
 }
 
 void Picture::find_piece() {
-  int min_row, max_row, min_col, max_col;
-  min_row = dim_y; max_row = 0;
-  min_col = dim_x; max_col = 0;
-  
   int c1r, c1c, c2r, c2c, c3r, c3c, c4r, c4c;
+  int x1r, x1c, x2r, x2c, x3r, x3c, x4r, x4c;
 
   int state = SCAN_OUTSIDE_IMAGE;
+  bool top_left_started = false;
+  bool top_right_started = false;
+  bool bottom_left_started = false;
+  bool bottom_right_started = false;
   for (int row = 1; row < dim_y - 1; row++) {
     bool is_blank_line = true;
     
@@ -1100,20 +1101,50 @@ void Picture::find_piece() {
           a4.is_white() && a5.is_white() && a6.is_white() && a7.is_white()) {
         // Find top-left corner
         state = SCAN_INSIDE_IMAGE;
-        cout << "Top left corner found at " << row + 1 << ", " << col + 1 << endl;
+
+        if (!top_left_started) {
+          top_left_started = true;
+          c1r = row + 1;
+          c1c = col + 1;
+        }
+        x1r = row + 1;
+        x1c = col + 1;
+        //cout << "Top left corner found at " << row + 1 << ", " << col + 1 << endl;
       } else if (!a2.is_white() &&
                  a0.is_white() && a1.is_white() && a3.is_white() && a4.is_white() &&
                  a5.is_white() && a6.is_white() && a7.is_white() && a8.is_white()) {
         // bottom-left corner
-        cout << "Bottom left corner found at " << row - 1 << ", " << col + 1 << endl;
+        if (!bottom_left_started) {
+          bottom_left_started = true;
+          c3r = row - 1;
+          c3c = col + 1;
+        }
+        x3r = row - 1;
+        x3c = col + 1;
+        //cout << "Bottom left corner found at " << row - 1 << ", " << col + 1 << endl;
       } else if (!a6.is_white() &&
                  a0.is_white() && a1.is_white() && a2.is_white() && a3.is_white() &&
                  a4.is_white() && a5.is_white() && a7.is_white() && a8.is_white()) {
-        cout << "Top right corner found at " << row + 1 << ", " << col - 1 << endl;
+
+        if (!top_right_started) {
+          top_right_started = true;
+          c2r = row + 1;
+          c2c = col - 1;
+        }
+        x2r = row + 1;
+        x2c = col - 1;
+        //cout << "Top right corner found at " << row + 1 << ", " << col - 1 << endl;
       } else if (!a0.is_white() &&
                  a1.is_white() && a2.is_white() && a3.is_white() && a4.is_white() &&
                  a5.is_white() && a6.is_white() && a7.is_white() && a8.is_white()) {
-        cout << "Bottom right corner found at " << row - 1 << ", " << col - 1 << endl;
+        if (!bottom_right_started) {
+          bottom_right_started = true;
+          c4r = row - 1;
+          c4c = col - 1;
+        }
+        x4r = row - 1;
+        x4c = col - 1;
+        //cout << "Bottom right corner found at " << row - 1 << ", " << col - 1 << endl;
       }
       
       if (!a4.is_white() || !a1.is_white() || !a7.is_white()) {
@@ -1124,6 +1155,36 @@ void Picture::find_piece() {
     if (is_blank_line && state == SCAN_INSIDE_IMAGE) {
       state = SCAN_OUTSIDE_IMAGE;
       cout << "Termination detected ===========================" << endl;
+//      if (left_detected) {
+//        cout << "Top left: " << c1r << ", " << c1c << endl;
+//        cout << "Top right: " << x2r << ", " << x2c << endl;
+//        cout << "Bottom left: " << c3r << ", " << c3c << endl;
+//        cout << "Bottom right: " << x4r << ", " << x4c << endl;
+//      }
+      cout << "Possible corner pairs: " << endl
+      << c1r << ", " << c1c << " | " << x1r << ", " << x1c << endl
+      << c2r << ", " << c2c << " | " << x2r << ", " << x2c << endl
+      << c3r << ", " << c3c << " | " << x3r << ", " << x3c << endl
+      << c4r << ", " << c4c << " | " << x4r << ", " << x4c << endl;
+      
+      if (c1r < x2r && c1c < x2c && x1r > x2r) {
+        cout << "Type 1 detected" << endl;
+        cout << "Top left: " << c1r << ", " << c1c << endl;
+        cout << "Top right: " << x2r << ", " << x2c << endl;
+        cout << "Bottom left: " << c3r << ", " << c3c << endl;
+        cout << "Bottom right: " << x4r << ", " << x4c << endl;
+      } else {
+        cout << "Type 2 detected" << endl;
+        cout << "Top left: " << x1r << ", " << x1c << endl;
+        cout << "Top right: " << c2r << ", " << c2c << endl;
+        cout << "Bottom left: " << x3r << ", " << x3c << endl;
+        cout << "Bottom right: " << c4r << ", " << c4c << endl;
+      }
+
+      top_left_started = false;
+      top_right_started = false;
+      bottom_left_started = false;
+      bottom_right_started = false;
 //      cout << "Corners: " << endl
 //      << c1r << ", " << c1c << endl
 //      << c2r << ", " << c2c << endl
