@@ -1291,6 +1291,44 @@ void Picture::find_piece(string piece_one, string piece_two) {
   }
 }
 
+void Picture::find_hole(int *trcr, int *trcc, int *brcr, int *brcc) {
+  for (int row = 1; row < dim_y - 1; row++) {
+    for (int col = 1; col < dim_x - 1; col++) {
+      RgbPixel a0 = data->at(row-1)->at(col-1);
+      RgbPixel a1 = data->at(row-1)->at(col);
+      RgbPixel a2 = data->at(row-1)->at(col+1);
+      RgbPixel a3 = data->at(row)->at(col-1);
+      RgbPixel a4 = data->at(row)->at(col);
+      RgbPixel a5 = data->at(row)->at(col+1);
+      RgbPixel a6 = data->at(row+1)->at(col-1);
+      RgbPixel a7 = data->at(row+1)->at(col);
+      RgbPixel a8 = data->at(row+1)->at(col+1);
+      
+      if (!a0.is_white() && !a1.is_white() && !a2.is_white() && !a3.is_white() && !a6.is_white()
+          && a4.is_white() && a5.is_white() && a7.is_white() && a8.is_white()) {
+        printf("left corner at %d, %d\n", row, col);
+        *trcr = row;
+        *trcc = col;
+      } else if (a0.is_white() && a1.is_white() && a3.is_white() && a4.is_white()
+                 && !a2.is_white() && !a5.is_white() && !a6.is_white() && !a7.is_white() && !a8.is_white()) {
+        printf("right corner at %d, %d\n", row, col);
+        *brcr = row;
+        *brcc = col;
+      }
+    }
+  }
+}
+
+void Picture::fit_piece(Picture piece, int tlcr, int tlcc, int brcr, int brcc) {
+  result = data;
+  
+  for (int r = tlcr; r <= brcr; r++) {
+    for (int c = tlcc; c <= brcc; c++) {
+      result->at(r)->at(c) = piece.data->at(r - tlcr)->at(c - tlcc);
+    }
+  }
+}
+
 void Picture::write_gray(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);

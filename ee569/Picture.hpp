@@ -50,6 +50,8 @@ public:
   
   void diamond_warp();
   void find_piece(std::string, std::string);
+  void find_hole(int*, int*, int*, int*);
+  void fit_piece(Picture, int, int, int, int);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
