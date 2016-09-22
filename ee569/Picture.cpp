@@ -1342,7 +1342,10 @@ void Picture::dither(int method) {
 void Picture::dither_multi_level(int method) {
   vector<int> levels = { 0, 85, 170, 255 };
   switch(method) {
-    case DITHER_8: dither_8(levels);
+    case DITHER_2: dither_2(levels); break;
+    case DITHER_4: dither_4(levels); break;
+    case DITHER_4A: dither_4a(levels); break;
+    case DITHER_8: dither_8(levels); break;
   }
 }
 
@@ -1362,7 +1365,11 @@ void Picture::apply_dithering(Matrix dither, vector<int> levels) {
       float bayer = dither.data.at(r % modulus).at(c % modulus);
       
       if (use_multi_level) {
-        row_gray.push_back(find_closest_palette(pixel/bayer * 255, levels));
+        int fcp = find_closest_palette((float) pixel/bayer * 127, levels);
+        //printf("%d | %.3f -> %d\n", pixel, bayer, fcp);
+
+        
+        row_gray.push_back(fcp);
       } else {
         row_gray.push_back(pixel > bayer ? 255 : 0);
       }
@@ -1510,6 +1517,12 @@ void Picture::dither_2(vector<int> levels) {
 int Picture::find_closest_palette(float val, std::vector<int> palettes) {
   float minima = __FLT_MAX__;
   int index = -1;
+  
+  if (val < 85) {
+    return 0;
+  } else if (val > 170) {
+    return 255;
+  }
   
   for (int i = 0; i < palettes.size(); i++) {
     float diff = abs(val - palettes.at(i));

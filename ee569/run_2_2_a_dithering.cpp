@@ -25,6 +25,15 @@ void f_2_2_a_dithering() {
   house.dither(DITHER_8);
   house.write_to_file("hw2_out/House_dither_8.raw");
   
+//  house.dither_multi_level(DITHER_2);
+//  house.write_to_file("hw2_out/House_dither_2_4.raw");
+//  
+//  house.dither_multi_level(DITHER_4);
+//  house.write_to_file("hw2_out/House_dither_4_4.raw");
+//  
+//  house.dither_multi_level(DITHER_4A);
+//  house.write_to_file("hw2_out/House_dither_4a_4.raw");
+  
   house.dither_multi_level(DITHER_8);
   house.write_to_file("hw2_out/House_dither_8_4.raw");
 }
