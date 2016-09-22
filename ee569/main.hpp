@@ -69,6 +69,14 @@
 #define SCAN_OUTSIDE_IMAGE 0
 #define SCAN_INSIDE_IMAGE 1
 
+#define DITHER_2 0
+#define DITHER_4 1
+#define DITHER_4A 2
+#define DITHER_8 3
+#define DITHER_FSB 4
+#define DITHER_JJN 5
+#define DITHER_STUCKI 6
+
 bool xcmp(char*, const char*);
 void print_help();
 

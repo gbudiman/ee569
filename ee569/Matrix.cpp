@@ -44,3 +44,30 @@ Matrix Matrix::multiply(Matrix other) {
   
   return Matrix(result);
 }
+
+float Matrix::multiply_and_average(Matrix other) {
+  Matrix res = multiply(other);
+  float acc = 0;
+  int row_size = res.data.size();
+  int col_size = res.data.at(0).size();
+  
+  for (int row = 0; row < row_size; row++) {
+    for (int col = 0; col < col_size; col++) {
+      acc += res.data.at(row).at(col);
+    }
+  }
+  
+  return acc / (row_size * col_size / 2);
+}
+
+void Matrix::thresholdize() {
+  int row_size = data.size();
+  int col_size = data.at(0).size();
+  int n_squared = row_size * col_size;
+  
+  for (int r = 0; r < row_size; r++) {
+    for (int c = 0; c < col_size; c++) {
+      data.at(r).at(c) = (data.at(r).at(c) + 0.5) * 255 / n_squared;
+    }
+  }
+}

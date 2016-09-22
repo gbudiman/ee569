@@ -39,4 +39,5 @@ void f_1_3_psnr_calculator();
 
 void f_2_1_a_diamond_warp();
 void f_2_1_b_puzzle_matching();
+void f_2_2_a_dithering();
 #endif /* project_inclusion_h */

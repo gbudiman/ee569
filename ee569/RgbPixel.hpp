@@ -21,6 +21,7 @@ public:
   CmykPixel to_cmyk();
   HslPixel to_hsl();
   
+  
   uint8_t r;
   uint8_t g;
   uint8_t b;

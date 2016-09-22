@@ -53,6 +53,9 @@ public:
   void find_hole(int*, int*, int*, int*);
   void fit_piece(Picture, int, int, int, int);
   
+  void dither(int);
+  void dither_multi_level(int);
+  
   uint32_t get_dim_x();
   uint32_t get_dim_y();
   uint32_t get_type();
@@ -99,6 +102,14 @@ private:
   void dump_transfer_function(std::string, std::vector<int16_t>*);
   
   void remap_diamond_warp(int, int, int);
+  
+  void dither_2(std::vector<int>);
+  void dither_4(std::vector<int>);
+  void dither_4a(std::vector<int>);
+  void dither_8(std::vector<int>);
+  void apply_dithering(Matrix, std::vector<int>);
+  
+  int find_closest_palette(float, std::vector<int>);
   
   std::string path;
   uint32_t dim_x;

@@ -1329,6 +1329,199 @@ void Picture::fit_piece(Picture piece, int tlcr, int tlcc, int brcr, int brcc) {
   }
 }
 
+void Picture::dither(int method) {
+  vector<int> levels = {};
+  switch(method) {
+    case DITHER_2: dither_2(levels); break;
+    case DITHER_4: dither_4(levels); break;
+    case DITHER_4A: dither_4a(levels); break;
+    case DITHER_8: dither_8(levels); break;
+  }
+}
+
+void Picture::dither_multi_level(int method) {
+  vector<int> levels = { 0, 85, 170, 255 };
+  switch(method) {
+    case DITHER_8: dither_8(levels);
+  }
+}
+
+void Picture::apply_dithering(Matrix dither, vector<int> levels) {
+  result_gray = new vector<vector<uint8_t>>();
+  int modulus = dither.data.size();
+  bool use_multi_level = true;
+  
+  if (levels.size() == 0) {
+    use_multi_level = false;
+  }
+  
+  for (int r = 0; r < dim_y; r++) {
+    vector<uint8_t> row_gray = vector<uint8_t>();
+    for (int c = 0; c < dim_x; c++) {
+      int pixel = data_gray->at(r).at(c);
+      float bayer = dither.data.at(r % modulus).at(c % modulus);
+      
+      if (use_multi_level) {
+        row_gray.push_back(find_closest_palette(pixel/bayer * 255, levels));
+      } else {
+        row_gray.push_back(pixel > bayer ? 255 : 0);
+      }
+    }
+    
+    result_gray->push_back(row_gray);
+  }
+}
+
+void Picture::dither_8(vector<int> levels) {
+  vector<vector<float>> mat = vector<vector<float>>();
+  vector<float> d = { 0, 32, 8, 40, 2, 34, 10, 42 };
+  mat.push_back(d);
+  d = { 48, 16, 56, 24, 50, 18, 58, 26 };
+  mat.push_back(d);
+  d = { 12, 44,  4, 36, 14, 46,  6, 38 };
+  mat.push_back(d);
+  d = { 60, 28, 52, 20, 62, 30, 54, 22 };
+  mat.push_back(d);
+  d = {  3, 35, 11, 43,  1, 33,  9, 41 };
+  mat.push_back(d);
+  d = { 51, 19, 59, 27, 49, 17, 57, 25 };
+  mat.push_back(d);
+  d = { 15, 47,  7, 39, 13, 45,  5, 37 };
+  mat.push_back(d);
+  d = { 63, 31, 55, 23, 61, 29, 53, 21 };
+  mat.push_back(d);
+  
+  Matrix m = Matrix(mat);
+  m.thresholdize();
+  
+  apply_dithering(m, levels);
+  
+//  for (int r = 0; r < dim_y; r++) {
+//    vector<uint8_t> row_gray = vector<uint8_t>();
+//    for (int c = 0; c < dim_x; c++) {
+//      int pixel = data_gray->at(r).at(c);
+//      float bayer = m.data.at(r % 8).at(c % 8);
+//      
+//      row_gray.push_back(pixel > bayer ? 255 : 0);
+//    }
+//    result_gray->push_back(row_gray);
+//  }
+}
+
+void Picture::dither_4(vector<int> levels) {
+  vector<vector<float>> mat = vector<vector<float>>();
+  vector<float> d = { 0, 8, 2, 10 };
+  mat.push_back(d);
+  d = { 12,  4, 14,  6 };
+  mat.push_back(d);
+  d = {  3, 11,  1,  9 };
+  mat.push_back(d);
+  d = { 15,  7, 13,  5 };
+  mat.push_back(d);
+  
+  Matrix m = Matrix(mat);
+  m.thresholdize();
+  
+  apply_dithering(m, levels);
+}
+
+void Picture::dither_4a(vector<int> levels) {
+  vector<vector<float>> mat = vector<vector<float>>();
+  vector<float> d = { 14, 10, 11, 15 };
+  mat.push_back(d);
+  d = {  9,  3,  0,  4 };
+  mat.push_back(d);
+  d = {  8,  2,  1,  5 };
+  mat.push_back(d);
+  d = { 13,  7,  6, 12 };
+  mat.push_back(d);
+  
+  Matrix m = Matrix(mat);
+  m.thresholdize();
+  
+  apply_dithering(m, levels);
+}
+
+void Picture::dither_2(vector<int> levels) {
+  vector<vector<float>> mat = vector<vector<float>>();
+  vector<float> d = vector<float>();
+  d.push_back(0.5 / 4 * 255);
+  d.push_back(2.5 / 4 * 255);
+  mat.push_back(d);
+  d = vector<float>();
+  d.push_back(3.5 / 4 * 255);
+  d.push_back(1.5 / 4 * 255);
+  mat.push_back(d);
+  Matrix m = Matrix(mat);
+  
+  apply_dithering(m, levels);
+  
+//  result_gray = new vector<vector<uint8_t>>();
+//  
+//  for (int r = 0; r < dim_y; r += 2) {
+//    vector<uint8_t> row_gray_0 = vector<uint8_t>();
+//    vector<uint8_t> row_gray_1 = vector<uint8_t>();
+//    
+//    for (int c = 0; c < dim_x; c += 2) {
+//      uint8_t p0 = data_gray->at(r).at(c);
+//      uint8_t p1 = data_gray->at(r).at(c+1);
+//      uint8_t p2 = data_gray->at(r+1).at(c);
+//      uint8_t p3 = data_gray->at(r+1).at(c+1);
+//      
+//      p0 = p0 > m.data.at(0).at(0) ? 255 : 0;
+//      p1 = p1 > m.data.at(0).at(1) ? 255 : 0;
+//      p2 = p2 > m.data.at(1).at(0) ? 255 : 0;
+//      p3 = p3 > m.data.at(1).at(1) ? 255 : 0;
+//      
+//      row_gray_0.push_back(p0);
+//      row_gray_0.push_back(p1);
+//      row_gray_1.push_back(p2);
+//      row_gray_1.push_back(p3);
+//    }
+//    
+//    result_gray->push_back(row_gray_0);
+//    result_gray->push_back(row_gray_1);
+//  }
+  
+//  for (int r = 0; r < dim_y; r++) {
+//    for (int c = 0; c < dim_x; c++) {
+//      vector<vector<float>> img = vector<vector<float>>();
+//      vector<float> i = vector<float>();
+//      uint8_t a0 = data_gray->at(abs(r - 1)).at(abs(c - 1));
+//      uint8_t a1 = data_gray->at(abs(r - 1)).at(abs(c));
+//      uint8_t a2 = data_gray->at(abs(r)).at(abs(c - 1));
+//      uint8_t a3 = data_gray->at(abs(r)).at(abs(c));
+//      
+//      i.push_back(a0);
+//      i.push_back(a1);
+//      img.push_back(i);
+//      i = vector<float>();
+//      i.push_back(a2);
+//      i.push_back(a3);
+//      img.push_back(i);
+//      Matrix mimg = Matrix(img);
+//      float mres = m.multiply_and_average (mimg);
+//      printf("(%d, %d): %.2f\n", r, c, mres);
+//
+//    }
+//  }
+}
+
+int Picture::find_closest_palette(float val, std::vector<int> palettes) {
+  float minima = __FLT_MAX__;
+  int index = -1;
+  
+  for (int i = 0; i < palettes.size(); i++) {
+    float diff = abs(val - palettes.at(i));
+    if (diff < minima) {
+      minima = diff;
+      index = i;
+    }
+  }
+  
+  return palettes.at(index);
+}
+
 void Picture::write_gray(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);

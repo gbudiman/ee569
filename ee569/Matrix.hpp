@@ -16,6 +16,9 @@ public:
   Matrix(std::vector<std::vector<float>>);
   std::vector<std::vector<float>> data;
   Matrix multiply(Matrix);
+  float multiply_and_average(Matrix);
+  
+  void thresholdize();
 private:
 };
 
