@@ -13,18 +13,18 @@ using namespace std;
 void f_2_2_a_dithering() {
   Picture house = Picture("hw2_images/House.raw", 512, 512, COLOR_GRAY);
   
-  house.dither(DITHER_2);
-  house.write_to_file("hw2_out/House_dither_2.raw");
-  
-  house.dither(DITHER_4);
-  house.write_to_file("hw2_out/House_dither_4.raw");
-  
-  house.dither(DITHER_4A);
-  house.write_to_file("hw2_out/House_dither_4a.raw");
-  
-  house.dither(DITHER_8);
-  house.write_to_file("hw2_out/House_dither_8.raw");
-  
+//  house.dither(DITHER_2);
+//  house.write_to_file("hw2_out/House_dither_2.raw");
+//  
+//  house.dither(DITHER_4);
+//  house.write_to_file("hw2_out/House_dither_4.raw");
+//  
+//  house.dither(DITHER_4A);
+//  house.write_to_file("hw2_out/House_dither_4a.raw");
+//  
+//  house.dither(DITHER_8);
+//  house.write_to_file("hw2_out/House_dither_8.raw");
+//  
 //  house.dither_multi_level(DITHER_2);
 //  house.write_to_file("hw2_out/House_dither_2_4.raw");
 //  
@@ -33,7 +33,16 @@ void f_2_2_a_dithering() {
 //  
 //  house.dither_multi_level(DITHER_4A);
 //  house.write_to_file("hw2_out/House_dither_4a_4.raw");
+//  
+//  house.dither_multi_level(DITHER_8);
+//  house.write_to_file("hw2_out/House_dither_8_4.raw");
   
-  house.dither_multi_level(DITHER_8);
-  house.write_to_file("hw2_out/House_dither_8_4.raw");
+  house.dither(DITHER_FSB);
+  house.write_to_file("hw2_out/House_fsb.raw");
+  
+  house.dither(DITHER_JJN);
+  house.write_to_file("hw2_out/House_jjn.raw");
+  
+  house.dither(DITHER_STUCKI);
+  house.write_to_file("hw2_out/House_stucki.raw");
 }

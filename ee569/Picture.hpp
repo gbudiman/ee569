@@ -107,6 +107,9 @@ private:
   void dither_4(std::vector<int>);
   void dither_4a(std::vector<int>);
   void dither_8(std::vector<int>);
+  void dither_fsb();
+  void dither_jjn();
+  void dither_stucki();
   void apply_dithering(Matrix, std::vector<int>);
   
   int find_closest_palette(float, std::vector<int>);
