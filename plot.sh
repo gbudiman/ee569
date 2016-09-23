@@ -13,5 +13,9 @@
 
 ## Part 3 onwards
 
-gnuplot scripts/1_5_lena.gs > plots/1_5_lena.gif
-open -a Preview plots/1_5_lena.gif
+# gnuplot scripts/1_5_lena.gs > plots/1_5_lena.gif
+# open -a Preview plots/1_5_lena.gif
+
+# Hw2
+
+gnuplot scripts/2_3_rice.gs > plots/2_3_rice.gif

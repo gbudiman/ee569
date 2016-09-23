@@ -31,6 +31,7 @@ public:
 
   void to_cmyk();
   void to_hsl();
+  void to_grayscale();
   void prepare_gnuplot_histogram_data(std::string);
   void prepare_gnuplot_histogram_data(std::string, bool);
   void prepare_gnuplot_transfer_function(std::string);
@@ -55,6 +56,9 @@ public:
   
   void dither(int);
   void dither_multi_level(int);
+  
+  void adaptive_thresholding();
+  void post_process_threshold();
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

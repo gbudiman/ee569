@@ -1879,6 +1879,84 @@ int Picture::find_closest_palette(float val, std::vector<int> palettes) {
   return palettes.at(index);
 }
 
+void Picture::to_grayscale() {
+  result_gray = new vector<vector<uint8_t>>();
+  type = COLOR_GRAY;
+  
+  for (auto r = 0; r < dim_y; r++) {
+    vector<uint8_t> row_gray = vector<uint8_t>();
+    for (auto c = 0; c < dim_x; c++) {
+      RgbPixel p = data->at(r)->at(c);
+      // Using luminosity method
+      float psv = 0.9 * (float) p.r + 0.1 * (float) p.g + 0.00 * (float) p.b;
+      row_gray.push_back(psv);
+    }
+    
+    result_gray->push_back(row_gray);
+  }
+}
+
+void Picture::adaptive_thresholding() {
+  vector<uint32_t> h_data = *hist_gray->data;
+  int minima = 255;
+  int maxima = 0;
+  float m_threshold = 0.002 * (float) dim_x * (float) dim_y;
+  for (int i = 0; i < h_data.size(); i++) {
+    if (h_data.at(i) > m_threshold) {
+      if (i < minima) {
+        minima = i;
+      }
+      
+      if (i > maxima) {
+        maxima = i;
+      }
+    }
+  }
+  
+  cout << "Min/max " << minima << " -> " << maxima << endl;
+  result_gray = new vector<vector<uint8_t>>();
+  
+  for (int r = 0; r < dim_y; r++) {
+    vector<uint8_t> row_gray = vector<uint8_t>();
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) > minima && data_gray->at(r).at(c) < maxima) {
+        row_gray.push_back(255);
+      } else {
+        row_gray.push_back(0);
+      }
+    }
+    
+    result_gray->push_back(row_gray);
+  }
+}
+
+void Picture::post_process_threshold() {
+  int radius = 3;
+  result_gray = data_gray;
+  
+  for (int r = radius; r < dim_y - radius; r++) {
+    for (int c = radius; c < dim_x - radius; c++) {
+      int h_count = 0;
+      int l_count = 0;
+      for (int ir = r - radius; ir <= r + radius; ir++) {
+        for (int ic = c - radius; ic <= c + radius; ic++) {
+          if (data_gray->at(ir).at(ic) == 0) {
+            l_count++;
+          } else {
+            h_count++;
+          }
+        }
+      }
+      
+      if (h_count >= l_count) {
+        result_gray->at(r).at(c) = 255;
+      } else {
+        result_gray->at(r).at(c) = 0;
+      }
+    }
+  }
+}
+
 void Picture::write_gray(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);
