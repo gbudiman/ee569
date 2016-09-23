@@ -1900,7 +1900,7 @@ void Picture::adaptive_thresholding() {
   vector<uint32_t> h_data = *hist_gray->data;
   int minima = 255;
   int maxima = 0;
-  float m_threshold = 0.002 * (float) dim_x * (float) dim_y;
+  float m_threshold = 0.005 * (float) dim_x * (float) dim_y;
   for (int i = 0; i < h_data.size(); i++) {
     if (h_data.at(i) > m_threshold) {
       if (i < minima) {
