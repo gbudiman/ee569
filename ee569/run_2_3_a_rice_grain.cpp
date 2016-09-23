@@ -20,6 +20,10 @@ void f_2_3_a_rice_grain() {
   rgray.write_to_file("hw2_out/Rice_thresholded.raw");
   
   Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-  rth.post_process_threshold();
-  rth.write_to_file("hw2_out/Rice_thrpp.raw");
+  rth.morph_erode();
+  rth.write_to_file("hw2_out/Rice_erode.raw");
+  
+  Picture reroded = Picture("hw2_out/Rice_erode.raw", 690, 500, COLOR_GRAY);
+  reroded.post_process_threshold();
+  reroded.write_to_file("hw2_out/Rice_thrpp.raw");
 }

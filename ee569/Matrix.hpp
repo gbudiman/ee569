@@ -19,6 +19,7 @@ public:
   float multiply_and_average(Matrix);
   
   void thresholdize();
+  int erode(Matrix);
 private:
 };
 

@@ -71,3 +71,22 @@ void Matrix::thresholdize() {
     }
   }
 }
+
+int Matrix::erode(Matrix image) {
+  int row_size = data.size();
+  int col_size = data.at(0).size();
+  
+  for (int r = 0; r < row_size; r++) {
+    for (int c = 0; c < col_size; c++) {
+      if (data.at(r).at(c) > 0.5) {
+        // foreground is white == 255
+        // anything less than that is background
+        if (image.data.at(r).at(c) < 127) {
+          return 0;
+        }
+      }
+    }
+  }
+  
+  return 255;
+}

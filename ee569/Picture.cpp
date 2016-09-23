@@ -1920,13 +1920,59 @@ void Picture::adaptive_thresholding() {
     vector<uint8_t> row_gray = vector<uint8_t>();
     for (int c = 0; c < dim_x; c++) {
       if (data_gray->at(r).at(c) > minima && data_gray->at(r).at(c) < maxima) {
-        row_gray.push_back(255);
-      } else {
         row_gray.push_back(0);
+      } else {
+        row_gray.push_back(255);
       }
     }
     
     result_gray->push_back(row_gray);
+  }
+}
+
+void Picture::morph_erode() {
+  result_gray = new vector<vector<uint8_t>>();
+  
+  for (int r = 0; r < dim_y; r++) {
+    vector<uint8_t> row_gray = vector<uint8_t>();
+    for (int c = 0; c < dim_x; c++) {
+      row_gray.push_back(data_gray->at(r).at(c));
+    }
+    result_gray->push_back(row_gray);
+  }
+  
+  vector<vector<float>> m = vector<vector<float>>();
+  vector<float> m_r = { 1, 1, 1 };
+  m.push_back(m_r);
+  m.push_back(m_r);
+  m.push_back(m_r);
+  
+  Matrix mat = Matrix(m);
+  
+  for (int r = 1; r < dim_y - 1; r++) {
+    for (int c = 1; c < dim_x - 1; c++) {
+      vector<vector<float>> _image = vector<vector<float>>();
+      vector<float> _image_r = vector<float>();
+      _image_r.push_back(data_gray->at(r-1).at(c-1));
+      _image_r.push_back(data_gray->at(r-1).at(c));
+      _image_r.push_back(data_gray->at(r-1).at(c+1));
+      _image.push_back(_image_r);
+      _image_r = vector<float>();
+      _image_r.push_back(data_gray->at(r).at(c-1));
+      _image_r.push_back(data_gray->at(r).at(c));
+      _image_r.push_back(data_gray->at(r).at(c+1));
+      _image.push_back(_image_r);
+      _image_r = vector<float>();
+      _image_r.push_back(data_gray->at(r+1).at(c-1));
+      _image_r.push_back(data_gray->at(r+1).at(c));
+      _image_r.push_back(data_gray->at(r+1).at(c+1));
+      _image.push_back(_image_r);
+      Matrix image = Matrix(_image);
+      
+      
+      int erosion = mat.erode(image);
+      result_gray->at(r).at(c) = erosion;
+    }
   }
 }
 

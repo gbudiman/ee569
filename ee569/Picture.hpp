@@ -58,6 +58,7 @@ public:
   void dither_multi_level(int);
   
   void adaptive_thresholding();
+  void morph_erode();
   void post_process_threshold();
   
   uint32_t get_dim_x();
