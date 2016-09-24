@@ -20,6 +20,7 @@ public:
   
   void thresholdize();
   int erode(Matrix);
+  bool exceed_threshold(float);
 private:
 };
 

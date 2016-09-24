@@ -2003,7 +2003,7 @@ void Picture::post_process_threshold() {
   }
 }
 
-void Picture::count_objects() {
+GrainCategorizer Picture::count_objects() {
   initialize_result(0);
 
   vector<bool> _diag_enter        = { 0, 0, 1, 0, 1, 1, 1, 1, 1 };
@@ -2118,8 +2118,8 @@ void Picture::count_objects() {
     }
   }
   
-  gc.debug_groups();
-  cout << gc.count_groups() << " groups detected\n";
+  // gc.debug_groups();
+  cout << gc.count_groups() << " grains detected\n";
   
   for (int g = 0; g < gc.grains.size(); g++) {
     if (gc.grains.at(g).size() < GRAIN_BORDER_THRESHOLD) {
@@ -2158,6 +2158,182 @@ void Picture::count_objects() {
 //      }
 //    }
   }
+  
+  return gc;
+}
+
+bool Picture::set_compare(vector<Coordinate> c, Coordinate in) {
+  for (int i = 0; i < c.size(); i++) {
+    Coordinate existing = c.at(i);
+    
+    if (existing.row == in.row && existing.col == in.col) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+vector<vector<Coordinate>> Picture::compute_spatial_data(GrainCategorizer gc) {
+  vector<vector<Coordinate>> spatial_data = vector<vector<Coordinate>>();
+  
+  for (int g = 0; g < gc.grains.size(); g++) {
+    if (gc.grains.at(g).size() < GRAIN_BORDER_THRESHOLD) {
+      continue;
+    }
+    
+    vector<Coordinate> spatial_coords = vector<Coordinate>();
+    
+    
+    // expand left first;
+    for (int h = 0; h < gc.grains.at(g).size(); h++) {
+      Coordinate this_coord = gc.grains.at(g).at(h);
+      
+      bool still_inside = true;
+      int subtractor = 1;
+      
+      spatial_coords.push_back(gc.grains.at(g).at(h));
+      
+      while (still_inside) {
+        Matrix s_left = extract_matrix(this_coord.row, this_coord.col - subtractor, 3);
+        still_inside = s_left.exceed_threshold(0.67);
+        if (set_compare(spatial_coords, Coordinate(this_coord.row, this_coord.col - subtractor))) {
+          spatial_coords.push_back(Coordinate(this_coord.row, this_coord.col - subtractor));
+        }
+        subtractor++;
+      }
+      
+      //printf("  Enter (%d, %d)\n", this_coord.row, this_coord.col);
+      //cout << "Leaving left-boundary at " << this_coord.row << ", " << this_coord.col - (subtractor - 1) << endl;
+    }
+    
+    // then expand right;
+    for (int h = 0; h < gc.grains.at(g).size(); h++) {
+      Coordinate this_coord = gc.grains.at(g).at(h);
+      
+      bool still_inside = true;
+      int adder = 1;
+      
+      while (still_inside) {
+        Matrix s_right = extract_matrix(this_coord.row, this_coord.col + adder, 3);
+        still_inside = s_right.exceed_threshold(0.67);
+        if (set_compare(spatial_coords, Coordinate(this_coord.row, this_coord.col + adder))) {
+          spatial_coords.push_back(Coordinate(this_coord.row, this_coord.col + adder));
+        }
+        adder++;
+      }
+      
+      //printf("  Enter (%d, %d)\n", this_coord.row, this_coord.col);
+      //cout << "Leaving right-boundary at " << this_coord.row << ", " << this_coord.col + (adder - 1) << endl;
+    }
+    
+    // now take the top-most pixel, then expand two-dimensionally upwards
+//    int min_col = 0XFFFF;
+//    int max_col = 0;
+//    int min_row = 0xFFFF;
+//    for (int s = 0; s < spatial_coords.size(); s++) {
+//      Coordinate c = spatial_coords.at(s);
+//      if (c.col < min_col) {
+//        min_col = c.col;
+//      }
+//      if (c.col > max_col) {
+//        max_col = c.col;
+//      }
+//      if (c.row < min_row) {
+//        min_row = c.row;
+//      }
+//      
+//    }
+//    if (min_col != max_col) {
+//      for (int c = min_col; c <= max_col; c++) {
+//        int subtractor = 1;
+//        bool still_inside = true;
+//        
+//        while (still_inside) {
+//          Matrix s_up = extract_matrix(min_row - subtractor, c, 3);
+//          still_inside = s_up.exceed_threshold(0.67);
+//          
+//          if (still_inside) {
+//            //spatial_coords.push_back(Coordinate(min_row - subtractor, c));
+//          }
+//          subtractor++;
+//        }
+//      }
+//    }
+    
+    spatial_data.push_back(spatial_coords);
+  }
+  
+//  // clean up missing lines
+//  vector<bool> _t_line = { 1, 1, 1, 0, 0, 0, 1, 1, 1 };
+//  BinaryMatrix t_line = BinaryMatrix(_t_line, 3);
+//  for (int i = 0; i < spatial_data.size(); i++) {
+//    vector<Coordinate> spatial_row = spatial_data.at(i);
+//    vector<Coordinate> new_members = vector<Coordinate>();
+//    
+//    for (int j = 0; j < spatial_row.size(); j++) {
+//      Matrix img = extract_matrix(spatial_row.at(j), 3);
+//      bool t_line_match = t_line.match(img);
+//      if (t_line_match) {
+//        new_members.push_back(spatial_row.at(j));
+//      }
+//    }
+//    
+//    for (int nm = 0; nm < new_members.size(); nm++) {
+//      spatial_row.push_back(new_members.at(nm));
+//    }
+//  }
+//  
+  printf("Grain  Area   Inert C.   X-mnt Y-mnt\n");
+  for (int i = 0; i < spatial_data.size(); i++) {
+    int row_max = 0;
+    int row_min = 0xFFFF;
+    int col_max = 0;
+    int col_min = 0xFFFF;
+    
+    for (int s = 0; s < spatial_data.at(i).size(); s++) {
+      Coordinate tc = spatial_data.at(i).at(s);
+      if (tc.row < row_min) {
+        row_min = tc.row;
+      }
+      if (tc.row > row_max) {
+        row_max = tc.row;
+      }
+      if (tc.col < col_min) {
+        col_min = tc.col;
+      }
+      if (tc.col > col_max) {
+        col_max = tc.col;
+      }
+    }
+    int row_length = row_max - row_min + 1;
+    int col_length = col_max - col_min + 1;
+    int center_row = (row_max + row_min) / 2;
+    int center_col = (col_max + col_min) / 2;
+    
+    printf("%5d  %4ld  (%3d, %3d) %5d %5d\n", i, spatial_data.at(i).size(), center_row, center_col, col_length, row_length);
+    
+//    printf(" <<< GROUP %d: Area %d >>>\n", i, spatial_data.at(i).size());
+//    printf("    Inertia center: %d, %d\n", center_row, center_col);
+//    printf("    X-length: %d\n", col_length);
+//    printf("    Y-length: %d\n", row_length);
+  }
+  
+  initialize_result(0);
+  for (int i = 0; i < spatial_data.size(); i++) {
+    vector<Coordinate> tc = spatial_data.at(i);
+    
+    for (int t = 0; t < tc.size(); t++) {
+      Coordinate xc = tc.at(t);
+      result_gray->at(xc.row).at(xc.col) = 255;
+    }
+  }
+  
+  return spatial_data;
+}
+
+Matrix Picture::extract_matrix(Coordinate c, int radius) {
+  return extract_matrix(c.row, c.col, radius);
 }
 
 Matrix Picture::extract_matrix(int r, int c, int radius) {

@@ -8,6 +8,7 @@
 
 #include "main.hpp"
 #include "Picture.hpp"
+#include "GrainCategorizer.hpp"
 
 void f_2_3_a_rice_grain() {
 //  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
@@ -30,6 +31,10 @@ void f_2_3_a_rice_grain() {
   Picture rpp = Picture("hw2_out/Rice_thrpp.raw", 690, 500, COLOR_GRAY);
   rpp.morph_erode();
   rpp.copy_result_to_data();
-  rpp.count_objects();
+  GrainCategorizer gc = rpp.count_objects();
   rpp.write_to_file("hw2_out/Rice_counted.raw");
+  
+  rpp = Picture("hw2_out/Rice_thrpp.raw", 690, 500, COLOR_GRAY);
+  rpp.compute_spatial_data(gc);
+  rpp.write_to_file("hw2_out/Rice_expanded.raw");
 }

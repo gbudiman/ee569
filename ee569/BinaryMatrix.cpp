@@ -43,3 +43,4 @@ bool BinaryMatrix::match(Matrix img) {
   
   return true;
 }
+

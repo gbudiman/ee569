@@ -20,6 +20,8 @@ public:
   void debug_groups();
   
   std::vector<std::vector<Coordinate>> grains;
+  
+private:
 };
 
 #endif /* GrainCategorizer_hpp */

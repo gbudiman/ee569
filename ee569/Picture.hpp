@@ -20,6 +20,7 @@
 #include "Matrix.hpp"
 #include "BinaryMatrix.hpp"
 #include "GrainCategorizer.hpp"
+#include "Coordinate.hpp"
 
 class Picture {
 public:
@@ -32,7 +33,9 @@ public:
   void write_separate_rgb_channel(std::string);
   void crop(uint32_t, uint32_t, uint32_t, uint32_t);
   void resize(uint32_t, uint32_t);
-
+  
+  bool set_compare(std::vector<Coordinate>, Coordinate);
+  
   void to_cmyk();
   void to_hsl();
   void to_grayscale();
@@ -64,7 +67,9 @@ public:
   void adaptive_thresholding();
   void morph_erode();
   void post_process_threshold();
-  void count_objects();
+  GrainCategorizer count_objects();
+  
+  std::vector<std::vector<Coordinate>> compute_spatial_data(GrainCategorizer);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -126,6 +131,7 @@ private:
   
   void initialize_result(uint8_t);
   Matrix extract_matrix(int, int, int);
+  Matrix extract_matrix(Coordinate, int);
   
   std::string path;
   uint32_t dim_x;

@@ -90,3 +90,21 @@ int Matrix::erode(Matrix image) {
   
   return 255;
 }
+
+bool Matrix::exceed_threshold(float threshold) {
+  auto row_count = data.size();
+  auto col_count = data.at(0).size();
+  
+  auto total_cells = row_count * col_count;
+  int high_cell = 0;
+  
+  for (int r = 0; r < row_count; r++) {
+    for (int c = 0; c < col_count; c++) {
+      if (data.at(r).at(c) > 127) {
+        high_cell++;
+      }
+    }
+  }
+  
+  return (((float) high_cell / (float) total_cells) > threshold);
+}
