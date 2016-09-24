@@ -18,6 +18,7 @@
 #include "PatchMap.hpp"
 #include "Kernel.hpp"
 #include "Matrix.hpp"
+#include "BinaryMatrix.hpp"
 
 class Picture {
 public:
@@ -60,6 +61,7 @@ public:
   void adaptive_thresholding();
   void morph_erode();
   void post_process_threshold();
+  void count_objects();
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -118,6 +120,10 @@ private:
   void apply_dithering(Matrix, std::vector<int>);
   
   int find_closest_palette(float, std::vector<int>);
+  
+  void initialize_result(uint8_t);
+  void copy_result_to_data();
+  Matrix extract_matrix(int, int, int);
   
   std::string path;
   uint32_t dim_x;

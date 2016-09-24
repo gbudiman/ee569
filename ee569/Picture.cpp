@@ -2003,6 +2003,93 @@ void Picture::post_process_threshold() {
   }
 }
 
+void Picture::count_objects() {
+  initialize_result(0);
+
+  vector<bool> _diag_enter        = { 0, 0, 1, 0, 1, 1, 1, 1, 1 };
+  vector<bool> _straight_enter    = { 0, 1, 1, 0, 1, 1, 0, 1, 1 };
+  vector<bool> _rdiag_enter       = { 1, 1, 1, 0, 1, 1, 0, 0, 1 };
+  vector<bool> _diag_exit         = { 1, 1, 1, 1, 1, 0, 1, 0, 0 };
+  vector<bool> _straight_exit     = { 1, 1, 0, 1, 1, 0, 1, 1, 0 };
+  vector<bool> _rdiag_exit        = { 1, 0, 0, 1, 1, 0, 1, 1, 1 };
+  BinaryMatrix diag_enter = BinaryMatrix(_diag_enter, 3);
+  BinaryMatrix straight_enter = BinaryMatrix(_straight_enter, 3);
+  BinaryMatrix rdiag_enter = BinaryMatrix(_rdiag_enter, 3);
+  BinaryMatrix diag_exit = BinaryMatrix(_diag_exit, 3);
+  BinaryMatrix straight_exit = BinaryMatrix(_straight_exit, 3);
+  BinaryMatrix rdiag_exit = BinaryMatrix(_rdiag_exit, 3);
+  
+  for (int r = 1; r < dim_y - 1; r++) {
+    for (int c = 1; c < dim_x - 1; c++) {
+      Matrix img = extract_matrix(r, c, 1);
+      bool diag_enter_match = diag_enter.match(img);
+      bool straight_enter_match = straight_enter.match(img);
+      bool rdiag_enter_match = rdiag_enter.match(img);
+      bool diag_exit_match = diag_exit.match(img);
+      bool straight_exit_match = straight_exit.match(img);
+      bool rdiag_exit_match = rdiag_exit.match(img);
+      
+      if (diag_enter_match) {
+        printf("Diag matched at %d, %d\n", r, c);
+      }
+      if (straight_enter_match) {
+        printf("Straight matched at %d, %d\n", r, c);
+      }
+      if (rdiag_enter_match) {
+        printf("Rdiag matched at %d, %d\n", r, c);
+      }
+      if (diag_exit_match) {
+        printf("Diag exit at %d, %d\n", r, c);
+      }
+      if (straight_exit_match) {
+        printf("Straight exit at %d, %d\n", r, c);
+      }
+      if (rdiag_exit_match) {
+        printf("Rdiag exit at %d, %d\n", r, c);
+      }
+    }
+  }
+}
+
+Matrix Picture::extract_matrix(int r, int c, int radius) {
+  vector<vector<float>> img = vector<vector<float>>();
+  
+  for (int rr = r - 1; rr <= r + 1; rr++) {
+    vector<float> r_img = vector<float>();
+    for (int cc = c - 1; cc <= c + 1; cc++) {
+      r_img.push_back(data_gray->at(rr).at(cc));
+    }
+    img.push_back(r_img);
+  }
+  
+  return Matrix(img);
+}
+
+void Picture::initialize_result(uint8_t val) {
+  if (type == COLOR_GRAY) {
+    result_gray = new vector<vector<uint8_t>>();
+    
+    for (int r = 0; r < dim_y; r++) {
+      vector<uint8_t> row_gray = vector<uint8_t>();
+      for (int c = 0; c < dim_x; c++) {
+        row_gray.push_back(val);
+      }
+      result_gray->push_back(row_gray);
+    }
+  }
+}
+
+void Picture::copy_result_to_data() {
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      switch (type) {
+        case COLOR_RGB: data->at(r)->at(c) = result->at(r)->at(c); break;
+        case COLOR_GRAY: data_gray->at(r).at(c) = result_gray->at(r).at(c); break;
+      }
+    }
+  }
+}
+
 void Picture::write_gray(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);

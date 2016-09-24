@@ -37,6 +37,7 @@
 		07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8821D92595B00AFC522 /* Matrix.cpp */; };
 		07DCB8861D932ECA00AFC522 /* run_2_2_a_dithering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */; };
 		07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */; };
+		07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -127,6 +128,8 @@
 		07DCB8831D92595B00AFC522 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_2_a_dithering.cpp; sourceTree = "<group>"; };
 		07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_3_a_rice_grain.cpp; sourceTree = "<group>"; };
+		07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryMatrix.cpp; sourceTree = "<group>"; };
+		07DCB88A1D9647C900AFC522 /* BinaryMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BinaryMatrix.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				07A489CA1D7BE308009C1FD1 /* NlmWeight.hpp */,
 				07DCB8821D92595B00AFC522 /* Matrix.cpp */,
 				07DCB8831D92595B00AFC522 /* Matrix.hpp */,
+				07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */,
+				07DCB88A1D9647C900AFC522 /* BinaryMatrix.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 				07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */,
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,
 				07A489CF1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp in Sources */,
+				07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */,
 				079284BD1D72DC0600BD6E8D /* Histogram.cpp in Sources */,
 				079284CA1D76491B00BD6E8D /* run_1_2_c_sfx.cpp in Sources */,
 				079284D01D7B56D700BD6E8D /* Psnr.cpp in Sources */,
