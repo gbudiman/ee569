@@ -28,6 +28,8 @@ void f_2_3_a_rice_grain() {
 //  reroded.write_to_file("hw2_out/Rice_thrpp.raw");
   
   Picture rpp = Picture("hw2_out/Rice_thrpp.raw", 690, 500, COLOR_GRAY);
+  rpp.morph_erode();
+  rpp.copy_result_to_data();
   rpp.count_objects();
-  //rpp.write_to_file("hw2_out/Rice_counted.raw");
+  rpp.write_to_file("hw2_out/Rice_counted.raw");
 }

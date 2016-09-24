@@ -19,11 +19,14 @@
 #include "Kernel.hpp"
 #include "Matrix.hpp"
 #include "BinaryMatrix.hpp"
+#include "GrainCategorizer.hpp"
 
 class Picture {
 public:
   Picture();
   Picture(std::string, uint32_t, uint32_t, uint32_t);
+  void copy_result_to_data();
+  
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
   void write_separate_rgb_channel(std::string);
@@ -122,7 +125,6 @@ private:
   int find_closest_palette(float, std::vector<int>);
   
   void initialize_result(uint8_t);
-  void copy_result_to_data();
   Matrix extract_matrix(int, int, int);
   
   std::string path;

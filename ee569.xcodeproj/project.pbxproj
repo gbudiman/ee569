@@ -38,6 +38,8 @@
 		07DCB8861D932ECA00AFC522 /* run_2_2_a_dithering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */; };
 		07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */; };
 		07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */; };
+		07DCB88E1D96F43300AFC522 /* GrainCategorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88C1D96F43300AFC522 /* GrainCategorizer.cpp */; };
+		07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -130,6 +132,10 @@
 		07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_3_a_rice_grain.cpp; sourceTree = "<group>"; };
 		07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryMatrix.cpp; sourceTree = "<group>"; };
 		07DCB88A1D9647C900AFC522 /* BinaryMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BinaryMatrix.hpp; sourceTree = "<group>"; };
+		07DCB88C1D96F43300AFC522 /* GrainCategorizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GrainCategorizer.cpp; sourceTree = "<group>"; };
+		07DCB88D1D96F43300AFC522 /* GrainCategorizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GrainCategorizer.hpp; sourceTree = "<group>"; };
+		07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinate.cpp; sourceTree = "<group>"; };
+		07DCB8901D96F49B00AFC522 /* Coordinate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Coordinate.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +199,10 @@
 				07DCB8831D92595B00AFC522 /* Matrix.hpp */,
 				07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */,
 				07DCB88A1D9647C900AFC522 /* BinaryMatrix.hpp */,
+				07DCB88C1D96F43300AFC522 /* GrainCategorizer.cpp */,
+				07DCB88D1D96F43300AFC522 /* GrainCategorizer.hpp */,
+				07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */,
+				07DCB8901D96F49B00AFC522 /* Coordinate.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -403,8 +413,10 @@
 				079284D31D7B645500BD6E8D /* Kernel.cpp in Sources */,
 				07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */,
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,
+				07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */,
 				07A489CF1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp in Sources */,
 				07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */,
+				07DCB88E1D96F43300AFC522 /* GrainCategorizer.cpp in Sources */,
 				079284BD1D72DC0600BD6E8D /* Histogram.cpp in Sources */,
 				079284CA1D76491B00BD6E8D /* run_1_2_c_sfx.cpp in Sources */,
 				079284D01D7B56D700BD6E8D /* Psnr.cpp in Sources */,

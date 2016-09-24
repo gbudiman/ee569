@@ -77,6 +77,8 @@
 #define DITHER_JJN 5
 #define DITHER_STUCKI 6
 
+#define GRAIN_BORDER_THRESHOLD 5
+
 bool xcmp(char*, const char*);
 void print_help();
 

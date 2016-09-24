@@ -2009,15 +2009,34 @@ void Picture::count_objects() {
   vector<bool> _diag_enter        = { 0, 0, 1, 0, 1, 1, 1, 1, 1 };
   vector<bool> _straight_enter    = { 0, 1, 1, 0, 1, 1, 0, 1, 1 };
   vector<bool> _rdiag_enter       = { 1, 1, 1, 0, 1, 1, 0, 0, 1 };
+  vector<bool> _triag_enter       = { 0, 0, 1, 0, 1, 1, 0, 0, 1 };
+  vector<bool> _utri_enter        = { 0, 1, 1, 0, 1, 1, 0, 0, 1 };
+  vector<bool> _ltri_enter        = { 0, 0, 1, 0, 1, 1, 0, 1, 1 };
+  vector<bool> _dp_enter          = { 0, 0, 0, 0, 1, 1, 1, 1, 1 };
+  vector<bool> _dt_enter          = { 0, 0, 0, 0, 1, 0, 1, 1, 1 };
+  vector<bool> _lp_enter          = { 1, 1, 1, 0, 1, 1, 0, 0, 0 };
+  vector<bool> _lt_enter          = { 1, 1, 1, 0, 1, 0, 0, 0, 0 };
+  vector<bool> _weak_down         = { 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+  vector<bool> _weak_se           = { 0, 0, 0, 0, 0, 1, 0, 1, 1 };
   vector<bool> _diag_exit         = { 1, 1, 1, 1, 1, 0, 1, 0, 0 };
   vector<bool> _straight_exit     = { 1, 1, 0, 1, 1, 0, 1, 1, 0 };
   vector<bool> _rdiag_exit        = { 1, 0, 0, 1, 1, 0, 1, 1, 1 };
   BinaryMatrix diag_enter = BinaryMatrix(_diag_enter, 3);
   BinaryMatrix straight_enter = BinaryMatrix(_straight_enter, 3);
   BinaryMatrix rdiag_enter = BinaryMatrix(_rdiag_enter, 3);
+  BinaryMatrix triag_enter = BinaryMatrix(_triag_enter, 3);
+  BinaryMatrix utri_enter = BinaryMatrix(_utri_enter, 3);
+  BinaryMatrix ltri_enter = BinaryMatrix(_ltri_enter, 3);
+  BinaryMatrix dp_enter = BinaryMatrix(_dp_enter, 3);
+  BinaryMatrix dt_enter = BinaryMatrix(_dt_enter, 3);
+  BinaryMatrix lp_enter = BinaryMatrix(_lp_enter, 3);
+  BinaryMatrix lt_enter = BinaryMatrix(_lt_enter, 3);
+  BinaryMatrix weak_down = BinaryMatrix(_weak_down, 3);
+  BinaryMatrix weak_se = BinaryMatrix(_weak_se, 3);
   BinaryMatrix diag_exit = BinaryMatrix(_diag_exit, 3);
   BinaryMatrix straight_exit = BinaryMatrix(_straight_exit, 3);
   BinaryMatrix rdiag_exit = BinaryMatrix(_rdiag_exit, 3);
+  GrainCategorizer gc = GrainCategorizer();
   
   for (int r = 1; r < dim_y - 1; r++) {
     for (int c = 1; c < dim_x - 1; c++) {
@@ -2025,29 +2044,119 @@ void Picture::count_objects() {
       bool diag_enter_match = diag_enter.match(img);
       bool straight_enter_match = straight_enter.match(img);
       bool rdiag_enter_match = rdiag_enter.match(img);
-      bool diag_exit_match = diag_exit.match(img);
-      bool straight_exit_match = straight_exit.match(img);
-      bool rdiag_exit_match = rdiag_exit.match(img);
+      bool triag_enter_match = triag_enter.match(img);
+      bool utri_enter_match = utri_enter.match(img);
+      bool ltri_enter_match = ltri_enter.match(img);
+      bool dp_enter_match = dp_enter.match(img);
+      bool dt_enter_match = dt_enter.match(img);
+      bool lp_enter_match = lp_enter.match(img);
+      bool lt_enter_match = lt_enter.match(img);
+      bool weak_down_match = weak_down.match(img);
+      bool weak_se_match = weak_se.match(img);
+      
+//      bool diag_exit_match = diag_exit.match(img);
+//      bool straight_exit_match = straight_exit.match(img);
+//      bool rdiag_exit_match = rdiag_exit.match(img);
       
       if (diag_enter_match) {
-        printf("Diag matched at %d, %d\n", r, c);
+        //printf("Diag matched at %d, %d\n", r, c);
+        gc.add(r, c);
       }
       if (straight_enter_match) {
-        printf("Straight matched at %d, %d\n", r, c);
+        //printf("Straight matched at %d, %d\n", r, c);
+        gc.add(r, c);
       }
       if (rdiag_enter_match) {
-        printf("Rdiag matched at %d, %d\n", r, c);
+        //printf("Rdiag matched at %d, %d\n", r, c);
+        gc.add(r, c);
       }
-      if (diag_exit_match) {
-        printf("Diag exit at %d, %d\n", r, c);
+      if (triag_enter_match) {
+        gc.add(r, c);
       }
-      if (straight_exit_match) {
-        printf("Straight exit at %d, %d\n", r, c);
+      if (utri_enter_match) {
+        gc.add(r, c);
       }
-      if (rdiag_exit_match) {
-        printf("Rdiag exit at %d, %d\n", r, c);
+      if (ltri_enter_match) {
+        gc.add(r, c);
       }
+      if (dp_enter_match) {
+        gc.add(r, c);
+      }
+      if (dt_enter_match) {
+        gc.add(r, c);
+      }
+      if (lp_enter_match) {
+        gc.add(r, c);
+      }
+      if (lt_enter_match) {
+        gc.add(r, c);
+      }
+      if (weak_down_match) {
+        gc.add(r, c);
+      }
+      if (weak_se_match) {
+        gc.add(r, c);
+      }
+      
+      // Ambiguous, don't use
+//      if (down_enter_match) {
+//        gc.add(r, c);
+//      }
+//      if (up_enter_match) {
+//        gc.add(r, c);
+//      }
+      
+//      if (diag_exit_match) {
+//        printf("Diag exit at %d, %d\n", r, c);
+//      }
+//      if (straight_exit_match) {
+//        printf("Straight exit at %d, %d\n", r, c);
+//      }
+//      if (rdiag_exit_match) {
+//        printf("Rdiag exit at %d, %d\n", r, c);
+//      }
     }
+  }
+  
+  gc.debug_groups();
+  cout << gc.count_groups() << " groups detected\n";
+  
+  for (int g = 0; g < gc.grains.size(); g++) {
+    if (gc.grains.at(g).size() < GRAIN_BORDER_THRESHOLD) {
+      continue;
+    }
+    
+    vector<Coordinate> members = gc.grains.at(g);
+    
+    int bb_row_low = 0xFFFF;
+    int bb_row_high = 0;
+    int bb_col_low = 0xFFFF;
+    int bb_col_high = 0;
+    
+    for (int m = 0; m < members.size(); m++) {
+      int this_row = members.at(m).row;
+      int this_col = members.at(m).col;
+      if (this_row > bb_row_high) {
+        bb_row_high = this_row;
+      }
+      if (this_row < bb_row_low) {
+        bb_row_low = this_row;
+      }
+      if (this_col > bb_col_high) {
+        bb_col_high = this_col;
+      }
+      if (this_col < bb_col_low) {
+        bb_col_low = this_col;
+      }
+      
+      result_gray->at(this_row).at(this_col) = (g + 23) * 73;
+    }
+    
+//    for (int rr = bb_row_low; rr <= bb_row_high; rr++) {
+//      for (int cc = bb_col_low; cc <= bb_col_high; cc++) {
+//        result_gray->at(rr).at(cc) = 255;
+//      }
+//    }
   }
 }
 
