@@ -1320,7 +1320,11 @@ void Picture::overlay_with(Picture other) {
       if (limit_row_low <= row && row < limit_row_high &&
           limit_col_low <= col && col < limit_col_high) {
         RgbPixel p = other.bilinear_interpolate(col, row);
-        result->at(r)->at(c) = p;
+        if (p.is_white()) {
+          
+        } else {
+          result->at(r)->at(c) = p;
+        }
       }
     }
   }
