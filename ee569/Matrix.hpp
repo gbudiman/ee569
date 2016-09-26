@@ -14,6 +14,7 @@
 class Matrix {
 public:
   Matrix(std::vector<std::vector<float>>);
+  Matrix(std::vector<float>, int);
   std::vector<std::vector<float>> data;
   Matrix multiply(Matrix);
   float multiply_and_average(Matrix);

@@ -13,6 +13,20 @@ Matrix::Matrix(vector<vector<float>> x) {
   data = x;
 }
 
+Matrix::Matrix(vector<float> x, int col) {
+  data = vector<vector<float>>();
+  vector<float> row_data = vector<float>();
+  
+  for (int i = 0; i < x.size(); i++) {
+    row_data.push_back(x.at(i));
+    
+    if (i % col == col - 1) {
+      data.push_back(row_data);
+      row_data = vector<float>();
+    }
+  }
+}
+
 Matrix Matrix::multiply(Matrix other) {
   vector<vector<float>> result = vector<vector<float>>();
   int result_row_length = other.data.size();

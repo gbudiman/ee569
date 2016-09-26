@@ -40,6 +40,7 @@
 		07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8891D9647C900AFC522 /* BinaryMatrix.cpp */; };
 		07DCB88E1D96F43300AFC522 /* GrainCategorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88C1D96F43300AFC522 /* GrainCategorizer.cpp */; };
 		07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */; };
+		07DCB8931D99BCB800AFC522 /* run_2_1_c_homography.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -136,6 +137,7 @@
 		07DCB88D1D96F43300AFC522 /* GrainCategorizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GrainCategorizer.hpp; sourceTree = "<group>"; };
 		07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinate.cpp; sourceTree = "<group>"; };
 		07DCB8901D96F49B00AFC522 /* Coordinate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Coordinate.hpp; sourceTree = "<group>"; };
+		07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_1_c_homography.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +248,7 @@
 				07A489D01D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp */,
 				07A489CE1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp */,
 				07DCB87E1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp */,
+				07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */,
 				07DCB8801D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp */,
 				07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */,
 				07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */,
@@ -396,6 +399,7 @@
 			files = (
 				07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */,
 				07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */,
+				07DCB8931D99BCB800AFC522 /* run_2_1_c_homography.cpp in Sources */,
 				07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */,
 				07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */,
 				079284AB1D726BC500BD6E8D /* run_1_1_a_cropping.cpp in Sources */,

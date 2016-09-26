@@ -27,6 +27,7 @@ public:
   Picture();
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void copy_result_to_data();
+  void copy_data_to_result();
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -60,6 +61,7 @@ public:
   void find_piece(std::string, std::string);
   void find_hole(int*, int*, int*, int*);
   void fit_piece(Picture, int, int, int, int);
+  void overlay_with(Picture);
   
   void dither(int);
   void dither_multi_level(int);

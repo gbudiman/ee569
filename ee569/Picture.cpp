@@ -1290,6 +1290,42 @@ void Picture::fit_piece(Picture piece, int tlcr, int tlcc, int brcr, int brcc) {
   }
 }
 
+void Picture::overlay_with(Picture other) {
+  copy_data_to_result();
+  
+  vector<float> tfm = { -1.1210,
+                        -0.8904,
+                       980.7080,
+                         1.1998,
+                        -0.0941,
+                      -657.0232,
+                        -0.0033,
+                        -0.0001,
+                         1.0};
+  Matrix mat = Matrix(tfm, 3);
+  int limit_row_low = 0;
+  int limit_col_low = 0;
+  int limit_row_high = other.dim_y - 1;
+  int limit_col_high = other.dim_x - 1;
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      vector<float> _pos = { (float) r, (float) c, (float) 1 };
+      Matrix pos = Matrix(_pos, 1);
+      
+      Matrix res = mat.multiply(pos);
+      float row = res.data.at(0).at(0) / res.data.at(2).at(0);
+      float col = res.data.at(1).at(0) / res.data.at(2).at(0);
+      
+      if (limit_row_low <= row && row < limit_row_high &&
+          limit_col_low <= col && col < limit_col_high) {
+        RgbPixel p = other.bilinear_interpolate(col, row);
+        result->at(r)->at(c) = p;
+      }
+    }
+  }
+}
+
 void Picture::dither(int method) {
   vector<int> levels = {};
   switch(method) {
@@ -2343,6 +2379,19 @@ void Picture::copy_result_to_data() {
         case COLOR_GRAY: data_gray->at(r).at(c) = result_gray->at(r).at(c); break;
       }
     }
+  }
+}
+
+void Picture::copy_data_to_result() {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      switch (type) {
+        case COLOR_RGB: result->at(r)->at(c) = data->at(r)->at(c); break;
+        case COLOR_GRAY: result_gray->at(r).at(c) = data_gray->at(r).at(c); break;
+      }
+    }  
   }
 }
 
