@@ -12,4 +12,9 @@
 void f_2_1_a_diamond_warp() {
   Picture* kitten = new Picture("hw2_images/Kitten_1.raw", 300, 300, COLOR_RGB);
   kitten->diamond_warp();
+  kitten->write_to_file("hw2_out/Kitten_1_warped.raw");
+  
+  kitten = new Picture("hw2_images/Kitten_2.raw", 300, 300, COLOR_RGB);
+  kitten->diamond_warp();
+  kitten->write_to_file("hw2_out/Kitten_2_warped.raw");
 }

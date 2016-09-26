@@ -1004,71 +1004,32 @@ void Picture::histogram_match_rgb(Histogram *rr, Histogram *rg, Histogram *rb) {
 }
 
 void Picture::diamond_warp() {
-  int x_quart1, x_quart2, x_quart3;
-  int y_quart1, y_quart2, y_quart3;
+  float mid_row = dim_y / 2;
+  int limit_low = 0;
+  int limit_high = dim_y - 1;
   
-  x_quart1 = dim_x / 4;
-  x_quart2 = dim_x / 2;
-  x_quart3 = dim_x * 3 / 4;
-  y_quart1 = dim_y / 4;
-  y_quart2 = dim_y / 2;
-  y_quart3 = dim_y * 3 / 4;
-  
-  for (int row = 0; row < y_quart2; row++) {
-    for (int col = 0; col < x_quart2; col++) {
-      remap_diamond_warp(row, col, DIAMOND_REGION_A);
+  initialize_result(0);
+  for (int r = 0; r < dim_y; r++) {
+    if (r < mid_row) {
+      for (int x_prime = 0; x_prime < dim_x; x_prime++) {
+        float x = ((float) x_prime - (mid_row - ((float) r + 1))) / (((float) r + 1) / mid_row);
+        RgbPixel p = RgbPixel(0, 0, 0);
+        if (limit_low <= x && x <= limit_high) {
+          p = bilinear_interpolate(x, r);
+          //printf("(%d, %.0f) -> (%d, %d)\n", r, x, r, x_prime);
+          result->at(r)->at(x_prime) = p;
+        }
+      }
+    } else {
+      for (int x_prime = 0; x_prime < dim_x; x_prime++) {
+        float x = ((float) x_prime - ((float) r - mid_row)) / (((float) dim_y - (float) r) / mid_row);
+        RgbPixel p = RgbPixel(0, 0, 0);
+        if (limit_low <= x && x <= limit_high) {
+          p = bilinear_interpolate(x, r);
+          result->at(r)->at(x_prime) = p;
+        }
+      }
     }
-    
-    for (int col = x_quart2; col < dim_x; col++) {
-      remap_diamond_warp(row, col, DIAMOND_REGION_B);
-    }
-  }
-  
-  for (int row = y_quart2; row < dim_y; row++) {
-    for (int col = 0; col < x_quart2; col++) {
-      remap_diamond_warp(row, col, DIAMOND_REGION_C);
-    }
-    
-    for (int col = x_quart1; col < dim_x; col++) {
-      remap_diamond_warp(row, col, DIAMOND_REGION_D);
-    }
-  }
-}
-
-void Picture::remap_diamond_warp(int row, int col, int region) {
-  int x_quart1, x_quart2, x_quart3;
-  int y_quart1, y_quart2, y_quart3;
-  
-  x_quart1 = dim_x / 4;
-  x_quart2 = dim_x / 2;
-  x_quart3 = dim_x * 3 / 4;
-  y_quart1 = dim_y / 4;
-  y_quart2 = dim_y / 2;
-  y_quart3 = dim_y * 3 / 4;
-  
-  float out_row, out_col;
-  
-  switch(region) {
-    case DIAMOND_REGION_A:
-      out_col = x_quart1 + (float) col / 2;
-      out_row = y_quart1 + (float) row / 2; // - (float) col / 2;
-      
-      cout << "(" << row << ", " << col << ") falls in region " << region
-      << " maps to (" << out_row << ", " << out_col << ")"
-      << endl;
-      break;
-    case DIAMOND_REGION_B:
-      out_col = x_quart3 + (float) (col - dim_x) / 2;
-      out_row = y_quart1 + (float) row / 2;
-      break;
-    case DIAMOND_REGION_C:
-      out_col = x_quart1 + (float) col / 2;
-      out_row = y_quart3 + (float) (row - dim_y) / 2;
-      break;
-    case DIAMOND_REGION_D:
-      out_col = x_quart3 + (float) (col - dim_x) / 2;
-      out_row = y_quart3 + (float) (col - dim_y) / 2;
-      break;
   }
 }
 
@@ -2196,7 +2157,7 @@ vector<vector<Coordinate>> Picture::compute_spatial_data(GrainCategorizer gc) {
       
       while (still_inside) {
         Matrix s_left = extract_matrix(this_coord.row, this_coord.col - subtractor, 3);
-        still_inside = s_left.exceed_threshold(0.67);
+        still_inside = s_left.exceed_threshold(0.6);
         if (set_compare(spatial_coords, Coordinate(this_coord.row, this_coord.col - subtractor))) {
           spatial_coords.push_back(Coordinate(this_coord.row, this_coord.col - subtractor));
         }
@@ -2216,7 +2177,7 @@ vector<vector<Coordinate>> Picture::compute_spatial_data(GrainCategorizer gc) {
       
       while (still_inside) {
         Matrix s_right = extract_matrix(this_coord.row, this_coord.col + adder, 3);
-        still_inside = s_right.exceed_threshold(0.67);
+        still_inside = s_right.exceed_threshold(0.6);
         if (set_compare(spatial_coords, Coordinate(this_coord.row, this_coord.col + adder))) {
           spatial_coords.push_back(Coordinate(this_coord.row, this_coord.col + adder));
         }
@@ -2360,6 +2321,16 @@ void Picture::initialize_result(uint8_t val) {
         row_gray.push_back(val);
       }
       result_gray->push_back(row_gray);
+    }
+  } else {
+    result = new vector<vector<RgbPixel>*>();
+    
+    for (int r = 0; r < dim_y; r++) {
+      vector<RgbPixel>* row_pixel = new vector<RgbPixel>();
+      for (int c = 0; c < dim_x; c++) {
+        row_pixel->push_back(RgbPixel(val, val, val));
+      }
+      result->push_back(row_pixel);
     }
   }
 }
