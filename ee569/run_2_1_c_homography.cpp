@@ -12,8 +12,12 @@ using namespace std;
 
 void f_2_1_c_homography() {
   Picture trojan = Picture("hw2_images/trojans.raw", 350, 146, COLOR_RGB);
+  Picture tartan = Picture("hw2_images/tartans.raw", 350, 146, COLOR_RGB);
   Picture field = Picture("hw2_images/field.raw", 972, 648, COLOR_RGB);
   
   field.overlay_with(trojan);
   field.write_to_file("hw2_out/trojans_field.raw");
+  
+  field.overlay_with(tartan);
+  field.write_to_file("hw2_out/tartan_field.raw");
 }

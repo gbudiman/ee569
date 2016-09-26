@@ -27,6 +27,7 @@ public:
   uint8_t b;
   
   bool is_white();
+  bool is_black();
 };
 
 #endif /* RgbPixel_hpp */

@@ -21,6 +21,10 @@ bool RgbPixel::is_white() {
   return (r == 0xFF && g == 0xFF && b == 0xFF);
 }
 
+bool RgbPixel::is_black() {
+  return (r == 0 && g == 0 && b == 0);
+}
+
 CmykPixel RgbPixel::to_cmyk() {
   uint8_t c = 255 - r;
   uint8_t m = 255 - g;
