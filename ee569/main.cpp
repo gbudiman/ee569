@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 23;
+  int debug = 25;
 
   if (RUN_ALL) {
     f_1_1_a_cropping();

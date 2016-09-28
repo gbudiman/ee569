@@ -67,6 +67,7 @@ public:
   void dither_multi_level(int);
   
   void adaptive_thresholding();
+  void adaptive_thresholding2(int);
   void morph_erode();
   void post_process_threshold();
   GrainCategorizer count_objects();

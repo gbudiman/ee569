@@ -1890,7 +1890,20 @@ void Picture::to_grayscale() {
       RgbPixel p = data->at(r)->at(c);
       // Using luminosity method
       float psv = 0.9 * (float) p.r + 0.1 * (float) p.g + 0.00 * (float) p.b;
-      row_gray.push_back(psv);
+      
+      if ((p.b > p.r || p.b > p.g)) {
+        if (p.b < 50) {
+          row_gray.push_back(psv);
+        } else {
+          if ((p.r + p.g + p.b) / 3 > 80) {
+            row_gray.push_back(psv);
+          } else {
+            row_gray.push_back(0);
+          }
+        }
+      } else {
+        row_gray.push_back(psv);
+      }
     }
     
     result_gray->push_back(row_gray);
@@ -1928,6 +1941,65 @@ void Picture::adaptive_thresholding() {
     }
     
     result_gray->push_back(row_gray);
+  }
+}
+
+void Picture::adaptive_thresholding2(int box_radius) {
+  initialize_result(0);
+  
+  // obtain global thresholding parameter
+  vector<uint32_t> h_data = *hist_gray->data;
+  int minima = 255;
+  int maxima = 0;
+  float m_threshold = 0.01 * (float) dim_x * (float) dim_y;
+  for (int i = 0; i < h_data.size(); i++) {
+    if (h_data.at(i) > m_threshold) {
+      if (i < minima) {
+        minima = i;
+      }
+      
+      if (i > maxima) {
+        maxima = i;
+      }
+    }
+  }
+  
+  cout << "Min/max " << minima << " -> " << maxima << endl;
+  
+  // loop to obtain local thresholding parameter
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      int cumulative = 0;
+      int element_count = 0;
+      int this_pixel_intensity = data_gray->at(r).at(c);
+      
+      for (int rr = r - box_radius / 2; rr <= r + box_radius / 2; rr++) {
+        if (rr < 0 || rr >= dim_y) { continue; }
+        for (int cc = c - box_radius / 2; cc <= c + box_radius / 2; cc++) {
+          if (cc < 0 || cc >= dim_x) { continue; }
+          if (cc == c && rr == r) { continue; }
+          cumulative += data_gray->at(rr).at(cc);
+          element_count++;
+        }
+      }
+      
+      int surround_cumulative = 0;
+      for (int rr = r - 1; rr <= r + 1; rr++) {
+        if (rr < 0 || rr >= dim_y) { continue; }
+        for (int cc = c - 1; cc <= c + 1; cc++) {
+          if (cc < 0 || cc >= dim_x) { continue; }
+          if (cc == c && rr == r) { continue; }
+          surround_cumulative += data_gray->at(rr).at(cc);
+        }
+      }
+      
+      float local_mean = (float) cumulative / (float) element_count;
+      if (this_pixel_intensity > local_mean) {
+        if (surround_cumulative >= 255) {
+          result_gray->at(r).at(c) = 255;
+        }
+      }
+    }
   }
 }
 
