@@ -11,6 +11,7 @@
 
 #include "main.hpp"
 #include "BinaryMatrix.hpp"
+#include "MarkPatternMatrix.hpp"
 using namespace std;
 
 class MorphMatrix {
@@ -20,8 +21,10 @@ public:
   vector<BinaryMatrix> thinning;
   vector<BinaryMatrix> shrinking;
   vector<BinaryMatrix> skeletonizing;
+  vector<MarkPatternMatrix> stump;
   
   void debug_matrix(int);
+  void debug_type2_filter();
 };
 
 #endif

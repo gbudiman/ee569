@@ -93,6 +93,53 @@ MorphMatrix::MorphMatrix() {
   BinaryMatrix b_11a3 = BinaryMatrix(1, 1, 0, 1, 1, 1, 1, 1, 1);
   BinaryMatrix b_11a4 = BinaryMatrix(0, 1, 1, 1, 1, 1, 1, 1, 1);
   
+  // MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCZ, MCZ, MCZ, MCZ, MCZ);
+  
+  MarkPatternMatrix m_spur1 = MarkPatternMatrix(MCZ, MCZ, MCM, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_spur2 = MarkPatternMatrix(MCM, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_s4c1  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCM, MCZ);
+  MarkPatternMatrix m_s4c2  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ);
+  
+  MarkPatternMatrix m_lcl1  = MarkPatternMatrix(MCZ, MCZ, MCM, MCZ, MCM, MCM, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_lcl2  = MarkPatternMatrix(MCZ, MCM, MCM, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_lcl3  = MarkPatternMatrix(MCM, MCM, MCZ, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_lcl4  = MarkPatternMatrix(MCM, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_lcl5  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCM, MCZ, MCZ);
+  MarkPatternMatrix m_lcl6  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCM, MCM, MCZ);
+  MarkPatternMatrix m_lcl7  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCM, MCM);
+  MarkPatternMatrix m_lcl8  = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCM);
+  
+  MarkPatternMatrix m_4c01  = MarkPatternMatrix(MCZ, MCM, MCM, MCM, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_4c02  = MarkPatternMatrix(MCM, MCM, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ);
+  MarkPatternMatrix m_4c03  = MarkPatternMatrix(MCZ, MCM, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCM);
+  MarkPatternMatrix m_4c04  = MarkPatternMatrix(MCZ, MCZ, MCM, MCZ, MCM, MCM, MCZ, MCM, MCZ);
+  
+  MarkPatternMatrix m_scc1  = MarkPatternMatrix(MCZ, MCA, MCM, MCZ, MCM, MCB, MCM, MCZ, MCZ);
+  MarkPatternMatrix m_scc2  = MarkPatternMatrix(MCM, MCB, MCZ, MCA, MCM, MCZ, MCZ, MCZ, MCM);
+  MarkPatternMatrix m_scc3  = MarkPatternMatrix(MCZ, MCZ, MCM, MCA, MCM, MCZ, MCM, MCB, MCZ);
+  MarkPatternMatrix m_scc4  = MarkPatternMatrix(MCM, MCZ, MCZ, MCZ, MCM, MCB, MCZ, MCA, MCM);
+  
+  MarkPatternMatrix m_cc    = MarkPatternMatrix(MCM, MCM, MCD, MCM, MCM, MCD, MCD, MCD, MCD);
+  
+  MarkPatternMatrix m_teb1  = MarkPatternMatrix(MCD, MCM, MCZ, MCM, MCM, MCM, MCD, MCZ, MCZ);
+  MarkPatternMatrix m_teb2  = MarkPatternMatrix(MCZ, MCM, MCD, MCM, MCM, MCM, MCZ, MCZ, MCD);
+  MarkPatternMatrix m_teb3  = MarkPatternMatrix(MCZ, MCZ, MCD, MCM, MCM, MCM, MCZ, MCM, MCZ);
+  MarkPatternMatrix m_teb4  = MarkPatternMatrix(MCD, MCZ, MCZ, MCM, MCM, MCM, MCD, MCM, MCZ);
+  MarkPatternMatrix m_teb5  = MarkPatternMatrix(MCD, MCM, MCD, MCM, MCM, MCZ, MCZ, MCM, MCZ);
+  MarkPatternMatrix m_teb6  = MarkPatternMatrix(MCZ, MCM, MCZ, MCM, MCM, MCZ, MCD, MCM, MCD);
+  MarkPatternMatrix m_teb7  = MarkPatternMatrix(MCZ, MCM, MCZ, MCZ, MCM, MCM, MCD, MCM, MCD);
+  MarkPatternMatrix m_teb8  = MarkPatternMatrix(MCD, MCM, MCD, MCZ, MCM, MCM, MCZ, MCM, MCZ);
+  
+  MarkPatternMatrix m_veb1  = MarkPatternMatrix(MCM, MCD, MCM, MCD, MCM, MCD, MCA, MCB, MCC);
+  MarkPatternMatrix m_veb2  = MarkPatternMatrix(MCM, MCD, MCC, MCD, MCM, MCB, MCM, MCD, MCA);
+  MarkPatternMatrix m_veb3  = MarkPatternMatrix(MCC, MCB, MCA, MCD, MCM, MCD, MCM, MCD, MCM);
+  MarkPatternMatrix m_veb4  = MarkPatternMatrix(MCA, MCD, MCM, MCB, MCM, MCD, MCC, MCD, MCM);
+  
+  MarkPatternMatrix m_dgb1  = MarkPatternMatrix(MCD, MCM, MCZ, MCZ, MCM, MCM, MCM, MCZ, MCD);
+  MarkPatternMatrix m_dgb2  = MarkPatternMatrix(MCZ, MCM, MCD, MCM, MCM, MCZ, MCD, MCZ, MCM);
+  MarkPatternMatrix m_dgb3  = MarkPatternMatrix(MCD, MCZ, MCM, MCM, MCM, MCZ, MCZ, MCM, MCD);
+  MarkPatternMatrix m_dgb4  = MarkPatternMatrix(MCM, MCZ, MCD, MCZ, MCM, MCM, MCD, MCM, MCZ);
+  
   shrinking.push_back(b_1a1);
   shrinking.push_back(b_1a2);
   shrinking.push_back(b_1a3);
@@ -247,6 +294,44 @@ MorphMatrix::MorphMatrix() {
   skeletonizing.push_back(b_11a2);
   skeletonizing.push_back(b_11a3);
   skeletonizing.push_back(b_11a4);
+  
+  stump.push_back(m_spur1);
+  stump.push_back(m_spur2);
+  stump.push_back(m_s4c1);
+  stump.push_back(m_s4c2);
+  stump.push_back(m_lcl1);
+  stump.push_back(m_lcl2);
+  stump.push_back(m_lcl3);
+  stump.push_back(m_lcl4);
+  stump.push_back(m_lcl5);
+  stump.push_back(m_lcl6);
+  stump.push_back(m_lcl7);
+  stump.push_back(m_lcl8);
+  stump.push_back(m_4c01);
+  stump.push_back(m_4c02);
+  stump.push_back(m_4c03);
+  stump.push_back(m_4c04);
+  stump.push_back(m_scc1);
+  stump.push_back(m_scc2);
+  stump.push_back(m_scc3);
+  stump.push_back(m_scc4);
+  stump.push_back(m_cc);
+  stump.push_back(m_teb1);
+  stump.push_back(m_teb2);
+  stump.push_back(m_teb3);
+  stump.push_back(m_teb4);
+  stump.push_back(m_teb5);
+  stump.push_back(m_teb6);
+  stump.push_back(m_teb7);
+  stump.push_back(m_teb8);
+  stump.push_back(m_veb1);
+  stump.push_back(m_veb2);
+  stump.push_back(m_veb3);
+  stump.push_back(m_veb4);
+  stump.push_back(m_dgb1);
+  stump.push_back(m_dgb2);
+  stump.push_back(m_dgb3);
+  stump.push_back(m_dgb4);
 }
 
 void MorphMatrix::debug_matrix(int type) {
@@ -260,5 +345,11 @@ void MorphMatrix::debug_matrix(int type) {
   
   for (int i = 0; i < v.size(); i++) {
     v.at(i).debug_3x3();
+  }
+}
+
+void MorphMatrix::debug_type2_filter() {
+  for (int i = 0; i < stump.size(); i++) {
+    stump.at(i).debug_3x3();
   }
 }

@@ -21,6 +21,7 @@ void f_2_3_a_rice_grain() {
 //  rgray.adaptive_thresholding2(75);
 //  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
   MorphMatrix mmx = MorphMatrix();
+  mmx.debug_type2_filter();
   
 /////////////////////////////////////
 // below this line is incorrect

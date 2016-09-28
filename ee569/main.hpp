@@ -84,6 +84,14 @@
 #define MORPH_SHRINKING 1
 #define MORPH_SKELETONIZING 2
 
+// Filter type 2
+#define MCA 1
+#define MCB 2
+#define MCC 3
+#define MCD 4
+#define MCM 5
+#define MCZ 0
+
 bool xcmp(char*, const char*);
 void print_help();
 
