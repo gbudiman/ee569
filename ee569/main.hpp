@@ -80,6 +80,10 @@
 
 #define GRAIN_BORDER_THRESHOLD 5
 
+#define MORPH_THINNING 0
+#define MORPH_SHRINKING 1
+#define MORPH_SKELETONIZING 2
+
 bool xcmp(char*, const char*);
 void print_help();
 

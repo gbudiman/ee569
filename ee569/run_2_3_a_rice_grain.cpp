@@ -9,16 +9,21 @@
 #include "main.hpp"
 #include "Picture.hpp"
 #include "GrainCategorizer.hpp"
+#include "MorphMatrix.hpp"
 
 void f_2_3_a_rice_grain() {
-  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
-  rg.to_grayscale();
-  rg.write_to_file("hw2_out/Rice_gray.raw");
+//  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
+//  rg.to_grayscale();
+//  rg.write_to_file("hw2_out/Rice_gray.raw");
+//  
+//  Picture rgray = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
+//  rgray.prepare_gnuplot_histogram_data("hw2_out/Rice_gray.raw", STRIP_EXTENSION);
+//  rgray.adaptive_thresholding2(75);
+//  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
+  MorphMatrix mmx = MorphMatrix();
   
-  Picture rgray = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
-  rgray.prepare_gnuplot_histogram_data("hw2_out/Rice_gray.raw", STRIP_EXTENSION);
-  rgray.adaptive_thresholding2(75);
-  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
+/////////////////////////////////////
+// below this line is incorrect
 //
 //  Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
 //  rth.morph_erode();

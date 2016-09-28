@@ -1947,25 +1947,6 @@ void Picture::adaptive_thresholding() {
 void Picture::adaptive_thresholding2(int box_radius) {
   initialize_result(0);
   
-  // obtain global thresholding parameter
-  vector<uint32_t> h_data = *hist_gray->data;
-  int minima = 255;
-  int maxima = 0;
-  float m_threshold = 0.01 * (float) dim_x * (float) dim_y;
-  for (int i = 0; i < h_data.size(); i++) {
-    if (h_data.at(i) > m_threshold) {
-      if (i < minima) {
-        minima = i;
-      }
-      
-      if (i > maxima) {
-        maxima = i;
-      }
-    }
-  }
-  
-  cout << "Min/max " << minima << " -> " << maxima << endl;
-  
   // loop to obtain local thresholding parameter
   for (int r = 0; r < dim_y; r++) {
     for (int c = 0; c < dim_x; c++) {

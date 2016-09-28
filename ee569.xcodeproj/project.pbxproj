@@ -41,6 +41,7 @@
 		07DCB88E1D96F43300AFC522 /* GrainCategorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88C1D96F43300AFC522 /* GrainCategorizer.cpp */; };
 		07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */; };
 		07DCB8931D99BCB800AFC522 /* run_2_1_c_homography.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */; };
+		07DCB8961D9C653500AFC522 /* MorphMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8941D9C653500AFC522 /* MorphMatrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -138,6 +139,8 @@
 		07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinate.cpp; sourceTree = "<group>"; };
 		07DCB8901D96F49B00AFC522 /* Coordinate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Coordinate.hpp; sourceTree = "<group>"; };
 		07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_1_c_homography.cpp; sourceTree = "<group>"; };
+		07DCB8941D9C653500AFC522 /* MorphMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MorphMatrix.cpp; sourceTree = "<group>"; };
+		07DCB8951D9C653500AFC522 /* MorphMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MorphMatrix.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +208,8 @@
 				07DCB88D1D96F43300AFC522 /* GrainCategorizer.hpp */,
 				07DCB88F1D96F49B00AFC522 /* Coordinate.cpp */,
 				07DCB8901D96F49B00AFC522 /* Coordinate.hpp */,
+				07DCB8941D9C653500AFC522 /* MorphMatrix.cpp */,
+				07DCB8951D9C653500AFC522 /* MorphMatrix.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,
 				07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */,
 				07A489CF1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp in Sources */,
+				07DCB8961D9C653500AFC522 /* MorphMatrix.cpp in Sources */,
 				07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */,
 				07DCB88E1D96F43300AFC522 /* GrainCategorizer.cpp in Sources */,
 				079284BD1D72DC0600BD6E8D /* Histogram.cpp in Sources */,

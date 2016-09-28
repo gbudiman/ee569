@@ -10,13 +10,18 @@
 #define BinaryMatrix_hpp
 
 #include "main.hpp"
+#include "Matrix.hpp"
+
 
 class BinaryMatrix {
 public:
   BinaryMatrix(std::vector<bool>, int);
+  BinaryMatrix(bool, bool, bool, bool, bool, bool, bool, bool, bool);
   bool match(Matrix);
   
   std::vector<std::vector<bool>> data;
+  
+  void debug_3x3();
 };
 
 #endif /* BinaryMatrix_hpp */
