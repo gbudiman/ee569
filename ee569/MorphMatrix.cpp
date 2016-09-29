@@ -123,7 +123,7 @@ MorphMatrix::MorphMatrix() {
   
   MarkPatternMatrix m_teb1  = MarkPatternMatrix(MCD, MCM, MCZ, MCM, MCM, MCM, MCD, MCZ, MCZ);
   MarkPatternMatrix m_teb2  = MarkPatternMatrix(MCZ, MCM, MCD, MCM, MCM, MCM, MCZ, MCZ, MCD);
-  MarkPatternMatrix m_teb3  = MarkPatternMatrix(MCZ, MCZ, MCD, MCM, MCM, MCM, MCZ, MCM, MCZ);
+  MarkPatternMatrix m_teb3  = MarkPatternMatrix(MCZ, MCZ, MCD, MCM, MCM, MCM, MCZ, MCM, MCD);
   MarkPatternMatrix m_teb4  = MarkPatternMatrix(MCD, MCZ, MCZ, MCM, MCM, MCM, MCD, MCM, MCZ);
   MarkPatternMatrix m_teb5  = MarkPatternMatrix(MCD, MCM, MCD, MCM, MCM, MCZ, MCZ, MCM, MCZ);
   MarkPatternMatrix m_teb6  = MarkPatternMatrix(MCZ, MCM, MCZ, MCM, MCM, MCZ, MCD, MCM, MCD);
@@ -355,17 +355,12 @@ void MorphMatrix::debug_type2_filter() {
 }
 
 int MorphMatrix::thinning_hit_or_miss(Matrix img) {
-  int pixel_value = img.data.at(1).at(1) > 127 ? 255 : 0;
+  //int pixel_value = img.data.at(1).at(1) > 127 ? 255 : 0;
   if (thinning_first_filter(img)) {
-    if (thinning_second_filter(img)) {
-      // when true, it means hit, so set to zero
-      return 0;
-    } else {
-      return pixel_value;
-    }
+    return MCM;
   }
   
-  return pixel_value;
+  return MCZ;
 }
 
 bool MorphMatrix::thinning_first_filter(Matrix img) {
@@ -382,10 +377,10 @@ bool MorphMatrix::thinning_first_filter(Matrix img) {
   return false;
 }
 
-bool MorphMatrix::thinning_second_filter(Matrix img) {
+bool MorphMatrix::thinning_unconditional_filter(Matrix img, Matrix mask) {
   for (int i = 0; i < stump.size(); i++) {
     MarkPatternMatrix mpmx = stump.at(i);
-    bool is_matched = mpmx.match(img);
+    bool is_matched = mpmx.match(img, mask);
     
     if (is_matched) {
       //cout << "  ==> second filter is hit at index " << i << endl;

@@ -28,9 +28,9 @@ public:
   void debug_type2_filter();
   
   int thinning_hit_or_miss(Matrix);
+  bool thinning_unconditional_filter(Matrix, Matrix);
 private:
   bool thinning_first_filter(Matrix);
-  bool thinning_second_filter(Matrix);
 };
 
 #endif

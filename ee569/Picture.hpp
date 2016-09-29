@@ -137,6 +137,7 @@ private:
   void initialize_result(uint8_t);
   Matrix extract_matrix(int, int, int);
   Matrix extract_matrix(Coordinate, int);
+  Matrix extract_mask(int, int, int);
   
   std::string path;
   uint32_t dim_x;
@@ -148,6 +149,7 @@ private:
   std::vector<std::vector<HslPixel>*>* data_hsl;
   
   std::vector<std::vector<uint8_t>>* data_gray;
+  std::vector<std::vector<uint8_t>>* second_phase_gray;
   std::vector<std::vector<uint8_t>>* result_gray;
   
   std::vector<int16_t> *tf_gray;

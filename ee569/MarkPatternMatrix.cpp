@@ -46,46 +46,39 @@ void MarkPatternMatrix::debug_3x3() {
   printf("\n");
 }
 
-bool MarkPatternMatrix::match(Matrix img) {
-  bool is_matching = true;
-  
-  bool has_a = false;
-  bool has_b = false;
-  bool has_c = false;
-  
+bool MarkPatternMatrix::match(Matrix img, Matrix mark) {
   int z_var = 0;
+  int has_non_zero = 0;
   for (int r = 0; r < 3; r++) {
     for (int c = 0; c < 3; c++) {
       int mask_type = data.at(r).at(c);
       int img_cell = img.data.at(r).at(c) > 127 ? 1 : 0;
+      int mark_cell = mark.data.at(r).at(c);
       
-      switch(mask_type) {
+      switch (mask_type) {
         case MCZ:
           if (img_cell != 0) { return false; } break;
         case MCM:
-          if (img_cell != 1) { return false; } break;
+          if (mark_cell != MCM) { return false; } break;
         case MCA:
-          has_a = true;
-          if (img_cell == 1) { z_var++; } break;
+          z_var++;
+          if (img_cell != 0) { has_non_zero++; } break;
+          break;
         case MCB:
-          has_b = true;
-          if (img_cell == 1) { z_var++; } break;
+          z_var++;
+          if (img_cell != 0) { has_non_zero++; } break;
+          break;
         case MCC:
-          has_c = true;
-          if (img_cell == 1) { z_var++; } break;
+          z_var++;
+          if (img_cell != 0) { has_non_zero++; } break;
+          break;
       }
     }
   }
   
-  if (has_a && has_b && has_c && z_var > 0) {
-    
-  } else {
-    if (has_a && has_b && z_var > 0) {
-      
-    } else {
-      return false;
-    }
+  if (z_var > 0 && has_non_zero == 0) {
+    return false;
   }
   
-  return is_matching;
+  return true;
 }

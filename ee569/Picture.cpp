@@ -2002,8 +2002,9 @@ void Picture::adaptive_thresholding2(int box_radius) {
 void Picture::morph_thin() {
   initialize_result(0);
   MorphMatrix mmx = MorphMatrix();
+  mmx.debug_type2_filter();
   
-  for (int rethin = 0; rethin < 16; rethin++) {
+  for (int rethin = 0; rethin < 15; rethin++) {
     printf("Rethinning iteration #%d\n", rethin);
     for (int r = 1; r < dim_y - 1; r++) {
       for (int c = 1; c < dim_x - 1; c++) {
@@ -2011,9 +2012,36 @@ void Picture::morph_thin() {
         
         Matrix img = extract_matrix(r, c, 1);
         int thinning_result = mmx.thinning_hit_or_miss(img);
-        result_gray->at(r).at(c) = thinning_result;
+        second_phase_gray->at(r).at(c) = thinning_result;
         //cout << "  " << data_gray->at(r).at(c) << " ==> result = " << thinning_result << endl;
         //printf("  %d --> %d\n", data_gray->at(r).at(c), result_gray->at(r).at(c));
+      }
+    }
+    
+    for (int r = 1; r < dim_y - 1; r++) {
+      for (int c = 1; c < dim_x - 1; c++) {
+//        if ((second_phase_gray)->at(r).at(c) == MCM) {
+//          result_gray->at(r).at(c) = 0;
+//        } else {
+//          result_gray->at(r).at(c) = data_gray->at(r).at(c);
+//        }
+        
+        if (second_phase_gray->at(r).at(c) != MCM) {
+          result_gray->at(r).at(c) = data_gray->at(r).at(c);
+          continue;
+        } // skip if no M is found at the center
+        
+        //printf("Applying second filter at %d, %d => ", c, r);
+        Matrix img = extract_matrix(r, c, 1);
+        Matrix mask = extract_mask(r, c, 1);
+        bool hit_on_second_filter = mmx.thinning_unconditional_filter(img, mask);
+        
+        //printf("%s\n", hit_on_second_filter ? "HIT" : "MISS");
+        if (hit_on_second_filter) { // then don't erase
+          result_gray->at(r).at(c) = data_gray->at(r).at(c);
+        } else {
+          result_gray->at(r).at(c) = 0;
+        }
       }
     }
     
@@ -2441,9 +2469,24 @@ Matrix Picture::extract_matrix(int r, int c, int radius) {
   return Matrix(img);
 }
 
+Matrix Picture::extract_mask(int r, int c, int radius) {
+  vector<vector<float>> img = vector<vector<float>>();
+  
+  for (int rr = r - 1; rr <= r + 1; rr++) {
+    vector<float> r_img = vector<float>();
+    for (int cc = c - 1; cc <= c + 1; cc++) {
+      r_img.push_back(second_phase_gray->at(rr).at(cc));
+    }
+    img.push_back(r_img);
+  }
+  
+  return Matrix(img);
+}
+
 void Picture::initialize_result(uint8_t val) {
   if (type == COLOR_GRAY) {
     result_gray = new vector<vector<uint8_t>>();
+    second_phase_gray = new vector<vector<uint8_t>>();
     
     for (int r = 0; r < dim_y; r++) {
       vector<uint8_t> row_gray = vector<uint8_t>();
@@ -2451,6 +2494,7 @@ void Picture::initialize_result(uint8_t val) {
         row_gray.push_back(val);
       }
       result_gray->push_back(row_gray);
+      second_phase_gray->push_back(row_gray);
     }
   } else {
     result = new vector<vector<RgbPixel>*>();
