@@ -330,17 +330,32 @@ void Picture::generate_histogram() {
 }
 
 void Picture::crop(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
+  
   result = new std::vector<std::vector<RgbPixel>*>();
+  result_gray = new vector<vector<uint8_t>>();
   std::vector<RgbPixel>* row_data;
+  std::vector<uint8_t> row_gray;
   
   for (uint32_t y = y1; y <= y2; y++) {
     row_data = new std::vector<RgbPixel>();
+    row_gray = std::vector<uint8_t>();
     
     for (uint32_t x = x1; x <= x2; x++) {
-      row_data->push_back(data->at(y)->at(x));
+      switch(type) {
+        case COLOR_RGB: row_data->push_back(data->at(y)->at(x)); break;
+        case COLOR_GRAY: row_gray.push_back(data_gray->at(y).at(x)); break;
+      }
+      
+      if (data_gray->at(y).at(x)) {
+        int i = 1;
+      }
+      //row_data->push_back(data->at(y)->at(x));
     }
     
-    result->push_back(row_data);
+    switch(type) {
+      case COLOR_RGB: result->push_back(row_data); break;
+      case COLOR_GRAY: result_gray->push_back(row_gray); break;
+    }
   }
 }
 
@@ -1981,6 +1996,28 @@ void Picture::adaptive_thresholding2(int box_radius) {
         }
       }
     }
+  }
+}
+
+void Picture::morph_thin() {
+  initialize_result(0);
+  MorphMatrix mmx = MorphMatrix();
+  
+  for (int rethin = 0; rethin < 16; rethin++) {
+    printf("Rethinning iteration #%d\n", rethin);
+    for (int r = 1; r < dim_y - 1; r++) {
+      for (int c = 1; c < dim_x - 1; c++) {
+        //printf("Processing (%d, %d)\n", r, c);
+        
+        Matrix img = extract_matrix(r, c, 1);
+        int thinning_result = mmx.thinning_hit_or_miss(img);
+        result_gray->at(r).at(c) = thinning_result;
+        //cout << "  " << data_gray->at(r).at(c) << " ==> result = " << thinning_result << endl;
+        //printf("  %d --> %d\n", data_gray->at(r).at(c), result_gray->at(r).at(c));
+      }
+    }
+    
+    copy_result_to_data();
   }
 }
 

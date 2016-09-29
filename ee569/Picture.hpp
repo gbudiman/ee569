@@ -21,6 +21,7 @@
 #include "BinaryMatrix.hpp"
 #include "GrainCategorizer.hpp"
 #include "Coordinate.hpp"
+#include "MorphMatrix.hpp"
 
 class Picture {
 public:
@@ -68,6 +69,7 @@ public:
   
   void adaptive_thresholding();
   void adaptive_thresholding2(int);
+  void morph_thin();
   void morph_erode();
   void post_process_threshold();
   GrainCategorizer count_objects();

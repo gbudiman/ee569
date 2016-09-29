@@ -15,6 +15,7 @@ class MarkPatternMatrix {
 public:
   MarkPatternMatrix(int, int, int, int, int, int, int, int, int);
   void debug_3x3();
+  bool match(Matrix);
   
   std::vector<std::vector<int>> data;
 };

@@ -353,3 +353,45 @@ void MorphMatrix::debug_type2_filter() {
     stump.at(i).debug_3x3();
   }
 }
+
+int MorphMatrix::thinning_hit_or_miss(Matrix img) {
+  int pixel_value = img.data.at(1).at(1) > 127 ? 255 : 0;
+  if (thinning_first_filter(img)) {
+    if (thinning_second_filter(img)) {
+      // when true, it means hit, so set to zero
+      return 0;
+    } else {
+      return pixel_value;
+    }
+  }
+  
+  return pixel_value;
+}
+
+bool MorphMatrix::thinning_first_filter(Matrix img) {
+  // cycle through all thinning filters
+  for (int i = 0; i < thinning.size(); i++) {
+    BinaryMatrix thinning_matrix = thinning.at(i);
+    bool is_matched = thinning_matrix.match(img);
+    if (is_matched) {
+      //cout << "  ==> first filter is hit\n";
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+bool MorphMatrix::thinning_second_filter(Matrix img) {
+  for (int i = 0; i < stump.size(); i++) {
+    MarkPatternMatrix mpmx = stump.at(i);
+    bool is_matched = mpmx.match(img);
+    
+    if (is_matched) {
+      //cout << "  ==> second filter is hit at index " << i << endl;
+      return true;
+    }
+  }
+  
+  return false;
+}

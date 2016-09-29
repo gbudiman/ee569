@@ -10,6 +10,7 @@
 #define MorphMatrix_hpp
 
 #include "main.hpp"
+#include "Matrix.hpp"
 #include "BinaryMatrix.hpp"
 #include "MarkPatternMatrix.hpp"
 using namespace std;
@@ -25,6 +26,11 @@ public:
   
   void debug_matrix(int);
   void debug_type2_filter();
+  
+  int thinning_hit_or_miss(Matrix);
+private:
+  bool thinning_first_filter(Matrix);
+  bool thinning_second_filter(Matrix);
 };
 
 #endif

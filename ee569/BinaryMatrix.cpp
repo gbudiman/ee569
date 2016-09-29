@@ -54,6 +54,10 @@ bool BinaryMatrix::match(Matrix img) {
   return true;
 }
 
+bool BinaryMatrix::strict_match(Matrix img) {
+  return true;
+}
+
 void BinaryMatrix::debug_3x3() {
   for (int r = 0; r < 3; r++) {
     printf("%d %d %d\n", data.at(r).at(0) ? 1 : 0, data.at(r).at(1) ? 1 : 0, data.at(r).at(2) ? 1 : 0);

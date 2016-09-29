@@ -9,7 +9,6 @@
 #include "main.hpp"
 #include "Picture.hpp"
 #include "GrainCategorizer.hpp"
-#include "MorphMatrix.hpp"
 
 void f_2_3_a_rice_grain() {
 //  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
@@ -20,8 +19,17 @@ void f_2_3_a_rice_grain() {
 //  rgray.prepare_gnuplot_histogram_data("hw2_out/Rice_gray.raw", STRIP_EXTENSION);
 //  rgray.adaptive_thresholding2(75);
 //  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
-  MorphMatrix mmx = MorphMatrix();
-  mmx.debug_type2_filter();
+
+  Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
+  //rth.morph_thin();
+  //rth.write_to_file("hw2_out/Rice_thinning.raw");
+  
+//  rth.crop(168, 394, 302, 480); // 135x87
+//  rth.write_to_file("hw2_out/Rice_thresholded_cropped.raw");
+  
+  Picture rth_small = Picture("hw2_out/Rice_thresholded_cropped.raw", 135, 87, COLOR_GRAY);
+  rth_small.morph_thin();
+  rth_small.write_to_file("hw2_out/Rsmall_thinning.raw");
   
 /////////////////////////////////////
 // below this line is incorrect

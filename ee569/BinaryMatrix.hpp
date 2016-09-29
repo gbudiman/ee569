@@ -18,6 +18,7 @@ public:
   BinaryMatrix(std::vector<bool>, int);
   BinaryMatrix(bool, bool, bool, bool, bool, bool, bool, bool, bool);
   bool match(Matrix);
+  bool strict_match(Matrix);
   
   std::vector<std::vector<bool>> data;
   
