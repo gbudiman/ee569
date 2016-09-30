@@ -9,7 +9,7 @@
 
 CC=g++-6
 CFLAGS=-Ofast
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
 picture:
@@ -42,6 +42,24 @@ patch_map:
 nlm_weight:
 	$(CC) $(CFLAGS) -c NlmWeight.cpp
 
+binary_matrix:
+	$(CC) $(CFLAGS) -c BinaryMatrix.cpp
+
+matrix:
+	$(CC) $(CFLAGS) -c Matrix.cpp
+
+grain_categorizer:
+	$(CC) $(CFLAGS) -c GrainCategorizer.cpp
+
+coordinate:
+	$(CC) $(CFLAGS) -c Coordinate.cpp
+
+morph_matrix:
+	$(CC) $(CFLAGS) -c MorphMatrix.cpp
+
+mark_pattern_matrix:
+	$(CC) $(CFLAGS) -c MarkPatternMatrix.cpp
+	
 runs:
 	$(CC) $(CFLAGS) -c run_1_1_a_cropping.cpp
 	$(CC) $(CFLAGS) -c run_1_1_a_resizing.cpp
@@ -56,6 +74,11 @@ runs:
 	$(CC) $(CFLAGS) -c run_1_3_b_nlm.cpp
 	$(CC) $(CFLAGS) -c run_1_3_b_cascaded_filter.cpp
 	$(CC) $(CFLAGS) -c run_1_3_psnr_calculator.cpp
+	$(CC) $(CFLAGS) -c run_2_1_a_diamond_warp.cpp
+	$(CC) $(CFLAGS) -c run_2_1_c_homography.cpp
+	$(CC) $(CFLAGS) -c run_f_2_1_b_puzzle_matching.cpp
+	$(CC) $(CFLAGS) -c run_2_2_a_dithering.cpp
+	$(CC) $(CFLAGS) -c run_2_3_a_rice_grain.cpp
 
 clean:
 	rm *.o main

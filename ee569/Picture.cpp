@@ -2002,11 +2002,19 @@ void Picture::adaptive_thresholding2(int box_radius) {
 void Picture::morph_thin() {
   initialize_result(0);
   MorphMatrix mmx = MorphMatrix();
-  mmx.debug_type2_filter();
-  
-  for (int rethin = 0; rethin < 15; rethin++) {
-    printf("Rethinning iteration #%d\n", rethin);
+  int delta = dim_x * dim_y;
+  int rethin = 0;
+  int checkpoint = 16;
+
+  while (delta > 0) {
+    printf("Rethinning iteration #%d\n", rethin++);
+    printf("  # Begin 1st filter");
+    fflush(stdout);
     for (int r = 1; r < dim_y - 1; r++) {
+      if (r % checkpoint == 0) {
+        printf(".");
+        fflush(stdout);
+      }
       for (int c = 1; c < dim_x - 1; c++) {
         //printf("Processing (%d, %d)\n", r, c);
         
@@ -2018,7 +2026,15 @@ void Picture::morph_thin() {
       }
     }
     
+    printf("\n");
+    printf("  # Begin 2nd filter");
+    fflush(stdout);
     for (int r = 1; r < dim_y - 1; r++) {
+      if (r % checkpoint == 0) {
+        printf(".");
+        fflush(stdout);
+      }
+      
       for (int c = 1; c < dim_x - 1; c++) {
 //        if ((second_phase_gray)->at(r).at(c) == MCM) {
 //          result_gray->at(r).at(c) = 0;
@@ -2045,7 +2061,13 @@ void Picture::morph_thin() {
       }
     }
     
+    delta = binary_delta();
+    printf("\n");
+    printf("  # Deltas = %d\n", delta);
     copy_result_to_data();
+    
+    //write_intermediate_mask_to_file("hw2_out/mask_" + to_string(rethin) + ".raw");
+    //write_to_file("hw2_out/debug_" + to_string(rethin) + ".raw");
   }
 }
 
@@ -2120,6 +2142,19 @@ void Picture::post_process_threshold() {
       }
     }
   }
+}
+
+int Picture::binary_delta() {
+  int diff = 0;
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (result_gray->at(r).at(c) != data_gray->at(r).at(c)) {
+        diff++;
+      }
+    }
+  }
+  
+  return diff;
 }
 
 GrainCategorizer Picture::count_objects() {
@@ -2568,6 +2603,21 @@ void Picture::write_gray(string out_path, vector<vector<uint8_t>*> *in) {
   out.close();
   
   cout << "File written to " << out_path << "\n";
+}
+
+void Picture::write_intermediate_mask_to_file(string out_path) {
+  ofstream out;
+  out.open(out_path, ios::out | ios::binary);
+  
+  for (auto r = 0; r < dim_y; r++) {
+    for (auto c = 0; c < dim_x; c++) {
+      uint8_t byte = second_phase_gray->at(r).at(c) * 32;
+      out.write((char*) &byte, sizeof(uint8_t));
+    }
+  }
+  
+  out.close();
+  cout << "Intermediate mask written to " << out_path << "\n";
 }
 
 void Picture::write_rgb(string out_path) {

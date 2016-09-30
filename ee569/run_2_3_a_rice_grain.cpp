@@ -21,15 +21,15 @@ void f_2_3_a_rice_grain() {
 //  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
 
   Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-  //rth.morph_thin();
-  //rth.write_to_file("hw2_out/Rice_thinning.raw");
+  rth.morph_thin();
+  rth.write_to_file("hw2_out/Rice_thinning.raw");
   
 //  rth.crop(168, 394, 302, 480); // 135x87
 //  rth.write_to_file("hw2_out/Rice_thresholded_cropped.raw");
   
-  Picture rth_small = Picture("hw2_out/Rice_thresholded_cropped.raw", 135, 87, COLOR_GRAY);
-  rth_small.morph_thin();
-  rth_small.write_to_file("hw2_out/Rsmall_thinning.raw");
+//  Picture rth_small = Picture("hw2_out/Rice_thresholded_cropped.raw", 135, 87, COLOR_GRAY);
+//  rth_small.morph_thin();
+//  rth_small.write_to_file("hw2_out/Rsmall_thinning.raw");
   
 /////////////////////////////////////
 // below this line is incorrect

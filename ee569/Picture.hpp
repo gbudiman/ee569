@@ -32,6 +32,7 @@ public:
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
+  void write_intermediate_mask_to_file(std::string);
   void write_separate_rgb_channel(std::string);
   void crop(uint32_t, uint32_t, uint32_t, uint32_t);
   void resize(uint32_t, uint32_t);
@@ -138,6 +139,8 @@ private:
   Matrix extract_matrix(int, int, int);
   Matrix extract_matrix(Coordinate, int);
   Matrix extract_mask(int, int, int);
+  
+  int binary_delta();
   
   std::string path;
   uint32_t dim_x;
