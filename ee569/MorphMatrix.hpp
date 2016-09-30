@@ -13,6 +13,7 @@
 #include "Matrix.hpp"
 #include "BinaryMatrix.hpp"
 #include "MarkPatternMatrix.hpp"
+#include "BitStreamMatrix.hpp"
 using namespace std;
 
 class MorphMatrix {
@@ -24,13 +25,18 @@ public:
   vector<BinaryMatrix> skeletonizing;
   vector<MarkPatternMatrix> stump;
   
+  vector<int> thinning_bitstream;
+  vector<int> shrinking_bitstream;
+  vector<int> skeletonizing_bitstream;
+  
   void debug_matrix(int);
   void debug_type2_filter();
   
-  int thinning_hit_or_miss(Matrix);
+  //int thinning_hit_or_miss(Matrix);
+  bool thinning_first_filter(int);
   bool thinning_unconditional_filter(Matrix, Matrix);
 private:
-  bool thinning_first_filter(Matrix);
+  
 };
 
 #endif

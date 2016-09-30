@@ -2018,9 +2018,11 @@ void Picture::morph_thin() {
       for (int c = 1; c < dim_x - 1; c++) {
         //printf("Processing (%d, %d)\n", r, c);
         
-        Matrix img = extract_matrix(r, c, 1);
-        int thinning_result = mmx.thinning_hit_or_miss(img);
-        second_phase_gray->at(r).at(c) = thinning_result;
+        //Matrix img = extract_matrix(r, c, 1);
+        int img_bst = extract_bitstream_matrix(r, c);
+        //int thinning_result = mmx.thinning_hit_or_miss(img);
+        bool hit_on_first_filter = mmx.thinning_first_filter(img_bst);
+        second_phase_gray->at(r).at(c) = hit_on_first_filter ? MCM : MCZ;
         //cout << "  " << data_gray->at(r).at(c) << " ==> result = " << thinning_result << endl;
         //printf("  %d --> %d\n", data_gray->at(r).at(c), result_gray->at(r).at(c));
       }
@@ -2516,6 +2518,19 @@ Matrix Picture::extract_mask(int r, int c, int radius) {
   }
   
   return Matrix(img);
+}
+
+int Picture::extract_bitstream_matrix(int r, int c) {
+  int result = 0;
+  int left_shifter = 8;
+  for (int rr = r - 1; rr <= r + 1; rr++) {
+    for (int cc = c - 1; cc <= c + 1; cc++) {
+      int data = data_gray->at(rr).at(cc);
+      result += (data == 0xFF ? 1 : 0) << left_shifter--;
+    }
+  }
+  
+  return result;
 }
 
 void Picture::initialize_result(uint8_t val) {

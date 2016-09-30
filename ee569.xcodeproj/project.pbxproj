@@ -43,6 +43,7 @@
 		07DCB8931D99BCB800AFC522 /* run_2_1_c_homography.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8921D99BCB800AFC522 /* run_2_1_c_homography.cpp */; };
 		07DCB8961D9C653500AFC522 /* MorphMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8941D9C653500AFC522 /* MorphMatrix.cpp */; };
 		07DCB8991D9C71F400AFC522 /* MarkPatternMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8971D9C71F400AFC522 /* MarkPatternMatrix.cpp */; };
+		07DCB89C1D9DEA7000AFC522 /* BitStreamMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -144,6 +145,8 @@
 		07DCB8951D9C653500AFC522 /* MorphMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MorphMatrix.hpp; sourceTree = "<group>"; };
 		07DCB8971D9C71F400AFC522 /* MarkPatternMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MarkPatternMatrix.cpp; sourceTree = "<group>"; };
 		07DCB8981D9C71F400AFC522 /* MarkPatternMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MarkPatternMatrix.hpp; sourceTree = "<group>"; };
+		07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BitStreamMatrix.cpp; sourceTree = "<group>"; };
+		07DCB89B1D9DEA7000AFC522 /* BitStreamMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BitStreamMatrix.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +218,8 @@
 				07DCB8951D9C653500AFC522 /* MorphMatrix.hpp */,
 				07DCB8971D9C71F400AFC522 /* MarkPatternMatrix.cpp */,
 				07DCB8981D9C71F400AFC522 /* MarkPatternMatrix.hpp */,
+				07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */,
+				07DCB89B1D9DEA7000AFC522 /* BitStreamMatrix.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */,
 				079284AD1D726C0200BD6E8D /* run_1_1_a_resizing.cpp in Sources */,
 				079284C11D740F1100BD6E8D /* run_1_2_b_histcolor_equalization.cpp in Sources */,
+				07DCB89C1D9DEA7000AFC522 /* BitStreamMatrix.cpp in Sources */,
 				079284D31D7B645500BD6E8D /* Kernel.cpp in Sources */,
 				07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */,
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,

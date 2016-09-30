@@ -13,6 +13,11 @@ MorphMatrix::MorphMatrix() {
   shrinking = vector<BinaryMatrix>();
   skeletonizing = vector<BinaryMatrix>();
   
+  thinning_bitstream = vector<int>();
+  shrinking_bitstream = vector<int>();
+  skeletonizing_bitstream = vector<int>();
+  
+  
   BinaryMatrix b_1a1 = BinaryMatrix(0, 0, 1, 0, 1, 0, 0, 0, 0);
   BinaryMatrix b_1a2 = BinaryMatrix(1, 0, 0, 0, 1, 0, 0, 0, 0);
   BinaryMatrix b_1a3 = BinaryMatrix(0, 0, 0, 0, 1, 0, 1, 0, 0);
@@ -332,6 +337,18 @@ MorphMatrix::MorphMatrix() {
   stump.push_back(m_dgb2);
   stump.push_back(m_dgb3);
   stump.push_back(m_dgb4);
+  
+  for (int i = 0; i < thinning.size(); i++) {
+    thinning_bitstream.push_back(BitStreamMatrix::pack(thinning.at(i)));
+  }
+  
+  for (int i = 0; i < skeletonizing.size(); i++) {
+    skeletonizing_bitstream.push_back(BitStreamMatrix::pack(skeletonizing.at(i)));
+  }
+  
+  for (int i = 0; i < shrinking.size(); i++) {
+    shrinking_bitstream.push_back(BitStreamMatrix::pack(shrinking.at(i)));
+  }
 }
 
 void MorphMatrix::debug_matrix(int type) {
@@ -354,24 +371,29 @@ void MorphMatrix::debug_type2_filter() {
   }
 }
 
-int MorphMatrix::thinning_hit_or_miss(Matrix img) {
-  //int pixel_value = img.data.at(1).at(1) > 127 ? 255 : 0;
-  if (thinning_first_filter(img)) {
-    return MCM;
-  }
-  
-  return MCZ;
-}
+//int MorphMatrix::thinning_hit_or_miss(Matrix img) {
+//  //int pixel_value = img.data.at(1).at(1) > 127 ? 255 : 0;
+//  if (thinning_first_filter(img)) {
+//    return MCM;
+//  }
+//  
+//  return MCZ;
+//}
 
-bool MorphMatrix::thinning_first_filter(Matrix img) {
+bool MorphMatrix::thinning_first_filter(int img_bts) {
   // cycle through all thinning filters
-  for (int i = 0; i < thinning.size(); i++) {
-    BinaryMatrix thinning_matrix = thinning.at(i);
-    bool is_matched = thinning_matrix.match(img);
-    if (is_matched) {
-      //cout << "  ==> first filter is hit\n";
-      return true;
-    }
+//  for (int i = 0; i < thinning.size(); i++) {
+//    BinaryMatrix thinning_matrix = thinning.at(i);
+//    bool is_matched = thinning_matrix.match(img);
+//    if (is_matched) {
+//      //cout << "  ==> first filter is hit\n";
+//      return true;
+//    }
+//  }
+
+  for (int i = 0; i < thinning_bitstream.size(); i++) {
+    int mark = thinning_bitstream.at(i);
+    if (mark == img_bts) { return true; };
   }
   
   return false;

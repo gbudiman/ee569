@@ -139,6 +139,7 @@ private:
   Matrix extract_matrix(int, int, int);
   Matrix extract_matrix(Coordinate, int);
   Matrix extract_mask(int, int, int);
+  int extract_bitstream_matrix(int, int);
   
   int binary_delta();
   

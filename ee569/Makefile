@@ -9,7 +9,7 @@
 
 CC=g++-6
 CFLAGS=-Ofast
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
 picture:
@@ -59,7 +59,10 @@ morph_matrix:
 
 mark_pattern_matrix:
 	$(CC) $(CFLAGS) -c MarkPatternMatrix.cpp
-	
+
+bitstream_matrix:
+	$(CC) $(CFLAGS) -c BitStreamMatrix.cpp
+
 runs:
 	$(CC) $(CFLAGS) -c run_1_1_a_cropping.cpp
 	$(CC) $(CFLAGS) -c run_1_1_a_resizing.cpp
