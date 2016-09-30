@@ -381,19 +381,24 @@ void MorphMatrix::debug_type2_filter() {
 //}
 
 bool MorphMatrix::thinning_first_filter(int img_bts) {
-  // cycle through all thinning filters
-//  for (int i = 0; i < thinning.size(); i++) {
-//    BinaryMatrix thinning_matrix = thinning.at(i);
-//    bool is_matched = thinning_matrix.match(img);
-//    if (is_matched) {
-//      //cout << "  ==> first filter is hit\n";
-//      return true;
-//    }
-//  }
-
   for (int i = 0; i < thinning_bitstream.size(); i++) {
-    int mark = thinning_bitstream.at(i);
-    if (mark == img_bts) { return true; };
+    if (thinning_bitstream.at(i) == img_bts) { return true; };
+  }
+  
+  return false;
+}
+
+bool MorphMatrix::skeletonizing_first_filter(int img_bts) {
+  for (int i = 0; i < skeletonizing_bitstream.size(); i++) {
+    if (skeletonizing_bitstream.at(i) == img_bts) { return true; };
+  }
+  
+  return false;
+}
+
+bool MorphMatrix::eroding_first_filter(int img_bts) {
+  for (int i = 0; i < shrinking_bitstream.size(); i++) {
+    if (shrinking_bitstream.at(i) == img_bts) { return true; };
   }
   
   return false;
@@ -405,10 +410,28 @@ bool MorphMatrix::thinning_unconditional_filter(Matrix img, Matrix mask) {
     bool is_matched = mpmx.match(img, mask);
     
     if (is_matched) {
-      //cout << "  ==> second filter is hit at index " << i << endl;
       return true;
     }
   }
+  
+  return false;
+}
+
+bool MorphMatrix::eroding_unconditional_filter(Matrix img, Matrix mask) {
+  for (int i = 0; i < stump.size(); i++) {
+    MarkPatternMatrix mpmx = stump.at(i);
+    bool is_matched = mpmx.match(img, mask);
+    
+    if (is_matched) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+bool MorphMatrix::skeletonizing_unconditional_filter(Matrix img, Matrix mask) {
+
   
   return false;
 }

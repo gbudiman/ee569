@@ -21,8 +21,12 @@ void f_2_3_a_rice_grain() {
 //  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
 
   Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-  rth.morph_thin();
+  rth.morph(MORPH_THIN);
   rth.write_to_file("hw2_out/Rice_thinning.raw");
+  
+  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
+  rth.morph(MORPH_ERODE);
+  rth.write_to_file("hw2_out/Rice_eroding.raw");
   
 //  rth.crop(168, 394, 302, 480); // 135x87
 //  rth.write_to_file("hw2_out/Rice_thresholded_cropped.raw");

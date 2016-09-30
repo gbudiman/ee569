@@ -1999,62 +1999,52 @@ void Picture::adaptive_thresholding2(int box_radius) {
   }
 }
 
-void Picture::morph_thin() {
+void Picture::morph(int operation) {
   initialize_result(0);
   MorphMatrix mmx = MorphMatrix();
   int delta = dim_x * dim_y;
-  int rethin = 0;
-  int checkpoint = 16;
+  int iteration = 0;
+  string monitor;
+  
+  switch(operation) {
+    case MORPH_SKEL: monitor = "ReSkeletonizing"; break;
+    case MORPH_THIN: monitor = "ReThinning"; break;
+    case MORPH_ERODE: monitor = "ReEroding"; break;
+  }
 
   while (delta > 0) {
-    printf("Rethinning iteration #%d\n", rethin++);
-    printf("  # Begin 1st filter");
-    fflush(stdout);
+    printf("%s iteration #%d... ", monitor.c_str(), iteration++);
     for (int r = 1; r < dim_y - 1; r++) {
-      if (r % checkpoint == 0) {
-        printf(".");
-        fflush(stdout);
-      }
       for (int c = 1; c < dim_x - 1; c++) {
-        //printf("Processing (%d, %d)\n", r, c);
-        
-        //Matrix img = extract_matrix(r, c, 1);
         int img_bst = extract_bitstream_matrix(r, c);
-        //int thinning_result = mmx.thinning_hit_or_miss(img);
-        bool hit_on_first_filter = mmx.thinning_first_filter(img_bst);
+        bool hit_on_first_filter = false;
+        
+        switch(operation) {
+          case MORPH_SKEL: hit_on_first_filter = mmx.skeletonizing_first_filter(img_bst);break;
+          case MORPH_THIN: hit_on_first_filter = mmx.thinning_first_filter(img_bst); break;
+          case MORPH_ERODE: hit_on_first_filter = mmx.eroding_first_filter(img_bst); break;
+        }
         second_phase_gray->at(r).at(c) = hit_on_first_filter ? MCM : MCZ;
-        //cout << "  " << data_gray->at(r).at(c) << " ==> result = " << thinning_result << endl;
-        //printf("  %d --> %d\n", data_gray->at(r).at(c), result_gray->at(r).at(c));
       }
     }
     
-    printf("\n");
-    printf("  # Begin 2nd filter");
-    fflush(stdout);
     for (int r = 1; r < dim_y - 1; r++) {
-      if (r % checkpoint == 0) {
-        printf(".");
-        fflush(stdout);
-      }
-      
       for (int c = 1; c < dim_x - 1; c++) {
-//        if ((second_phase_gray)->at(r).at(c) == MCM) {
-//          result_gray->at(r).at(c) = 0;
-//        } else {
-//          result_gray->at(r).at(c) = data_gray->at(r).at(c);
-//        }
-        
         if (second_phase_gray->at(r).at(c) != MCM) {
           result_gray->at(r).at(c) = data_gray->at(r).at(c);
           continue;
         } // skip if no M is found at the center
         
-        //printf("Applying second filter at %d, %d => ", c, r);
         Matrix img = extract_matrix(r, c, 1);
         Matrix mask = extract_mask(r, c, 1);
-        bool hit_on_second_filter = mmx.thinning_unconditional_filter(img, mask);
+        bool hit_on_second_filter = false;
         
-        //printf("%s\n", hit_on_second_filter ? "HIT" : "MISS");
+        switch(operation) {
+          case MORPH_SKEL: hit_on_second_filter = mmx.skeletonizing_unconditional_filter(img, mask); break;
+          case MORPH_THIN: hit_on_second_filter = mmx.thinning_unconditional_filter(img, mask); break;
+          case MORPH_ERODE: hit_on_second_filter = mmx.eroding_unconditional_filter(img, mask); break;
+        }
+        
         if (hit_on_second_filter) { // then don't erase
           result_gray->at(r).at(c) = data_gray->at(r).at(c);
         } else {
@@ -2064,12 +2054,8 @@ void Picture::morph_thin() {
     }
     
     delta = binary_delta();
-    printf("\n");
-    printf("  # Deltas = %d\n", delta);
+    printf("# Deltas = %d\n", delta);
     copy_result_to_data();
-    
-    //write_intermediate_mask_to_file("hw2_out/mask_" + to_string(rethin) + ".raw");
-    //write_to_file("hw2_out/debug_" + to_string(rethin) + ".raw");
   }
 }
 

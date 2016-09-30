@@ -92,6 +92,10 @@
 #define MCM 5
 #define MCZ 0
 
+#define MORPH_THIN 0
+#define MORPH_ERODE 1
+#define MORPH_SKEL 2
+
 bool xcmp(char*, const char*);
 void print_help();
 

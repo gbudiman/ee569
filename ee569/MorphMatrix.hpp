@@ -34,7 +34,11 @@ public:
   
   //int thinning_hit_or_miss(Matrix);
   bool thinning_first_filter(int);
+  bool skeletonizing_first_filter(int);
+  bool eroding_first_filter(int);
   bool thinning_unconditional_filter(Matrix, Matrix);
+  bool skeletonizing_unconditional_filter(Matrix, Matrix);
+  bool eroding_unconditional_filter(Matrix, Matrix);
 private:
   
 };
