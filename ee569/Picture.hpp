@@ -73,8 +73,10 @@ public:
   void morph(int);
   //void morph_thin();
   void morph_erode();
+  void measure_area(std::vector<Coordinate>);
   void post_process_threshold();
   GrainCategorizer count_objects();
+  std::vector<Coordinate> get_center_of_mass();
   
   std::vector<std::vector<Coordinate>> compute_spatial_data(GrainCategorizer);
   
@@ -143,6 +145,8 @@ private:
   int extract_bitstream_matrix(int, int);
   
   int binary_delta();
+  
+  int expand_area(Coordinate);
   
   std::string path;
   uint32_t dim_x;

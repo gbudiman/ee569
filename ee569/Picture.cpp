@@ -1999,6 +1999,160 @@ void Picture::adaptive_thresholding2(int box_radius) {
   }
 }
 
+vector<Coordinate> Picture::get_center_of_mass() {
+  vector<Coordinate> centers = vector<Coordinate>();
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) == 0xFF) {
+        centers.push_back(Coordinate(r, c));
+      }
+    }
+  }
+  
+  return centers;
+}
+
+void Picture::measure_area(std::vector<Coordinate> coords) {
+  initialize_result(0);
+  for (int i = 0; i < coords.size(); i++) {
+    int area = expand_area(coords.at(i));
+    printf("(%3d, %3d)   %4d\n", coords.at(i).row, coords.at(i).col, area);
+  }
+}
+
+int Picture::expand_area(Coordinate coord) {
+  int area = 0;
+
+  bool first_line_counted = false;
+  bool top_out_of_bounds = false;
+  bool bottom_out_of_bounds = false;
+  bool left_out_of_bounds = false;
+  bool right_out_of_bounds = false;
+  int mid_r = coord.row;
+  int mid_c = coord.col;
+  int first_line_area = 0;
+  
+  int r = mid_r;
+  int c = mid_c;
+  
+  while (!top_out_of_bounds) {
+    int this_row_left_boundary = -1;
+    int this_row_right_boundary = -1;
+    
+    c = mid_c;
+    while (!left_out_of_bounds) {
+      uint8_t pixel = data_gray->at(r).at(c--);
+      if (pixel == 0) {
+        left_out_of_bounds = true;
+        this_row_left_boundary = c + 2;
+      } else {
+        result_gray->at(r).at(c + 1) = 0xFF;
+        area++;
+      }
+    }
+    
+    c = mid_c;
+    area--;
+    while (!right_out_of_bounds) {
+      uint8_t pixel = data_gray->at(r).at(c++);
+      if (pixel == 0) {
+        right_out_of_bounds = true;
+        this_row_right_boundary = c - 2;
+      } else {
+        result_gray->at(r).at(c - 1) = 0xFF;
+        area++;
+      }
+    }
+    
+    if (!first_line_counted) {
+      first_line_counted = true;
+      //first_line_area = area;
+      area = 0;
+    }
+    
+    int next_row_midpint = -1;
+    if (this_row_right_boundary != -1 && this_row_left_boundary != -1) {
+      for (int cc = this_row_left_boundary; cc <= this_row_right_boundary; cc++) {
+        if (data_gray->at(r-1).at(cc) == 0xFF) {
+          next_row_midpint = cc;
+          break;
+        }
+      }
+    }
+    
+    if (next_row_midpint == -1) {
+      top_out_of_bounds = true;
+    } else {
+      r--;
+      
+      mid_c = next_row_midpint;
+      left_out_of_bounds = false;
+      right_out_of_bounds = false;
+      // printf("Row %d midpoint %d\n", r, next_row_midpint);
+    }
+  }
+  
+  left_out_of_bounds = false;
+  right_out_of_bounds = false;
+  r = coord.row;
+  c = coord.col;
+  mid_c = coord.col;
+
+  while (!bottom_out_of_bounds) {
+    int this_row_left_boundary = -1;
+    int this_row_right_boundary = -1;
+    
+    c = mid_c;
+    while (!left_out_of_bounds) {
+      uint8_t pixel = data_gray->at(r).at(c--);
+      if (pixel == 0) {
+        left_out_of_bounds = true;
+        this_row_left_boundary = c + 2;
+      } else {
+        result_gray->at(r).at(c + 1) = 0xFF;
+        area++;
+      }
+    }
+    
+    c = mid_c;
+    area--;
+    while (!right_out_of_bounds) {
+      uint8_t pixel = data_gray->at(r).at(c++);
+      if (pixel == 0) {
+        right_out_of_bounds = true;
+        this_row_right_boundary = c - 2;
+      } else {
+        result_gray->at(r).at(c - 1) = 0xFF;
+        area++;
+      }
+    }
+    
+    int next_row_midpint = -1;
+    if (this_row_right_boundary != -1 && this_row_left_boundary != -1) {
+      for (int cc = this_row_left_boundary; cc <= this_row_right_boundary; cc++) {
+        if (data_gray->at(r+1).at(cc) == 0xFF) {
+          next_row_midpint = cc;
+          break;
+        }
+      }
+    }
+    
+    if (next_row_midpint == -1) {
+      bottom_out_of_bounds = true;
+    } else {
+      r++;
+      
+      mid_c = next_row_midpint;
+      left_out_of_bounds = false;
+      right_out_of_bounds = false;
+      // printf("Row %d midpoint %d\n", r, next_row_midpint);
+    }
+  }
+  
+  return area;
+}
+
 void Picture::morph(int operation) {
   initialize_result(0);
   MorphMatrix mmx = MorphMatrix();

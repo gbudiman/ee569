@@ -24,6 +24,7 @@ public:
   vector<BinaryMatrix> shrinking;
   vector<BinaryMatrix> skeletonizing;
   vector<MarkPatternMatrix> stump;
+  vector<MarkPatternMatrix> skump;
   
   vector<int> thinning_bitstream;
   vector<int> shrinking_bitstream;
@@ -31,6 +32,7 @@ public:
   
   void debug_matrix(int);
   void debug_type2_filter();
+  void debug_skel2_filter();
   
   //int thinning_hit_or_miss(Matrix);
   bool thinning_first_filter(int);

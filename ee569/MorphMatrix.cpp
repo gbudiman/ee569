@@ -145,6 +145,39 @@ MorphMatrix::MorphMatrix() {
   MarkPatternMatrix m_dgb3  = MarkPatternMatrix(MCD, MCZ, MCM, MCM, MCM, MCZ, MCZ, MCM, MCD);
   MarkPatternMatrix m_dgb4  = MarkPatternMatrix(MCM, MCZ, MCD, MCZ, MCM, MCM, MCD, MCM, MCZ);
   
+  MarkPatternMatrix k_spur1 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCZ, MCM);
+  MarkPatternMatrix k_spur2 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCM, MCZ, MCZ);
+  MarkPatternMatrix k_spur3 = MarkPatternMatrix(MCZ, MCZ, MCM, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix k_spur4 = MarkPatternMatrix(MCM, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  
+  MarkPatternMatrix k_s4cn1 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCZ, MCZ, MCM, MCZ);
+  MarkPatternMatrix k_s4cn2 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ);
+  MarkPatternMatrix k_s4cn3 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix k_s4cn4 = MarkPatternMatrix(MCZ, MCM, MCZ, MCZ, MCM, MCZ, MCZ, MCZ, MCZ);
+  
+  MarkPatternMatrix k_klcn1 = MarkPatternMatrix(MCZ, MCM, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCZ);
+  MarkPatternMatrix k_klcn2 = MarkPatternMatrix(MCZ, MCM, MCZ, MCM, MCM, MCZ, MCZ, MCZ, MCZ);
+  MarkPatternMatrix k_klcn3 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCM, MCZ);
+  MarkPatternMatrix k_klcn4 = MarkPatternMatrix(MCZ, MCZ, MCZ, MCM, MCM, MCZ, MCZ, MCM, MCZ);
+  
+  MarkPatternMatrix k_cccl1 = MarkPatternMatrix(MCM, MCM, MCD, MCM, MCM, MCD, MCD, MCD, MCD);
+  MarkPatternMatrix k_cccl2 = MarkPatternMatrix(MCD, MCD, MCD, MCD, MCM, MCM, MCD, MCM, MCM);
+  
+  MarkPatternMatrix k_teeb1 = MarkPatternMatrix(MCD, MCM, MCD, MCM, MCM, MCM, MCD, MCD, MCD);
+  MarkPatternMatrix k_teeb2 = MarkPatternMatrix(MCD, MCM, MCD, MCM, MCM, MCD, MCD, MCM, MCD);
+  MarkPatternMatrix k_teeb3 = MarkPatternMatrix(MCD, MCD, MCD, MCM, MCM, MCM, MCD, MCM, MCD);
+  MarkPatternMatrix k_teeb4 = MarkPatternMatrix(MCD, MCM, MCD, MCD, MCM, MCM, MCD, MCM, MCD);
+  
+  MarkPatternMatrix k_veeb1 = MarkPatternMatrix(MCM, MCD, MCM, MCD, MCM, MCD, MCA, MCB, MCC);
+  MarkPatternMatrix k_veeb2 = MarkPatternMatrix(MCM, MCD, MCC, MCD, MCM, MCB, MCM, MCD, MCA);
+  MarkPatternMatrix k_veeb3 = MarkPatternMatrix(MCC, MCB, MCA, MCD, MCM, MCD, MCM, MCD, MCM);
+  MarkPatternMatrix k_veeb4 = MarkPatternMatrix(MCA, MCD, MCM, MCB, MCM, MCD, MCC, MCD, MCM);
+  
+  MarkPatternMatrix k_dgbr1 = MarkPatternMatrix(MCD, MCM, MCZ, MCZ, MCM, MCM, MCM, MCZ, MCD);
+  MarkPatternMatrix k_dgbr2 = MarkPatternMatrix(MCZ, MCM, MCD, MCM, MCM, MCZ, MCD, MCZ, MCM);
+  MarkPatternMatrix k_dgbr3 = MarkPatternMatrix(MCD, MCZ, MCM, MCM, MCM, MCZ, MCZ, MCM, MCD);
+  MarkPatternMatrix k_dgbr4 = MarkPatternMatrix(MCM, MCZ, MCD, MCZ, MCM, MCM, MCD, MCM, MCZ);
+  
   shrinking.push_back(b_1a1);
   shrinking.push_back(b_1a2);
   shrinking.push_back(b_1a3);
@@ -338,6 +371,39 @@ MorphMatrix::MorphMatrix() {
   stump.push_back(m_dgb3);
   stump.push_back(m_dgb4);
   
+  skump.push_back(k_spur1);
+  skump.push_back(k_spur2);
+  skump.push_back(k_spur3);
+  skump.push_back(k_spur4);
+  
+  skump.push_back(k_s4cn1);
+  skump.push_back(k_s4cn2);
+  skump.push_back(k_s4cn3);
+  skump.push_back(k_s4cn4);
+  
+  skump.push_back(k_klcn1);
+  skump.push_back(k_klcn2);
+  skump.push_back(k_klcn3);
+  skump.push_back(k_klcn4);
+  
+  skump.push_back(k_cccl1);
+  skump.push_back(k_cccl2);
+
+  skump.push_back(k_teeb1);
+  skump.push_back(k_teeb2);
+  skump.push_back(k_teeb3);
+  skump.push_back(k_teeb4);
+  
+  skump.push_back(k_veeb1);
+  skump.push_back(k_veeb2);
+  skump.push_back(k_veeb3);
+  skump.push_back(k_veeb4);
+  
+  skump.push_back(k_dgbr1);
+  skump.push_back(k_dgbr2);
+  skump.push_back(k_dgbr3);
+  skump.push_back(k_dgbr4);
+  
   for (int i = 0; i < thinning.size(); i++) {
     thinning_bitstream.push_back(BitStreamMatrix::pack(thinning.at(i)));
   }
@@ -368,6 +434,12 @@ void MorphMatrix::debug_matrix(int type) {
 void MorphMatrix::debug_type2_filter() {
   for (int i = 0; i < stump.size(); i++) {
     stump.at(i).debug_3x3();
+  }
+}
+
+void MorphMatrix::debug_skel2_filter() {
+  for (int i = 0; i < skump.size(); i++) {
+    skump.at(i).debug_3x3();
   }
 }
 
@@ -431,7 +503,16 @@ bool MorphMatrix::eroding_unconditional_filter(Matrix img, Matrix mask) {
 }
 
 bool MorphMatrix::skeletonizing_unconditional_filter(Matrix img, Matrix mask) {
-
+  for (int i = 0; i < skump.size(); i++) {
+    MarkPatternMatrix mpmx = skump.at(i);
+    bool is_matched = mpmx.match(img, mask);
+    
+    if (is_matched) {
+      return true;
+    }
+  }
+  
+  return false;
   
   return false;
 }
