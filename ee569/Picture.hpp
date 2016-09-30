@@ -148,6 +148,8 @@ private:
   
   int expand_area(Coordinate);
   
+  void dither_range_check(int, int, float, int);
+  
   std::string path;
   uint32_t dim_x;
   uint32_t dim_y;

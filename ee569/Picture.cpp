@@ -1358,344 +1358,101 @@ void Picture::dither(int method) {
   }
 }
 
-void Picture::dither_fsb() {
-  vector<vector<float>> quanterror = vector<vector<float>>();
-  result_gray = new vector<vector<uint8_t>>();
+void Picture::dither_range_check(int r, int c, float mult, int error) {
+  if (r < 0 || r >= dim_y) { return; }
+  if (c < 0 || c >= dim_x) { return; }
+  int result = mult * error;
+  int acc = (int) second_phase_gray->at(r).at(c) + result;
   
-  // Reserve spaces for dim_x * dim_y error structure;
-  for (int prefill = 0; prefill < dim_y; prefill++) {
-    vector<uint8_t> row_gray = vector<uint8_t>(dim_x);
-    vector<float> row_error = vector<float>(dim_x, 0);
-    
-    result_gray->push_back(row_gray);
-    quanterror.push_back(row_error);
+  //acc = (acc > 255) ? 255 : acc;
+  if (acc > 255) {
+    acc = 255;
+  } else if (acc < 0) {
+    acc = 0;
   }
+
+  second_phase_gray->at(r).at(c) = (uint8_t) acc;
+  //printf("%d, ", second_phase_gray->at(r).at(c));
+}
+
+void Picture::dither_fsb() {
+  //vector<vector<float>> quanterror = vector<vector<float>>();
+  second_phase_gray = new vector<vector<uint8_t>>(dim_y);
+  initialize_result(0);
+  float sevenf = 7.0f/16.0f;
+  float fivef = 5.0f/16.0f;
+  float threef = 3.0f/16.0f;
+  float onef = 1.0f/16.0f;
   
-  
+  for (int r = 0; r < dim_y; r++) {
+    second_phase_gray->at(r) = vector<uint8_t>(dim_x);
+    for (int c = 0; c < dim_x; c++) {
+      second_phase_gray->at(r).at(c) = data_gray->at(r).at(c);
+    }
+  }
+
   for (int r = 0; r < dim_y; r += 2) {
     for (int c = 0; c < dim_x; c++) {
-      float quanterror_here = quanterror.at(r).at(c);
-      int current_pixel = (int) data_gray->at(r).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
+      uint8_t old_pixel = second_phase_gray->at(r).at(c);
+      uint8_t new_pixel = old_pixel > 127 ? 255 : 0;
+      int error = old_pixel - new_pixel;
       
-      result_gray->at(r).at(c) = updated_pixel;
+      result_gray->at(r).at(c) = new_pixel;
       
-      //printf("%.2f + %d => %d (%d)\n", quanterror_here, current_pixel, updated_pixel, error);
-      if (c < dim_x - 1) {
-        quanterror.at(r).at(c+1) += (float) 7 / (float) 16 * (float) error;
-        //cout << "    " << quanterror.at(r).at(c+1) << endl;
-      }
-      
-      if (r < dim_y - 1) {
-        quanterror.at(r+1).at(c) += (float) 5 / (float) 16 * (float) error;
-        //cout << "    " << quanterror.at(r+1).at(c) << endl;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+1).at(c+1) += (float) 1 / (float) 16 * (float) error;
-          //cout << "    " << quanterror.at(r+1).at(c+1) << endl;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+1).at(c-1) += (float) 3 / (float) 16 * (float) error;
-          //cout << "    " << quanterror.at(r+1).at(c-1) << endl;
-        }
-      }
+      dither_range_check(r, c+1, sevenf, error);
+      dither_range_check(r+1, c-1, threef, error);
+      dither_range_check(r+1, c, fivef, error);
+      dither_range_check(r+1, c+1, onef, error);
     }
     
     for (int c = dim_x - 1; c >= 0; c--) {
-      float quanterror_here = quanterror.at(r+1).at(c);
-      int current_pixel = (int) data_gray->at(r+1).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
+      uint8_t this_pixel = second_phase_gray->at(r+1).at(c);
+      uint8_t thresholded = this_pixel > 127 ? 255 : 0;
+      int error = (int) this_pixel - (int) thresholded;
       
-      result_gray->at(r+1).at(c) = updated_pixel;
+      result_gray->at(r+1).at(c) = thresholded;
       
-      //printf("%.2f + %d => %d (%d)\n", quanterror_here, current_pixel, updated_pixel, error);
-      if (c > 0) {
-        quanterror.at(r+1).at(c-1) += (float) 7 / (float) 16 * (float) error;
-        //cout << "    " << quanterror.at(r).at(c+1) << endl;
-      }
-      
-      if (r < dim_y - 2) {
-        quanterror.at(r+2).at(c) += (float) 5 / (float) 16 * (float) error;
-        //cout << "    " << quanterror.at(r+1).at(c) << endl;
-        
-        if (c > 0) {
-          quanterror.at(r+2).at(c-1) += (float) 1 / (float) 16 * (float) error;
-          //cout << "    " << quanterror.at(r+1).at(c+1) << endl;
-        }
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+2).at(c+1) += (float) 3 / (float) 16 * (float) error;
-          //cout << "    " << quanterror.at(r+1).at(c-1) << endl;
-        }
-      }
+      dither_range_check(r+1, c-1, sevenf, error);
+      dither_range_check(r+2, c+1, threef, error);
+      dither_range_check(r+2, c, fivef, error);
+      dither_range_check(r+2, c-1, onef, error);
     }
   }
 }
 
 void Picture::dither_jjn() {
-  vector<vector<float>> quanterror = vector<vector<float>>();
-  result_gray = new vector<vector<uint8_t>>();
+  initialize_result(0);
+  float sevenf = 7.0f/48.0f;
+  float fivef = 5.0f/48.0f;
+  float threef = 3.0f/48.0f;
+  float onef = 1.0f/48.0f;
   
   // Reserve spaces for dim_x * dim_y error structure;
-  for (int prefill = 0; prefill < dim_y; prefill++) {
-    vector<uint8_t> row_gray = vector<uint8_t>(dim_x);
-    vector<float> row_error = vector<float>(dim_x, 0);
-    
-    result_gray->push_back(row_gray);
-    quanterror.push_back(row_error);
-  }
-  
-  
-  for (int r = 0; r < dim_y; r += 2) {
+  for (int r = 0; r < dim_y; r++) {
+    vector<uint8_t> temp_row = vector<uint8_t>();
     for (int c = 0; c < dim_x; c++) {
-      float quanterror_here = quanterror.at(r).at(c);
-      int current_pixel = (int) data_gray->at(r).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
-      
-      result_gray->at(r).at(c) = updated_pixel;
-      
-      if (c < dim_x - 1) {
-        quanterror.at(r).at(c+1) += (float) 7 / (float) 48 * (float) error;
-      }
-      
-      if (c < dim_x - 2) {
-        quanterror.at(r).at(c+2) += (float) 5 / (float) 48 * (float) error;
-      }
-      
-      if (r < dim_y - 1) {
-        if (c > 1) {
-          quanterror.at(r+1).at(c-2) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+1).at(c-1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+1).at(c) += (float) 7 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+1).at(c+1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+1).at(c+2) += (float) 3 / (float) 48 * (float) error;
-        }
-      }
-      
-      if (r < dim_y - 2) {
-        if (c > 1) {
-          quanterror.at(r+2).at(c-2) += (float) 1 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+2).at(c-1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+2).at(c) += (float) 5 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+2).at(c+1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+2).at(c+2) += (float) 1 / (float) 48 * (float) error;
-        }
-      }
+      temp_row.push_back(data_gray->at(r).at(c));
     }
-    
-    for (int c = dim_x - 1; c >= 0; c--) {
-      float quanterror_here = quanterror.at(r+1).at(c);
-      int current_pixel = (int) data_gray->at(r+1).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
-      
-      result_gray->at(r+1).at(c) = updated_pixel;
-      
-      if (c > 1) {
-        quanterror.at(r).at(c-2) += (float) 5 / (float) 48 * (float) error;
-      }
-      
-      if (c > 0) {
-        quanterror.at(r).at(c-1) += (float) 7 / (float) 48 * (float) error;
-      }
-      
-      
-      if (r < dim_y - 2) {
-        if (c > 1) {
-          quanterror.at(r+2).at(c-2) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+2).at(c-1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+2).at(c) += (float) 7 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+2).at(c+1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+2).at(c+2) += (float) 3 / (float) 48 * (float) error;
-        }
-      }
-      
-      if (r < dim_y - 3) {
-        if (c > 1) {
-          quanterror.at(r+3).at(c-2) += (float) 1 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+3).at(c-1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+3).at(c) += (float) 5 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+3).at(c+1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+3).at(c+2) += (float) 1 / (float) 48 * (float) error;
-        }
-      }
-    }
+    second_phase_gray->push_back(temp_row);
   }
+  
+  
 }
 
 void Picture::dither_stucki() {
-  vector<vector<float>> quanterror = vector<vector<float>>();
-  result_gray = new vector<vector<uint8_t>>();
+  initialize_result(0);
+  float sevenf = 7.0f/48.0f;
+  float fivef = 5.0f/48.0f;
+  float threef = 3.0f/48.0f;
+  float onef = 1.0f/48.0f;
   
   // Reserve spaces for dim_x * dim_y error structure;
-  for (int prefill = 0; prefill < dim_y; prefill++) {
-    vector<uint8_t> row_gray = vector<uint8_t>(dim_x);
-    vector<float> row_error = vector<float>(dim_x, 0);
-    
-    result_gray->push_back(row_gray);
-    quanterror.push_back(row_error);
-  }
-  
-  
-  for (int r = 0; r < dim_y; r += 2) {
+  for (int r = 0; r < dim_y; r++) {
+    vector<uint8_t> temp_row = vector<uint8_t>();
     for (int c = 0; c < dim_x; c++) {
-      float quanterror_here = quanterror.at(r).at(c);
-      int current_pixel = (int) data_gray->at(r).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
-      
-      result_gray->at(r).at(c) = updated_pixel;
-      
-      if (c < dim_x - 1) {
-        quanterror.at(r).at(c+1) += (float) 8 / (float) 42 * (float) error;
-      }
-      
-      if (c < dim_x - 2) {
-        quanterror.at(r).at(c+2) += (float) 4 / (float) 42 * (float) error;
-      }
-      
-      if (r < dim_y - 1) {
-        if (c > 1) {
-          quanterror.at(r+1).at(c-2) += (float) 2 / (float) 42 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+1).at(c-1) += (float) 4 / (float) 42 * (float) error;
-        }
-        
-        quanterror.at(r+1).at(c) += (float) 8 / (float) 42 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+1).at(c+1) += (float) 4 / (float) 42 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+1).at(c+2) += (float) 2 / (float) 42 * (float) error;
-        }
-      }
-      
-      if (r < dim_y - 2) {
-        if (c > 1) {
-          quanterror.at(r+2).at(c-2) += (float) 1 / (float) 42 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+2).at(c-1) += (float) 2 / (float) 42 * (float) error;
-        }
-        
-        quanterror.at(r+2).at(c) += (float) 4 / (float) 42 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+2).at(c+1) += (float) 2 / (float) 42 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+2).at(c+2) += (float) 1 / (float) 42 * (float) error;
-        }
-      }
+      temp_row.push_back(data_gray->at(r).at(c));
     }
-    
-    for (int c = dim_x - 1; c >= 0; c--) {
-      float quanterror_here = quanterror.at(r+1).at(c);
-      int current_pixel = (int) data_gray->at(r+1).at(c);
-      int updated_pixel = (current_pixel + quanterror_here) > 127 ? 255 : 0;
-      int error = current_pixel - updated_pixel;
-      
-      result_gray->at(r+1).at(c) = updated_pixel;
-      
-      if (c > 1) {
-        quanterror.at(r).at(c-2) += (float) 5 / (float) 48 * (float) error;
-      }
-      
-      if (c > 0) {
-        quanterror.at(r).at(c-1) += (float) 7 / (float) 48 * (float) error;
-      }
-      
-      
-      if (r < dim_y - 2) {
-        if (c > 1) {
-          quanterror.at(r+2).at(c-2) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+2).at(c-1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+2).at(c) += (float) 7 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+2).at(c+1) += (float) 5 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+2).at(c+2) += (float) 3 / (float) 48 * (float) error;
-        }
-      }
-      
-      if (r < dim_y - 3) {
-        if (c > 1) {
-          quanterror.at(r+3).at(c-2) += (float) 1 / (float) 48 * (float) error;
-        }
-        
-        if (c > 0) {
-          quanterror.at(r+3).at(c-1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        quanterror.at(r+3).at(c) += (float) 5 / (float) 48 * (float) error;
-        
-        if (c < dim_x - 1) {
-          quanterror.at(r+3).at(c+1) += (float) 3 / (float) 48 * (float) error;
-        }
-        
-        if (c < dim_x - 2) {
-          quanterror.at(r+3).at(c+2) += (float) 1 / (float) 48 * (float) error;
-        }
-      }
-    }
+    second_phase_gray->push_back(temp_row);
   }
 }
 

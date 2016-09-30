@@ -40,9 +40,9 @@ void f_2_2_a_dithering() {
   house.dither(DITHER_FSB);
   house.write_to_file("hw2_out/House_fsb.raw");
   
-  house.dither(DITHER_JJN);
-  house.write_to_file("hw2_out/House_jjn.raw");
-  
-  house.dither(DITHER_STUCKI);
-  house.write_to_file("hw2_out/House_stucki.raw");
+//  house.dither(DITHER_JJN);
+//  house.write_to_file("hw2_out/House_jjn.raw");
+//  
+//  house.dither(DITHER_STUCKI);
+//  house.write_to_file("hw2_out/House_stucki.raw");
 }
