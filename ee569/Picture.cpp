@@ -1421,38 +1421,122 @@ void Picture::dither_fsb() {
 }
 
 void Picture::dither_jjn() {
+  second_phase_gray = new vector<vector<uint8_t>>(dim_y);
   initialize_result(0);
   float sevenf = 7.0f/48.0f;
   float fivef = 5.0f/48.0f;
   float threef = 3.0f/48.0f;
   float onef = 1.0f/48.0f;
   
-  // Reserve spaces for dim_x * dim_y error structure;
   for (int r = 0; r < dim_y; r++) {
-    vector<uint8_t> temp_row = vector<uint8_t>();
+    second_phase_gray->at(r) = vector<uint8_t>(dim_x);
     for (int c = 0; c < dim_x; c++) {
-      temp_row.push_back(data_gray->at(r).at(c));
+      second_phase_gray->at(r).at(c) = data_gray->at(r).at(c);
     }
-    second_phase_gray->push_back(temp_row);
   }
   
-  
+  for (int r = 0; r < dim_y; r += 2) {
+    for (int c = 0; c < dim_x; c++) {
+      uint8_t old_pixel = second_phase_gray->at(r).at(c);
+      uint8_t new_pixel = old_pixel > 127 ? 255 : 0;
+      int error = old_pixel - new_pixel;
+      
+      result_gray->at(r).at(c) = new_pixel;
+      
+      dither_range_check(r, c+1, sevenf, error);
+      dither_range_check(r, c+2, fivef, error);
+      dither_range_check(r+1, c-2, threef, error);
+      dither_range_check(r+1, c-1, fivef, error);
+      dither_range_check(r+1, c, sevenf, error);
+      dither_range_check(r+1, c+1, fivef, error);
+      dither_range_check(r+1, c+2, threef, error);
+      dither_range_check(r+2, c-2, onef, error);
+      dither_range_check(r+2, c-1, threef, error);
+      dither_range_check(r+2, c, fivef, error);
+      dither_range_check(r+2, c+1, threef, error);
+      dither_range_check(r+2, c+2, onef, error);
+    }
+    
+    for (int c = dim_x - 1; c >= 0; c--) {
+      uint8_t this_pixel = second_phase_gray->at(r+1).at(c);
+      uint8_t thresholded = this_pixel > 127 ? 255 : 0;
+      int error = (int) this_pixel - (int) thresholded;
+      
+      result_gray->at(r+1).at(c) = thresholded;
+      
+      dither_range_check(r+1, c-2, fivef, error);
+      dither_range_check(r+1, c-1, sevenf, error);
+      dither_range_check(r+2, c-2, threef, error);
+      dither_range_check(r+2, c-1, fivef, error);
+      dither_range_check(r+2, c, sevenf, error);
+      dither_range_check(r+2, c+1, fivef, error);
+      dither_range_check(r+2, c+2, threef, error);
+      dither_range_check(r+3, c-2, onef, error);
+      dither_range_check(r+3, c-1, threef, error);
+      dither_range_check(r+3, c, fivef, error);
+      dither_range_check(r+3, c+1, threef, error);
+      dither_range_check(r+3, c+2, onef, error);
+    }
+  }
 }
 
 void Picture::dither_stucki() {
+  second_phase_gray = new vector<vector<uint8_t>>(dim_y);
   initialize_result(0);
-  float sevenf = 7.0f/48.0f;
-  float fivef = 5.0f/48.0f;
-  float threef = 3.0f/48.0f;
-  float onef = 1.0f/48.0f;
+  float eightf = 8.0f/42.0f;
+  float fourf = 4.0f/42.0f;
+  float twof = 2.0f/42.0f;
+  float onef = 1.0f/42.0f;
   
-  // Reserve spaces for dim_x * dim_y error structure;
   for (int r = 0; r < dim_y; r++) {
-    vector<uint8_t> temp_row = vector<uint8_t>();
+    second_phase_gray->at(r) = vector<uint8_t>(dim_x);
     for (int c = 0; c < dim_x; c++) {
-      temp_row.push_back(data_gray->at(r).at(c));
+      second_phase_gray->at(r).at(c) = data_gray->at(r).at(c);
     }
-    second_phase_gray->push_back(temp_row);
+  }
+  
+  for (int r = 0; r < dim_y; r += 2) {
+    for (int c = 0; c < dim_x; c++) {
+      uint8_t old_pixel = second_phase_gray->at(r).at(c);
+      uint8_t new_pixel = old_pixel > 127 ? 255 : 0;
+      int error = old_pixel - new_pixel;
+      
+      result_gray->at(r).at(c) = new_pixel;
+      
+      dither_range_check(r, c+1, eightf, error);
+      dither_range_check(r, c+2, fourf, error);
+      dither_range_check(r+1, c-2, twof, error);
+      dither_range_check(r+1, c-1, fourf, error);
+      dither_range_check(r+1, c, eightf, error);
+      dither_range_check(r+1, c+1, fourf, error);
+      dither_range_check(r+1, c+2, twof, error);
+      dither_range_check(r+2, c-2, onef, error);
+      dither_range_check(r+2, c-1, twof, error);
+      dither_range_check(r+2, c, fourf, error);
+      dither_range_check(r+2, c+1, twof, error);
+      dither_range_check(r+2, c+2, onef, error);
+    }
+    
+    for (int c = dim_x - 1; c >= 0; c--) {
+      uint8_t this_pixel = second_phase_gray->at(r+1).at(c);
+      uint8_t thresholded = this_pixel > 127 ? 255 : 0;
+      int error = (int) this_pixel - (int) thresholded;
+      
+      result_gray->at(r+1).at(c) = thresholded;
+      
+      dither_range_check(r+1, c-2, fourf, error);
+      dither_range_check(r+1, c-1, eightf, error);
+      dither_range_check(r+2, c-2, twof, error);
+      dither_range_check(r+2, c-1, fourf, error);
+      dither_range_check(r+2, c, eightf, error);
+      dither_range_check(r+2, c+1, fourf, error);
+      dither_range_check(r+2, c+2, twof, error);
+      dither_range_check(r+3, c-2, onef, error);
+      dither_range_check(r+3, c-1, twof, error);
+      dither_range_check(r+3, c, fourf, error);
+      dither_range_check(r+3, c+1, twof, error);
+      dither_range_check(r+3, c+2, onef, error);
+    }
   }
 }
 
