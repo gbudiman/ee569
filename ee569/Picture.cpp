@@ -208,6 +208,7 @@ void Picture::load() {
   switch(type) {
     case COLOR_RGB: load_rgb(); break;
     case COLOR_GRAY: load_gray(); break;
+    case COLOR_BINARY: load_binary(); break;
   }
 }
 
@@ -1854,6 +1855,20 @@ vector<Coordinate> Picture::get_center_of_mass() {
   return centers;
 }
 
+void Picture::measure_length() {
+  Tracer tracers = Tracer(data_gray);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) == 0xFF) {
+        tracers.add(r, c);
+      }
+    }
+  }
+  
+  int r = 0;
+}
+
 void Picture::measure_area(std::vector<Coordinate> coords) {
   initialize_result(0);
   for (int i = 0; i < coords.size(); i++) {
@@ -2786,6 +2801,34 @@ void Picture::load_gray() {
     
     byte_counter++;
   }
+}
+
+void Picture::load_binary() {
+  ifstream in(path, std::ios::binary);
+  uint8_t _byte;
+  uint32_t col_counter = 0;
+  uint32_t byte_counter = 0;
+  
+  data_gray = new std::vector<std::vector<uint8_t>>();
+  std::vector<uint8_t> row_data = *new std::vector<uint8_t>();
+  
+  while (in.read((char*) &_byte, sizeof(_byte))) {
+    col_counter = byte_counter % dim_x;
+    
+    if (col_counter == 0) {
+      row_data = *new std::vector<uint8_t>();
+    }
+    
+    row_data.push_back(_byte == 1 ? 255 : 0);
+    
+    if (col_counter == dim_x - 1) {
+      data_gray->push_back(row_data);
+    }
+    
+    byte_counter++;
+  }
+  
+  type = COLOR_GRAY;
 }
 
 uint32_t Picture::get_dim_x() {

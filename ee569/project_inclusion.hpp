@@ -42,4 +42,5 @@ void f_2_1_b_puzzle_matching();
 void f_2_1_c_homography();
 void f_2_2_a_dithering();
 void f_2_3_a_rice_grain();
+void f_2_3_b_mpeg7();
 #endif /* project_inclusion_h */

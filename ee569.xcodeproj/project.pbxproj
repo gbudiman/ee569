@@ -44,6 +44,8 @@
 		07DCB8961D9C653500AFC522 /* MorphMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8941D9C653500AFC522 /* MorphMatrix.cpp */; };
 		07DCB8991D9C71F400AFC522 /* MarkPatternMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8971D9C71F400AFC522 /* MarkPatternMatrix.cpp */; };
 		07DCB89C1D9DEA7000AFC522 /* BitStreamMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */; };
+		07DCB89E1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */; };
+		07DCB8A11DA04BD000AFC522 /* Tracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89F1DA04BD000AFC522 /* Tracer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -147,6 +149,9 @@
 		07DCB8981D9C71F400AFC522 /* MarkPatternMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MarkPatternMatrix.hpp; sourceTree = "<group>"; };
 		07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BitStreamMatrix.cpp; sourceTree = "<group>"; };
 		07DCB89B1D9DEA7000AFC522 /* BitStreamMatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BitStreamMatrix.hpp; sourceTree = "<group>"; };
+		07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_3_b_mpeg7.cpp; sourceTree = "<group>"; };
+		07DCB89F1DA04BD000AFC522 /* Tracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tracer.cpp; sourceTree = "<group>"; };
+		07DCB8A01DA04BD000AFC522 /* Tracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tracer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +225,8 @@
 				07DCB8981D9C71F400AFC522 /* MarkPatternMatrix.hpp */,
 				07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */,
 				07DCB89B1D9DEA7000AFC522 /* BitStreamMatrix.hpp */,
+				07DCB89F1DA04BD000AFC522 /* Tracer.cpp */,
+				07DCB8A01DA04BD000AFC522 /* Tracer.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -267,6 +274,7 @@
 				07DCB8801D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp */,
 				07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */,
 				07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */,
+				07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */,
 				079284AE1D726DD800BD6E8D /* project_inclusion.hpp */,
 			);
 			path = ee569;
@@ -422,6 +430,7 @@
 				079284BF1D72E3DB00BD6E8D /* run_1_2_a_histogram_equalization.cpp in Sources */,
 				07872F1D1D7BC2A600A2C487 /* PatchMap.cpp in Sources */,
 				079284C61D74F68700BD6E8D /* run_1_2_d_histogram_transform.cpp in Sources */,
+				07DCB89E1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp in Sources */,
 				079284D51D7B96DA00BD6E8D /* run_1_3_b_nlm.cpp in Sources */,
 				079284B01D72864800BD6E8D /* run_1_1_b_cmyk.cpp in Sources */,
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
@@ -435,6 +444,7 @@
 				07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */,
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,
 				07DCB8911D96F49B00AFC522 /* Coordinate.cpp in Sources */,
+				07DCB8A11DA04BD000AFC522 /* Tracer.cpp in Sources */,
 				07A489CF1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp in Sources */,
 				07DCB8961D9C653500AFC522 /* MorphMatrix.cpp in Sources */,
 				07DCB88B1D9647C900AFC522 /* BinaryMatrix.cpp in Sources */,

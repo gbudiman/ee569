@@ -35,8 +35,11 @@ void f_2_3_a_rice_grain() {
   
   //rth.write_to_file("hw2_out/Rice_eroding.raw");
   rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-  rth.measure_area(centers);
-  rth.write_to_file("hw2_out/Rice_area.raw");
+  //rth.measure_area(centers);
+  //rth.write_to_file("hw2_out/Rice_area.raw");
+  
+  rth = Picture("hw2_out/Rice_thinning.raw", 690, 500, COLOR_GRAY);
+  rth.measure_length();
   
 //  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
 //  rth.morph(MORPH_SKEL);

@@ -22,6 +22,7 @@
 #include "GrainCategorizer.hpp"
 #include "Coordinate.hpp"
 #include "MorphMatrix.hpp"
+#include "Tracer.hpp"
 
 class Picture {
 public:
@@ -74,6 +75,7 @@ public:
   //void morph_thin();
   void morph_erode();
   void measure_area(std::vector<Coordinate>);
+  void measure_length();
   void post_process_threshold();
   GrainCategorizer count_objects();
   std::vector<Coordinate> get_center_of_mass();
@@ -98,6 +100,7 @@ private:
   void load();
   void load_rgb();
   void load_gray();
+  void load_binary();
   
   void write_gray(std::string);
   void write_gray(std::string, std::vector<std::vector<uint8_t>*>*);

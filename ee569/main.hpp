@@ -29,6 +29,7 @@
 #define COLOR_RGB     1 // 8-bit RGB
 #define COLOR_CMYK    2
 #define COLOR_HSL     3
+#define COLOR_BINARY  4
 
 #define HEAVY_DEBUG   0
 
