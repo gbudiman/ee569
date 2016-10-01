@@ -1855,8 +1855,10 @@ vector<Coordinate> Picture::get_center_of_mass() {
   return centers;
 }
 
-void Picture::measure_length() {
+vector<SpatialData> Picture::measure_length() {
+  vector<SpatialData> spatial_data = vector<SpatialData>();
   Tracer tracers = Tracer(data_gray);
+  vector<BoundingBox> bounding_boxes = vector<BoundingBox>();
   
   for (int r = 0; r < dim_y; r++) {
     for (int c = 0; c < dim_x; c++) {
@@ -1866,15 +1868,40 @@ void Picture::measure_length() {
     }
   }
   
-  int r = 0;
+  initialize_result(0);
+  for (int i = 0; i < tracers.data.size(); i++) {
+    vector<Coordinate> tracer = tracers.data.at(i);
+    BoundingBox bb = BoundingBox();
+    
+    for (int t = 0; t < tracer.size(); t++) {
+      Coordinate coord = tracer.at(t);
+      bb.update(coord);
+      result_gray->at(coord.row).at(coord.col) = 0xFF;
+    }
+    
+    SpatialData s = SpatialData();
+    s.update_length(bb, bb.get_length());
+    spatial_data.push_back(s);
+    
+    //bb.dump();
+    //printf("\n");
+  }
+  
+  return spatial_data;
 }
 
-void Picture::measure_area(std::vector<Coordinate> coords) {
+vector<SpatialData> Picture::measure_area(std::vector<Coordinate> coords) {
+  vector<SpatialData> spatial_data = vector<SpatialData>();
   initialize_result(0);
   for (int i = 0; i < coords.size(); i++) {
+    SpatialData s = SpatialData();
     int area = expand_area(coords.at(i));
-    printf("(%3d, %3d)   %4d\n", coords.at(i).row, coords.at(i).col, area);
+    //printf("(%3d, %3d)   %4d\n", coords.at(i).row, coords.at(i).col, area);
+    s.update_area(coords.at(i), area);
+    spatial_data.push_back(s);
   }
+  
+  return spatial_data;
 }
 
 int Picture::expand_area(Coordinate coord) {

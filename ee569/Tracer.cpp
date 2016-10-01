@@ -21,10 +21,10 @@ Tracer::Tracer(vector<vector<uint8_t>>* _picture_data) {
 }
 
 void Tracer::add(int r, int c) {
-  printf("processing (%d, %d)\n", r, c);
+  //printf("processing (%d, %d)\n", r, c);
 
   if (!check_existing_trace(r, c)) {
-    printf("  Trace begin from (%d, %d)\n", r, c);
+    //printf("  Trace begin from (%d, %d)\n", r, c);
     traced_pixels = vector<Coordinate>();
     trace(r, c);
     
@@ -38,7 +38,7 @@ void Tracer::trace(int r, int c) {
       if (rr == r && cc == c) { continue; }
       
       if (has_connecting_pixel(rr, cc) && not_in_traced_pixels(rr, cc)) {
-        printf("    Adding trace of pixel (%d, %d)\n", rr, cc);
+        //printf("    Adding trace of pixel (%d, %d)\n", rr, cc);
         traced_pixels.push_back(Coordinate(rr, cc));
         trace(rr, cc);
       }

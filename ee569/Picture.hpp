@@ -23,6 +23,8 @@
 #include "Coordinate.hpp"
 #include "MorphMatrix.hpp"
 #include "Tracer.hpp"
+#include "BoundingBox.hpp"
+#include "SpatialData.hpp"
 
 class Picture {
 public:
@@ -74,8 +76,8 @@ public:
   void morph(int);
   //void morph_thin();
   void morph_erode();
-  void measure_area(std::vector<Coordinate>);
-  void measure_length();
+  vector<SpatialData> measure_area(std::vector<Coordinate>);
+  vector<SpatialData> measure_length();
   void post_process_threshold();
   GrainCategorizer count_objects();
   std::vector<Coordinate> get_center_of_mass();

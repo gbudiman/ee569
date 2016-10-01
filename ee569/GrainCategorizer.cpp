@@ -56,40 +56,66 @@ int GrainCategorizer::count_groups() {
 }
 
 void GrainCategorizer::debug_groups() {
-  int real_count = 0;
-  for (int g = 0; g < grains.size(); g++) {
-    vector<Coordinate> members = grains.at(g);
-    int bb_row_low = 0xFFFF;
-    int bb_row_high = 0;
-    int bb_col_low = 0xFFFF;
-    int bb_col_high = 0;
-    
-    if (members.size() < GRAIN_BORDER_THRESHOLD) {
-      continue;
-      //printf(" <<< GROUP %d (NOT COUNTED) >>>\n", g);
-    } else {
-      printf(" <<< GROUP %d >>>\n", ++real_count);
+//  int real_count = 0;
+//  for (int g = 0; g < grains.size(); g++) {
+//    vector<Coordinate> members = grains.at(g);
+//    int bb_row_low = 0xFFFF;
+//    int bb_row_high = 0;
+//    int bb_col_low = 0xFFFF;
+//    int bb_col_high = 0;
+//    
+//    if (members.size() < GRAIN_BORDER_THRESHOLD) {
+//      continue;
+//      //printf(" <<< GROUP %d (NOT COUNTED) >>>\n", g);
+//    } else {
+//      printf(" <<< GROUP %d >>>\n", ++real_count);
+//    }
+//    
+//    for (int m = 0; m < members.size(); m++) {
+//      int this_row = members.at(m).row;
+//      int this_col = members.at(m).col;
+//      if (this_row > bb_row_high) {
+//        bb_row_high = this_row;
+//      }
+//      if (this_row < bb_row_low) {
+//        bb_row_low = this_row;
+//      }
+//      if (this_col > bb_col_high) {
+//        bb_col_high = this_col;
+//      }
+//      if (this_col < bb_col_low) {
+//        bb_col_low = this_col;
+//      }
+//      
+//      //printf("  (%d, %d)\n", this_row, this_col);
+//    }
+//    
+//    printf(" (%d, %d) -> (%d, %d) === (%d, %d)\n", bb_col_low, bb_row_low, bb_col_high, bb_row_high, bb_col_high - bb_col_low, bb_row_high - bb_row_low);
+//  }
+  for (int i = 0; i < grain_data.size(); i++) {
+    SpatialData s = grain_data.at(i);
+    if (s.area < 10) { continue; }
+    printf("(%3d, %3d) | %4.0f | %3.1f x %3.1f | %.3f\n",
+           s.spatial_center.col,
+           s.spatial_center.row,
+           s.area,
+           s.length,
+           s.width,
+           s.width / s.length);
+  }
+}
+
+void GrainCategorizer::insert_area_data(Coordinate coord, float area) {
+  SpatialData spd = SpatialData();
+  spd.update_area(coord, area);
+  grain_data.push_back(spd);
+}
+
+void GrainCategorizer::correlate_length(BoundingBox bb, float length) {
+  for (int i = 0; i < grain_data.size(); i++) {
+    if (bb.in_bounding_box(grain_data.at(i).spatial_center)) {
+      grain_data.at(i).update_length(bb, length);
+      grain_data.at(i).update_width();
     }
-    
-    for (int m = 0; m < members.size(); m++) {
-      int this_row = members.at(m).row;
-      int this_col = members.at(m).col;
-      if (this_row > bb_row_high) {
-        bb_row_high = this_row;
-      }
-      if (this_row < bb_row_low) {
-        bb_row_low = this_row;
-      }
-      if (this_col > bb_col_high) {
-        bb_col_high = this_col;
-      }
-      if (this_col < bb_col_low) {
-        bb_col_low = this_col;
-      }
-      
-      //printf("  (%d, %d)\n", this_row, this_col);
-    }
-    
-    printf(" (%d, %d) -> (%d, %d) === (%d, %d)\n", bb_col_low, bb_row_low, bb_col_high, bb_row_high, bb_col_high - bb_col_low, bb_row_high - bb_row_low);
   }
 }

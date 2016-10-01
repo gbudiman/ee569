@@ -10,6 +10,7 @@
 #include "Coordinate.hpp"
 #include "Picture.hpp"
 #include "GrainCategorizer.hpp"
+#include "SpatialData.hpp"
 using namespace std;
 
 void f_2_3_a_rice_grain() {
@@ -32,14 +33,27 @@ void f_2_3_a_rice_grain() {
 
   rth = Picture("hw2_out/Rice_eroding.raw", 690, 500, COLOR_GRAY);
   vector<Coordinate> centers = rth.get_center_of_mass();
+
+  GrainCategorizer gc = GrainCategorizer();
   
   //rth.write_to_file("hw2_out/Rice_eroding.raw");
   rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-  //rth.measure_area(centers);
+  vector<SpatialData> s = rth.measure_area(centers);
   //rth.write_to_file("hw2_out/Rice_area.raw");
   
+  for (int i = 0; i < s.size(); i++) {
+    gc.insert_area_data(s.at(i).spatial_center, s.at(i).area);
+  }
+  
   rth = Picture("hw2_out/Rice_thinning.raw", 690, 500, COLOR_GRAY);
-  rth.measure_length();
+  vector<SpatialData> l = rth.measure_length();
+  
+  for (int i = 0; i < l.size(); i++) {
+    gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
+  }
+  
+  gc.debug_groups();
+  //rth.write_to_file("hw2_out/Rice_traced.raw");
   
 //  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
 //  rth.morph(MORPH_SKEL);

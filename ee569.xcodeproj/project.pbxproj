@@ -46,6 +46,8 @@
 		07DCB89C1D9DEA7000AFC522 /* BitStreamMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89A1D9DEA7000AFC522 /* BitStreamMatrix.cpp */; };
 		07DCB89E1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */; };
 		07DCB8A11DA04BD000AFC522 /* Tracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89F1DA04BD000AFC522 /* Tracer.cpp */; };
+		07DCB8A41DA0654400AFC522 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A21DA0654400AFC522 /* BoundingBox.cpp */; };
+		07DCB8A71DA06B1B00AFC522 /* SpatialData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +154,10 @@
 		07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_3_b_mpeg7.cpp; sourceTree = "<group>"; };
 		07DCB89F1DA04BD000AFC522 /* Tracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tracer.cpp; sourceTree = "<group>"; };
 		07DCB8A01DA04BD000AFC522 /* Tracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tracer.hpp; sourceTree = "<group>"; };
+		07DCB8A21DA0654400AFC522 /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cpp; sourceTree = "<group>"; };
+		07DCB8A31DA0654400AFC522 /* BoundingBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundingBox.hpp; sourceTree = "<group>"; };
+		07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpatialData.cpp; sourceTree = "<group>"; };
+		07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpatialData.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +233,10 @@
 				07DCB89B1D9DEA7000AFC522 /* BitStreamMatrix.hpp */,
 				07DCB89F1DA04BD000AFC522 /* Tracer.cpp */,
 				07DCB8A01DA04BD000AFC522 /* Tracer.hpp */,
+				07DCB8A21DA0654400AFC522 /* BoundingBox.cpp */,
+				07DCB8A31DA0654400AFC522 /* BoundingBox.hpp */,
+				07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */,
+				07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -420,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07DCB8A71DA06B1B00AFC522 /* SpatialData.cpp in Sources */,
 				07DCB8991D9C71F400AFC522 /* MarkPatternMatrix.cpp in Sources */,
 				07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */,
 				07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */,
@@ -459,6 +470,7 @@
 				079284B61D72971900BD6E8D /* HslPixel.cpp in Sources */,
 				07A489CD1D80C6C3009C1FD1 /* run_1_3_a_cascaded_filter.cpp in Sources */,
 				079284A71D726B4400BD6E8D /* main.cpp in Sources */,
+				07DCB8A41DA0654400AFC522 /* BoundingBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
