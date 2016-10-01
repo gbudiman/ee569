@@ -97,6 +97,8 @@
 #define MORPH_ERODE 1
 #define MORPH_SKEL 2
 
+#define MEASURE_CHROMA 1
+
 bool xcmp(char*, const char*);
 void print_help();
 

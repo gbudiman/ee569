@@ -13,6 +13,7 @@
 #include "Coordinate.hpp"
 #include "SpatialData.hpp"
 #include "BoundingBox.hpp"
+#include "RgbPixel.hpp"
 
 class GrainCategorizer {
 public:
@@ -22,11 +23,13 @@ public:
   void debug_groups();
   
   void insert_area_data(Coordinate, float);
+  void correlate_chroma(Coordinate, RgbPixel);
   void correlate_length(BoundingBox, float);
   
   std::vector<std::vector<Coordinate>> grains;
   std::vector<SpatialData> grain_data;
   
+  int pseudo_group(int r, int c);
 private:
 };
 

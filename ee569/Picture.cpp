@@ -1895,7 +1895,8 @@ vector<SpatialData> Picture::measure_area(std::vector<Coordinate> coords) {
   initialize_result(0);
   for (int i = 0; i < coords.size(); i++) {
     SpatialData s = SpatialData();
-    int area = expand_area(coords.at(i));
+    RgbPixel chroma_avg = RgbPixel(0,0,0);
+    int area = expand_area(coords.at(i), 0, chroma_avg);
     //printf("(%3d, %3d)   %4d\n", coords.at(i).row, coords.at(i).col, area);
     s.update_area(coords.at(i), area);
     spatial_data.push_back(s);
@@ -1904,7 +1905,23 @@ vector<SpatialData> Picture::measure_area(std::vector<Coordinate> coords) {
   return spatial_data;
 }
 
-int Picture::expand_area(Coordinate coord) {
+vector<SpatialData> Picture::measure_chromaticity(Picture other, vector<Coordinate> coords) {
+  vector<SpatialData> spatial_data = vector<SpatialData>();
+  data = other.data;
+  
+  for (int i = 0; i < coords.size(); i++) {
+    SpatialData s = SpatialData();
+    RgbPixel chroma_avg = RgbPixel(0,0,0);
+    expand_area(coords.at(i), MEASURE_CHROMA, chroma_avg);
+    s.spatial_center = coords.at(i);
+    s.chroma = chroma_avg;
+    spatial_data.push_back(s);
+  }
+  
+  return spatial_data;
+}
+
+int Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &chroma) {
   int area = 0;
 
   bool first_line_counted = false;
@@ -1919,6 +1936,11 @@ int Picture::expand_area(Coordinate coord) {
   int r = mid_r;
   int c = mid_c;
   
+  int chroma_r = 0;
+  int chroma_g = 0;
+  int chroma_b = 0;
+  int pixel_count = 0;
+  
   while (!top_out_of_bounds) {
     int this_row_left_boundary = -1;
     int this_row_right_boundary = -1;
@@ -1930,6 +1952,12 @@ int Picture::expand_area(Coordinate coord) {
         left_out_of_bounds = true;
         this_row_left_boundary = c + 2;
       } else {
+        if (measure_chroma) {
+          chroma_r += data->at(r)->at(c).r;
+          chroma_g += data->at(r)->at(c).g;
+          chroma_b += data->at(r)->at(c).b;
+          pixel_count++;
+        }
         result_gray->at(r).at(c + 1) = 0xFF;
         area++;
       }
@@ -1943,6 +1971,12 @@ int Picture::expand_area(Coordinate coord) {
         right_out_of_bounds = true;
         this_row_right_boundary = c - 2;
       } else {
+        if (measure_chroma) {
+          chroma_r += data->at(r)->at(c).r;
+          chroma_g += data->at(r)->at(c).g;
+          chroma_b += data->at(r)->at(c).b;
+          pixel_count++;
+        }
         result_gray->at(r).at(c - 1) = 0xFF;
         area++;
       }
@@ -1993,6 +2027,12 @@ int Picture::expand_area(Coordinate coord) {
         left_out_of_bounds = true;
         this_row_left_boundary = c + 2;
       } else {
+        if (measure_chroma) {
+          chroma_r += data->at(r)->at(c).r;
+          chroma_g += data->at(r)->at(c).g;
+          chroma_b += data->at(r)->at(c).b;
+          pixel_count++;
+        }
         result_gray->at(r).at(c + 1) = 0xFF;
         area++;
       }
@@ -2006,6 +2046,12 @@ int Picture::expand_area(Coordinate coord) {
         right_out_of_bounds = true;
         this_row_right_boundary = c - 2;
       } else {
+        if (measure_chroma) {
+          chroma_r += data->at(r)->at(c).r;
+          chroma_g += data->at(r)->at(c).g;
+          chroma_b += data->at(r)->at(c).b;
+          pixel_count++;
+        }
         result_gray->at(r).at(c - 1) = 0xFF;
         area++;
       }
@@ -2031,6 +2077,10 @@ int Picture::expand_area(Coordinate coord) {
       right_out_of_bounds = false;
       // printf("Row %d midpoint %d\n", r, next_row_midpint);
     }
+  }
+  
+  if (measure_chroma) {
+    chroma = RgbPixel(chroma_r / pixel_count, chroma_g / pixel_count, chroma_b / pixel_count);
   }
   
   return area;

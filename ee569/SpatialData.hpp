@@ -12,6 +12,7 @@
 #include "main.hpp"
 #include "Coordinate.hpp"
 #include "BoundingBox.hpp"
+#include "RgbPixel.hpp"
 
 class SpatialData {
 public:
@@ -26,6 +27,7 @@ public:
   float area;
   float length;
   float width;
+  RgbPixel chroma = RgbPixel(0,0,0);
 };
 
 #endif /* SpatialData_hpp */

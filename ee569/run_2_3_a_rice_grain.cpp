@@ -14,7 +14,7 @@
 using namespace std;
 
 void f_2_3_a_rice_grain() {
-//  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
+  Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
 //  rg.to_grayscale();
 //  rg.write_to_file("hw2_out/Rice_gray.raw");
 //  
@@ -39,10 +39,15 @@ void f_2_3_a_rice_grain() {
   //rth.write_to_file("hw2_out/Rice_eroding.raw");
   rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
   vector<SpatialData> s = rth.measure_area(centers);
+  vector<SpatialData> chromas = rth.measure_chromaticity(rg, centers);
   //rth.write_to_file("hw2_out/Rice_area.raw");
   
   for (int i = 0; i < s.size(); i++) {
     gc.insert_area_data(s.at(i).spatial_center, s.at(i).area);
+  }
+  
+  for (int i = 0; i < chromas.size(); i++) {
+    gc.correlate_chroma(chromas.at(i).spatial_center, chromas.at(i).chroma);
   }
   
   rth = Picture("hw2_out/Rice_thinning.raw", 690, 500, COLOR_GRAY);
@@ -51,6 +56,8 @@ void f_2_3_a_rice_grain() {
   for (int i = 0; i < l.size(); i++) {
     gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
   }
+  
+  
   
   gc.debug_groups();
   //rth.write_to_file("hw2_out/Rice_traced.raw");

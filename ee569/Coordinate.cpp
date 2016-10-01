@@ -26,3 +26,7 @@ bool Coordinate::has_connectivity(Coordinate other) {
   
   return false;
 }
+
+bool Coordinate::operator==(const Coordinate &other) {
+  return (row == other.row && col == other.col);
+}

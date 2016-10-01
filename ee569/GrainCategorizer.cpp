@@ -95,13 +95,17 @@ void GrainCategorizer::debug_groups() {
   for (int i = 0; i < grain_data.size(); i++) {
     SpatialData s = grain_data.at(i);
     if (s.area < 10) { continue; }
-    printf("(%3d, %3d) | %4.0f | %3.1f x %3.1f | %.3f\n",
+    printf("(%3d, %3d) | %4.0f | %3.1f x %3.1f | %.3f | (%3d,%3d,%3d) // %.2d\n",
            s.spatial_center.col,
            s.spatial_center.row,
            s.area,
            s.length,
            s.width,
-           s.width / s.length);
+           s.width / s.length,
+           s.chroma.r,
+           s.chroma.g,
+           s.chroma.b,
+           pseudo_group(s.spatial_center.row, s.spatial_center.col));
   }
 }
 
@@ -118,4 +122,36 @@ void GrainCategorizer::correlate_length(BoundingBox bb, float length) {
       grain_data.at(i).update_width();
     }
   }
+}
+
+void GrainCategorizer::correlate_chroma(Coordinate coord, RgbPixel p) {
+  for (int i = 0; i < grain_data.size(); i++) {
+    if (coord == grain_data.at(i).spatial_center) {
+      grain_data.at(i).chroma = p;
+    }
+  }
+}
+
+int GrainCategorizer::pseudo_group(int r, int c) {
+  int r_mult, c_add;
+  
+  if (r < 155) {
+    r_mult = 0;
+  } else if (r < 281) {
+    r_mult = 1;
+  } else if (r < 395) {
+    r_mult = 2;
+  } else {
+    r_mult = 3;
+  }
+  
+  if (c < 300) {
+    c_add = 0;
+  } else if (c < 520) {
+    c_add = 1;
+  } else {
+    c_add = 2;
+  }
+  
+  return r_mult * 3 + c_add;
 }

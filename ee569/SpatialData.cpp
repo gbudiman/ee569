@@ -14,6 +14,7 @@ SpatialData::SpatialData() {
   area = -1;
   length = -1;
   width = -1;
+  chroma = RgbPixel(0,0,0);
 }
 
 void SpatialData::update_area(Coordinate _center, float _area) {

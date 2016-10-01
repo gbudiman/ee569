@@ -78,6 +78,7 @@ public:
   void morph_erode();
   vector<SpatialData> measure_area(std::vector<Coordinate>);
   vector<SpatialData> measure_length();
+  vector<SpatialData> measure_chromaticity(Picture, std::vector<Coordinate>);
   void post_process_threshold();
   GrainCategorizer count_objects();
   std::vector<Coordinate> get_center_of_mass();
@@ -151,7 +152,7 @@ private:
   
   int binary_delta();
   
-  int expand_area(Coordinate);
+  int expand_area(Coordinate, int, RgbPixel&);
   
   void dither_range_check(int, int, float, int);
   
