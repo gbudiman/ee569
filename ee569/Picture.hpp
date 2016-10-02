@@ -33,6 +33,7 @@ public:
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void copy_result_to_data();
   void copy_data_to_result();
+  void sum_result_and_data();
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -86,8 +87,9 @@ public:
   
   std::vector<std::vector<Coordinate>> compute_spatial_data(GrainCategorizer);
   
-  void trace_boundary();
-  void fill_holes();
+  std::vector<Coordinate> trace_boundary();
+  void fill_holes(std::vector<Coordinate>);
+  void fill_holes2(std::vector<Coordinate>);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -161,6 +163,14 @@ private:
   void dither_range_check(int, int, float, int);
   
   void scan_until_first_while_pixel(int&, int&);
+  void scan_until_first_white_block(int&, int&);
+  void scan_for_fillable_hole(int, int);
+  void scan_until_hit_trace(uint32_t, int);
+  bool hit_a_trace(uint32_t);
+  bool has_been_visited(Coordinate);
+  int determine_trace_direction(Coordinate, Coordinate);
+  
+  uint32_t move(uint32_t, int);
   
   std::string path;
   uint32_t dim_x;
@@ -179,6 +189,13 @@ private:
   std::vector<int16_t> *tf_red;
   std::vector<int16_t> *tf_green;
   std::vector<int16_t> *tf_blue;
+  
+//  vector<Coordinate> traces;
+//  vector<Coordinate> visited_fill;
+//  vector<Coordinate> queue;
+  set<uint32_t> traces;
+  set<uint32_t> visited_fill;
+  set<uint32_t> queue;
   
   bool is_pseudo;
 };

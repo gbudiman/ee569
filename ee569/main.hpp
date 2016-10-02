@@ -100,6 +100,11 @@
 
 #define MEASURE_CHROMA 1
 
+#define SCAN_DIR_RIGHT 0
+#define SCAN_DIR_DOWN 1
+#define SCAN_DIR_LEFT 2
+#define SCAN_DIR_UP 3
+
 bool xcmp(char*, const char*);
 void print_help();
 

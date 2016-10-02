@@ -34,3 +34,16 @@ bool Coordinate::operator==(const Coordinate &other) {
 bool Coordinate::operator!=(const Coordinate &other) {
   return !(row == other.row && col == other.col);
 }
+
+void Coordinate::move(int direction) {
+  switch(direction) {
+    case SCAN_DIR_UP: row--; break;
+    case SCAN_DIR_DOWN: row++; break;
+    case SCAN_DIR_LEFT: col--; break;
+    case SCAN_DIR_RIGHT: col++; break;
+  }
+}
+
+uint32_t Coordinate::to_scalar() {
+  return ((row << 16) | col);
+}

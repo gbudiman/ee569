@@ -9,13 +9,20 @@
 #include "BoundaryTracer.hpp"
 using namespace std;
 
-BoundaryTracer::BoundaryTracer() {
+BoundaryTracer::BoundaryTracer(int row, int col) {
   traced = vector<Coordinate>();
   entrance = 7;
+  
+  cols = vector<vector<uint8_t>>(row);
+  for (int c = 0; c < col; c++) {
+    vector<uint8_t> col_row = vector<uint8_t>();
+    cols.push_back(col_row);
+  }
 }
 
 void BoundaryTracer::set_initial_point(Coordinate coord) {
   initial_point = coord;
+  traced.push_back(coord);
 }
 
 bool BoundaryTracer::trace(int mat, int &r, int &c) {
@@ -49,6 +56,18 @@ bool BoundaryTracer::trace(int mat, int &r, int &c) {
   if (new_position != initial_point) {
     traced.push_back(new_position);
     entrance = (entrance + 4) & 0b111;
+    
+    vector<uint8_t> col_tracker = cols.at(r);
+    if (col_tracker.size() == 0) {
+      cols.at(r).push_back(c);
+    } else {
+      uint8_t last_col_at_this_row = cols.at(r).back();
+      if (abs(last_col_at_this_row - c) < 3) {
+        cols.at(r).back() = c;
+      } else {
+        cols.at(r).push_back(c);
+      }
+    }
 
     return true;
   }

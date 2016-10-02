@@ -2561,20 +2561,156 @@ vector<vector<Coordinate>> Picture::compute_spatial_data(GrainCategorizer gc) {
   return spatial_data;
 }
 
-void Picture::trace_boundary() {
+vector<Coordinate> Picture::trace_boundary() {
   initialize_result(0);
   int fr, fc;
   bool keep_tracing = true;
-  BoundaryTracer tracer = BoundaryTracer();
+  BoundaryTracer tracer = BoundaryTracer(dim_y, dim_x);
   
   scan_until_first_while_pixel(fr, fc);
   tracer.set_initial_point(Coordinate(fr, fc));
   
   while (keep_tracing) {
-    printf("Begin tracing (%d, %d)\n", fc, fr);
+    //printf("Begin tracing (%d, %d)\n", fc, fr);
     result_gray->at(fr).at(fc) = 255;
     int mat = extract_bitstream_matrix(fr, fc);
     keep_tracing = tracer.trace(mat, fr, fc);
+  }
+  
+  return tracer.traced;
+}
+
+void Picture::scan_until_hit_trace(uint32_t _coord, int direction) {
+  //printf("Scanning until hit trace from (%d, %d) towards %d\n", _coord.col, _coord.row, direction);
+  uint32_t coord = _coord;
+  
+  while(!hit_a_trace(coord)) {
+    coord = move(coord, direction);
+    
+    // if visited_fill doesn't contain this coordinate, the insert to queue and visited_fill
+    if (visited_fill.find(coord) == visited_fill.end()) {
+      visited_fill.insert(coord);
+      queue.insert(coord);
+    }
+  }
+}
+
+uint32_t Picture::move(uint32_t coord, int direction) {
+  int result = coord;
+  
+  switch (direction) {
+    case SCAN_DIR_UP: result = result - (1 << 16); break;
+    case SCAN_DIR_DOWN: result = result + (1 << 16); break;
+    case SCAN_DIR_LEFT: result--; break;
+    case SCAN_DIR_RIGHT: result++; break;
+  }
+  
+  return result;
+}
+
+void Picture::fill_holes2(std::vector<Coordinate> _traces) {
+  sum_result_and_data();
+  traces = set<uint32_t>();
+  visited_fill = set<uint32_t>();
+  queue = set<uint32_t>();
+  
+  int fr, fc;
+  for (int i = 0; i < _traces.size(); i++) {
+    traces.insert(_traces.at(i).to_scalar());
+  }
+  
+  scan_until_first_white_block(fr, fc);
+  queue.insert(Coordinate(fr, fc).to_scalar());
+  visited_fill.insert(Coordinate(fr, fc).to_scalar());
+  //visited_fill.push_back(Coordinate(fr, fc));
+
+  while (queue.size() != 0) {
+    int in_process = *queue.begin();
+    int row = (in_process >> 16) & 0xFFFF;
+    int col = in_process & 0xFFFF;
+    printf("Processing (%d, %d)\n", col, row);
+    
+    //visited_fill.push_back(in_process);
+    result_gray->at(row).at(col) = 255;
+    queue.erase(queue.begin());
+    
+    scan_until_hit_trace(in_process, SCAN_DIR_RIGHT);
+    scan_until_hit_trace(in_process, SCAN_DIR_LEFT);
+    scan_until_hit_trace(in_process, SCAN_DIR_DOWN);
+    scan_until_hit_trace(in_process, SCAN_DIR_UP);
+    
+  }
+}
+
+void Picture::fill_holes(vector<Coordinate> _traces) {
+//  sum_result_and_data();
+//  
+//  traces = _traces;
+//  for (int i = 0; i < traces.size() - 1; i++) {
+//    int direction = determine_trace_direction(traces.at(i), traces.at(i+1));
+//    Coordinate s = traces.at(i);
+//    printf("at (%d, %d) direction is %s\n", s.col, s.row, direction == 0 ? "Right" : direction == 1 ? "Down" : direction == 2 ? "Left" : "Up");
+//    
+//    int rr = s.row;
+//    int cc = s.col;
+//    
+//    if (direction == SCAN_DIR_UP) {
+//      while (!hit_a_trace(Coordinate(rr - 1, cc))) {
+//        result_gray->at(rr--).at(cc) = 255;
+//      }
+//    } else if (direction == SCAN_DIR_DOWN) {
+//      while (!hit_a_trace(Coordinate(rr + 1, cc))) {
+//        result_gray->at(rr++).at(cc) = 255;
+//      }
+//    } else if (direction == SCAN_DIR_LEFT) {
+//      while (!hit_a_trace(Coordinate(rr, cc - 1))) {
+//        result_gray->at(rr).at(cc--) = 255;
+//      }
+//    } else if (direction == SCAN_DIR_RIGHT) {
+//      while (!hit_a_trace(Coordinate(rr, cc + 1))) {
+//        result_gray->at(rr).at(cc++) = 255;
+//      }
+//    }
+//  }
+}
+
+int Picture::determine_trace_direction(Coordinate a, Coordinate b) {
+  if ((a.row == b.row && a.col + 1 == b.col) ||
+      (a.row +1 == b.row && a.col + 1 == b.col)) {
+    return SCAN_DIR_DOWN;
+  } else if ((a.row + 1 == b.row && a.col == b.col) ||
+             (a.row + 1 == b.row && a.col - 1 == b.col)) {
+    return SCAN_DIR_LEFT;
+  } else if ((a.row == b.row && a.col - 1 == b.col) ||
+             (a.row - 1 == b.row && a.col - 1 == b.col)) {
+    return SCAN_DIR_UP;
+  } else if ((a.row - 1 == b.row && a.col == b.col) ||
+             (a.row - 1 == b.row && a.col + 1 == b.col)) {
+    return SCAN_DIR_RIGHT;
+  }
+  
+  return -1;
+}
+
+bool Picture::hit_a_trace(uint32_t coord) {
+  if (traces.find(coord) == traces.end()) {
+    return false;
+  }
+  
+  return true;
+}
+
+
+void Picture::scan_for_fillable_hole(int r, int c) {
+}
+
+void Picture::sum_result_and_data() {
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) == 255) {
+        result_gray->at(r).at(c) = 255;
+      }
+    }
   }
 }
 
@@ -2582,6 +2718,19 @@ void Picture::scan_until_first_while_pixel(int &fr, int &fc) {
   for (int r = 0; r < dim_y; r++) {
     for (int c = 0; c < dim_x; c++) {
       if (data_gray->at(r).at(c) == 0xFF) {
+        fr = r;
+        fc = c;
+        return;
+      }
+    }
+  }
+}
+
+void Picture::scan_until_first_white_block(int &fr, int &fc) {
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      int mat = extract_bitstream_matrix(r, c);
+      if (mat == 0b111111111) {
         fr = r;
         fc = c;
         return;
@@ -2627,7 +2776,10 @@ int Picture::extract_bitstream_matrix(int r, int c) {
   int left_shifter = 8;
   for (int rr = r - 1; rr <= r + 1; rr++) {
     for (int cc = c - 1; cc <= c + 1; cc++) {
-      int data = data_gray->at(rr).at(cc);
+      int data = 0;
+      if (rr < dim_y && cc < dim_x && r >= 0 && c >= 0) {
+        data = data_gray->at(rr).at(cc);
+      }
       result += (data == 0xFF ? 1 : 0) << left_shifter--;
     }
   }

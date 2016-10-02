@@ -18,6 +18,9 @@ public:
   bool operator==(const Coordinate&);
   bool operator!=(const Coordinate&);
   
+  void move(int);
+  
+  uint32_t to_scalar();
   int row;
   int col;
 };

@@ -14,11 +14,12 @@
 
 class BoundaryTracer {
 public:
-  BoundaryTracer();
+  BoundaryTracer(int, int);
   
   void set_initial_point(Coordinate);
   bool trace(int, int&, int&);
   std::vector<Coordinate> traced;
+  std::vector<std::vector<uint8_t>> cols;
 private:
   Coordinate initial_point = Coordinate(-1, -1);
   uint8_t entrance;
