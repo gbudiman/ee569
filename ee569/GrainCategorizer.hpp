@@ -29,7 +29,15 @@ public:
   std::vector<std::vector<Coordinate>> grains;
   std::vector<SpatialData> grain_data;
   
-  int pseudo_group(int r, int c);
+  static int pseudo_group(int r, int c);
+  void cluster_group_by_area();
+  void cluster_group_by_roundness();
+  void cluster_group_by_lightness();
+  void cluster_group_by_location();
+  void cluster_group_by_yellow_chroma();
+  void cluster_group_by_red_chroma();
+  
+  void compute_average_size();
 private:
 };
 
