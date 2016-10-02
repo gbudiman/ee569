@@ -48,6 +48,7 @@
 		07DCB8A11DA04BD000AFC522 /* Tracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB89F1DA04BD000AFC522 /* Tracer.cpp */; };
 		07DCB8A41DA0654400AFC522 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A21DA0654400AFC522 /* BoundingBox.cpp */; };
 		07DCB8A71DA06B1B00AFC522 /* SpatialData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */; };
+		07DCB8AA1DA0A21A00AFC522 /* BoundaryTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -158,6 +159,8 @@
 		07DCB8A31DA0654400AFC522 /* BoundingBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundingBox.hpp; sourceTree = "<group>"; };
 		07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpatialData.cpp; sourceTree = "<group>"; };
 		07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpatialData.hpp; sourceTree = "<group>"; };
+		07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundaryTracer.cpp; sourceTree = "<group>"; };
+		07DCB8A91DA0A21A00AFC522 /* BoundaryTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundaryTracer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +240,8 @@
 				07DCB8A31DA0654400AFC522 /* BoundingBox.hpp */,
 				07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */,
 				07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */,
+				07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */,
+				07DCB8A91DA0A21A00AFC522 /* BoundaryTracer.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				07DCB89E1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp in Sources */,
 				079284D51D7B96DA00BD6E8D /* run_1_3_b_nlm.cpp in Sources */,
 				079284B01D72864800BD6E8D /* run_1_1_b_cmyk.cpp in Sources */,
+				07DCB8AA1DA0A21A00AFC522 /* BoundaryTracer.cpp in Sources */,
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,
 				07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */,

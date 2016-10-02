@@ -13,4 +13,8 @@ void f_2_3_b_mpeg7() {
   Picture butterfly = Picture("hw2_images/Butterfly.raw", 335, 320, COLOR_BINARY);
   butterfly.copy_data_to_result();
   butterfly.write_to_file("hw2_out/Butterfly_gray.raw");
+  
+  butterfly = Picture("hw2_out/Butterfly_gray.raw", 335, 320, COLOR_GRAY);
+  butterfly.trace_boundary();
+  butterfly.write_to_file("hw2_out/Butterfly_traced.raw");
 }

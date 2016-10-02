@@ -2561,6 +2561,35 @@ vector<vector<Coordinate>> Picture::compute_spatial_data(GrainCategorizer gc) {
   return spatial_data;
 }
 
+void Picture::trace_boundary() {
+  initialize_result(0);
+  int fr, fc;
+  bool keep_tracing = true;
+  BoundaryTracer tracer = BoundaryTracer();
+  
+  scan_until_first_while_pixel(fr, fc);
+  tracer.set_initial_point(Coordinate(fr, fc));
+  
+  while (keep_tracing) {
+    printf("Begin tracing (%d, %d)\n", fc, fr);
+    result_gray->at(fr).at(fc) = 255;
+    int mat = extract_bitstream_matrix(fr, fc);
+    keep_tracing = tracer.trace(mat, fr, fc);
+  }
+}
+
+void Picture::scan_until_first_while_pixel(int &fr, int &fc) {
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) == 0xFF) {
+        fr = r;
+        fc = c;
+        return;
+      }
+    }
+  }
+}
+
 Matrix Picture::extract_matrix(Coordinate c, int radius) {
   return extract_matrix(c.row, c.col, radius);
 }

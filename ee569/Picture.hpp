@@ -25,6 +25,7 @@
 #include "Tracer.hpp"
 #include "BoundingBox.hpp"
 #include "SpatialData.hpp"
+#include "BoundaryTracer.hpp"
 
 class Picture {
 public:
@@ -84,6 +85,9 @@ public:
   std::vector<Coordinate> get_center_of_mass();
   
   std::vector<std::vector<Coordinate>> compute_spatial_data(GrainCategorizer);
+  
+  void trace_boundary();
+  void fill_holes();
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -155,6 +159,8 @@ private:
   int expand_area(Coordinate, int, RgbPixel&);
   
   void dither_range_check(int, int, float, int);
+  
+  void scan_until_first_while_pixel(int&, int&);
   
   std::string path;
   uint32_t dim_x;

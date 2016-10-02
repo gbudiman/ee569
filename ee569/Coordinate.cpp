@@ -30,3 +30,7 @@ bool Coordinate::has_connectivity(Coordinate other) {
 bool Coordinate::operator==(const Coordinate &other) {
   return (row == other.row && col == other.col);
 }
+
+bool Coordinate::operator!=(const Coordinate &other) {
+  return !(row == other.row && col == other.col);
+}

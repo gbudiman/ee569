@@ -16,6 +16,7 @@ public:
   Coordinate(int, int);
   bool has_connectivity(Coordinate);
   bool operator==(const Coordinate&);
+  bool operator!=(const Coordinate&);
   
   int row;
   int col;
