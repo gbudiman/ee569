@@ -2089,6 +2089,7 @@ int Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &chroma)
 void Picture::morph(int operation) {
   initialize_result(0);
   MorphMatrix mmx = MorphMatrix();
+  
   int delta = dim_x * dim_y;
   int iteration = 0;
   string monitor;
@@ -2144,6 +2145,240 @@ void Picture::morph(int operation) {
     printf("# Deltas = %d\n", delta);
     copy_result_to_data();
   }
+}
+
+void Picture::compute_diagonal_lines(int radius) {
+  int diagonal_falling_count = 0;
+  int diagonal_rising_count = 0;
+  for (int r = radius; r < dim_y - radius; r += 2*radius + 1) {
+    for (int c = radius; c < dim_x - radius; c += 2*radius + 1) {
+      
+      bool is_diagonal = true;
+      int rr = r - radius;
+      int cc = c - radius;
+      for (int z = 0; z < 2*radius + 1; z++) {
+        if (data_gray->at(rr + z).at(cc + z) == 0) {
+          is_diagonal = false;
+          break;
+        }
+      }
+      
+      if (is_diagonal) { diagonal_falling_count++; }
+      
+      is_diagonal = true;
+      rr = r + radius;
+      for (int z = 0; z < 2*radius + 1; z++) {
+        if (data_gray->at(rr - z).at(cc + z) == 0) {
+          is_diagonal = false;
+          break;
+        }
+      }
+      
+      if (is_diagonal) { diagonal_rising_count++; }
+    }
+  }
+  
+  cout << diagonal_falling_count << endl;
+  cout << diagonal_rising_count << endl;
+}
+
+void Picture::compute_global_connectivity() {
+  vector<uint32_t> connectivities = vector<uint32_t>(12);
+  uint32_t total_connectivity = 0;
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      uint32_t conn = compute_connectivity(extract_bitstream_matrix(r, c));
+      connectivities.at(conn)++;
+    }
+  }
+  
+  for (int i = 1; i < 12; i++) {
+    total_connectivity += connectivities.at(i);
+  }
+  
+  printf("Global connectivity:\n");
+  for (int i = 1; i < 12; i++) {
+    printf("[%2d]: %4d (%.2f)\n", i, connectivities.at(i), (float) connectivities.at(i) / (float) total_connectivity);
+  }
+}
+
+void Picture::compute_concentration(int radius, float threshold) {
+  int exceeding_threshold_count = 0;
+  cout << radius << endl;
+  for (int r = radius; r < dim_y - radius; r++) {
+    for (int c = radius; c < dim_x - radius; c++) {
+      Matrix m = extract_matrix(r, c, radius);
+      if (m.exceed_threshold(threshold)) {
+        exceeding_threshold_count++;
+      }
+    }
+  }
+  
+  cout << (float) exceeding_threshold_count / (dim_y * dim_x) << endl;
+}
+
+void Picture::compute_branching(int _threshold) {
+  vector<int> buffer = vector<int>();
+  int threshold = dim_x / _threshold;
+  
+  int last_pixel_column = 0;
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (data_gray->at(r).at(c) == 255) {
+        if (last_pixel_column == 0) {
+          last_pixel_column = c;
+        } else {
+          if (c - last_pixel_column > threshold) {
+            buffer.push_back(c - last_pixel_column);
+          }
+        }
+      }
+    }
+    
+    last_pixel_column = 0;
+  }
+  
+  float average = 0;
+  for (int i = 0; i < buffer.size(); i++) {
+    average += buffer.at(i);
+  }
+  
+  cout << average / buffer.size() / dim_x << endl;
+  
+  threshold = dim_y / _threshold;
+  buffer = vector<int>();
+  int last_pixel_row = 0;
+  for (int c = 0; c < dim_x; c++) {
+    for (int r = 0; r < dim_y; r++) {
+      if (data_gray->at(r).at(c) == 255) {
+        if (last_pixel_row == 0) {
+          last_pixel_row = r;
+        } else {
+          if (r - last_pixel_row > threshold) {
+            buffer.push_back(r - last_pixel_row);
+          }
+        }
+      }
+    }
+    
+    last_pixel_row = 0;
+  }
+  cout << average / buffer.size() / dim_y << endl;
+  cout << endl;
+}
+
+void Picture::label_connected_components(int distance_threshold) {
+  map<uint32_t, int> labels = map<uint32_t, int>();
+  
+  for (int r = 0; r < dim_y; r++) {
+    vector<vector<uint32_t>> this_row = vector<vector<uint32_t>>();
+    
+    for (int c = 0; c < dim_x; c++) {
+      //uint32_t coord = (r << 16) | c;
+      uint32_t coord = ((r << 16) | c);
+      if (data_gray->at(r).at(c) == 255) {
+        if (this_row.size() == 0 || (coord - this_row.back().back() > distance_threshold)) {
+          vector<uint32_t> new_row = vector<uint32_t>();
+          new_row.push_back(coord);
+          this_row.push_back(new_row);
+        } else if (coord - this_row.back().back() <= distance_threshold) {
+          this_row.back().push_back(coord);
+        }
+      }
+    }
+    
+    // reconciliate lines
+    for (int i = 0; i < this_row.size(); i++) {
+      bool label_found = false;
+      int label = -1;
+      
+      for (int m = 0; m < this_row.at(i).size(); m++) {
+        for (int backtrack = 1; backtrack < distance_threshold; backtrack++) {
+          uint32_t seek = this_row.at(i).at(m) - (backtrack << 16);
+          if (labels.find(seek) != labels.end()) {
+            label_found = true;
+            label = labels.find(seek)->second;
+            break;
+          }
+        }
+      }
+      
+      if (label_found) {
+        for (int m = 0; m < this_row.at(i).size(); m++) {
+          labels.insert(pair<uint32_t, int>(this_row.at(i).at(m), label));
+        }
+      } else {
+        int max_label = -1;
+        for (auto i = labels.begin(); i != labels.end(); ++i) {
+          if (i->second > max_label) {
+            max_label = i->second;
+          }
+        }
+        
+        max_label++;
+        
+        for (int m = 0; m < this_row.at(i).size(); m++) {
+          labels.insert(pair<uint32_t, int>(this_row.at(i).at(m), max_label));
+        }
+      }
+    }
+  }
+  
+  int max_label = -1;
+  initialize_result(0);
+  for (auto i = labels.begin(); i != labels.end(); ++i) {
+    uint32_t coord = i->first;
+    int label = i->second;
+    
+    if (label > max_label) {
+      max_label = label;
+    }
+    
+    uint32_t r = (coord >> 16) & 0xFFFF;
+    uint32_t c = coord & 0xFFFF;
+    result_gray->at(r).at(c) = label + 1;
+  }
+  
+  int scaler = (255 - 64) / (max_label + 1);
+  vector<int> label_member_count = vector<int>(max_label + 2);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (result_gray->at(r).at(c) > 0) {
+        uint8_t pixel_value = result_gray->at(r).at(c);
+        label_member_count.at(pixel_value)++;
+        result_gray->at(r).at(c) = 64 + pixel_value * scaler;
+      }
+    }
+  }
+  
+  int actual_label_count = 0;
+  for (int i = 0; i < label_member_count.size(); i++) {
+    if (label_member_count.at(i) > 0.0005 * (dim_x * dim_y)) {
+      actual_label_count++;
+    }
+  }
+  
+  //cout << max_label << endl;
+  cout << actual_label_count << endl;
+}
+
+uint32_t Picture::compute_connectivity(int bst) {
+  uint32_t connectivity = 0;
+  
+  if (((bst >> 4) & 0x1) == 0) { return 0; }
+  
+  connectivity += ((bst >> 8) & 0x1) == 1 ? 1 : 0;
+  connectivity += ((bst >> 7) & 0x1) == 1 ? 2 : 0;
+  connectivity += ((bst >> 6) & 0x1) == 1 ? 1 : 0;
+  connectivity += ((bst >> 5) & 0x1) == 1 ? 2 : 0;
+  connectivity += ((bst >> 3) & 0x1) == 1 ? 2 : 0;
+  connectivity += ((bst >> 2) & 0x1) == 1 ? 1 : 0;
+  connectivity += ((bst >> 1) & 0x1) == 1 ? 2 : 0;
+  connectivity += ((bst >> 0) & 0x1) == 1 ? 1 : 0;
+  
+  return connectivity;
 }
 
 void Picture::morph_erode() {
@@ -2628,9 +2863,8 @@ void Picture::fill_holes2(std::vector<Coordinate> _traces) {
     int in_process = *queue.begin();
     int row = (in_process >> 16) & 0xFFFF;
     int col = in_process & 0xFFFF;
-    printf("Processing (%d, %d)\n", col, row);
+    //printf("Processing (%d, %d)\n", col, row);
     
-    //visited_fill.push_back(in_process);
     result_gray->at(row).at(col) = 255;
     queue.erase(queue.begin());
     

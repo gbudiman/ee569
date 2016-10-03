@@ -91,6 +91,13 @@ public:
   void fill_holes(std::vector<Coordinate>);
   void fill_holes2(std::vector<Coordinate>);
   
+  void compute_diagonal_lines(int);
+  void compute_global_connectivity();
+  void compute_branching(int);
+  void compute_concentration(int, float);
+  
+  void label_connected_components(int);
+  
   uint32_t get_dim_x();
   uint32_t get_dim_y();
   uint32_t get_type();
@@ -169,6 +176,8 @@ private:
   bool hit_a_trace(uint32_t);
   bool has_been_visited(Coordinate);
   int determine_trace_direction(Coordinate, Coordinate);
+  
+  uint32_t compute_connectivity(int);
   
   uint32_t move(uint32_t, int);
   
