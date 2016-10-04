@@ -101,7 +101,7 @@ void f_2_3_b_mpeg7() {
 //  probe.morph(MORPH_SHRINKING);
 //  probe.write_to_file("hw2_out/Probe_shrinking.raw");
   probe = Picture("hw2_out/Probe_skeletonizing.raw", 496, 502, COLOR_GRAY);
-  m7.classify_by_diagonal_lines(probe.compute_diagonal_lines(3));
+  m7.classify_by_diagonal_lines(probe.compute_diagonal_lines(5));
   m7.classify_by_connectivities(probe.compute_global_connectivity());
   m7.classify_by_branching_ratio(probe.compute_branching(separation_threshold));
   m7.classify_by_energy_concentration(probe.compute_concentration(energy_radius, energy_threshold));

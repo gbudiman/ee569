@@ -28,5 +28,8 @@ private:
   std::vector<float> energy_concentration;
   std::vector<int> protrusions;
   
+  float compute_inverse_quadratic_difference(float, float);
+  float compute_quadratic_difference(float, float);
+  void debug_rank(const char*, std::vector<float>, float, std::vector<float>&);
 };
 #endif /* Mpeg7Classifier_hpp */
