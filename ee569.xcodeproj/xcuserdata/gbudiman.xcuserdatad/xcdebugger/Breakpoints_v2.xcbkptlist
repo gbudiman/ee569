@@ -2232,11 +2232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/GrainCategorizer.cpp"
-            timestampString = "497065707.456227"
+            timestampString = "497253697.88348"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "GrainCategorizer::cluster_group_by_area()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2446,6 +2446,22 @@
             startingLineNumber = "2363"
             endingLineNumber = "2363"
             landmarkName = "Picture::label_connected_components(int distance_threshold)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/GrainCategorizer.cpp"
+            timestampString = "497255900.750519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "GrainCategorizer::compute_average_size()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

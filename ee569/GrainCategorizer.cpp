@@ -216,6 +216,12 @@ struct scalar_red_chroma_comparator {
   }
 };
 
+struct pair_value_comparator {
+  inline bool operator() (const pair<int, float>& f1, const pair<int, float>& f2) {
+    return f1.second > f2.second;
+  }
+};
+
 void GrainCategorizer::cluster_group_by_area() {
   sort(grain_data.begin(), grain_data.end(), scalar_area_comparator());
 }
@@ -241,22 +247,83 @@ void GrainCategorizer::cluster_group_by_red_chroma() {
 }
 
 void GrainCategorizer::compute_average_size() {
-  vector<float> average_by_group = vector<float>(11);
-  vector<float> roundness_by_group = vector<float>(11);
+  vector<pair<int, float>> average_by_area = vector<pair<int, float>>();
+  vector<pair<int, float>> average_by_roundness = vector<pair<int, float>>();
+  vector<pair<int, float>> average_by_length = vector<pair<int, float>>();
+  vector<pair<int, float>> average_by_luminance = vector<pair<int, float>>();
+  vector<pair<int, float>> average_by_yellow_chroma = vector<pair<int, float>>();
+  vector<pair<int, float>> average_by_red_chroma = vector<pair<int, float>>();
+  
+  int grain_count = 0;
   
   for (int i = 0; i < grain_data.size(); i++) {
-    if (grain_data.at(i).area < GRAIN_AREA_THRESHOLD) { continue; }
+    SpatialData sd = grain_data.at(i);
     
-    average_by_group.at(pseudo_group(grain_data.at(i).spatial_center.row, grain_data.at(i).spatial_center.col)) += grain_data.at(i).area;
-    roundness_by_group.at(pseudo_group(grain_data.at(i).spatial_center.row, grain_data.at(i).spatial_center.col)) += grain_data.at(i).width / grain_data.at(i).length;
+    if (sd.area < 20) { continue; }
+    grain_count++;
+    
+    int row = sd.spatial_center.row;
+    int col = sd.spatial_center.col;
+    int group = pseudo_group(row, col);
+    
+    float length = sd.length;
+    float roundness = sd.width / sd.length;
+    float area = sd.area;
+    float luminance = ((float) sd.chroma.r + (float) sd.chroma.g + (float) sd.chroma.b) / 3.0;
+    float yellow_chroma = ((float) sd.chroma.r + (float) sd.chroma.g * 3.0) / ((float) sd.chroma.r + (float) sd.chroma.g + (float) sd.chroma.b * 0.3);
+    float red_chroma = ((float) sd.chroma.r) / (((float) sd.chroma.b + (float) sd.chroma.g) / 2.0);
+    
+    average_by_area.push_back(pair<int, float>(group, area));
+    average_by_length.push_back(pair<int, float>(group, length));
+    average_by_roundness.push_back(pair<int, float>(group, roundness));
+    average_by_luminance.push_back(pair<int, float>(group, luminance));
+    average_by_yellow_chroma.push_back(pair<int, float>(group, yellow_chroma));
+    average_by_red_chroma.push_back(pair<int, float>(group, red_chroma));
   }
   
-  for (int i = 0; i < average_by_group.size(); i++) {
-    average_by_group.at(i) /= 5;
-    roundness_by_group.at(i) /= 5;
+  printf("Data from categorizing %d grains\n", grain_count);
+  printf(" === grains by area === \n");
+  averaging_functor(average_by_area);
+  printf(" === grains by length === \n");
+  averaging_functor(average_by_length);
+  printf(" === grains by roundness === \n");
+  averaging_functor(average_by_roundness);
+  printf(" === grains by luminance === \n");
+  averaging_functor(average_by_luminance);
+  printf(" === grains by yellow chromaticity === \n");
+  averaging_functor(average_by_yellow_chroma);
+  printf(" === grains by red chromaticity === \n");
+  averaging_functor(average_by_red_chroma);
+
+}
+
+vector<pair<int, float>> GrainCategorizer::averaging_functor(vector<pair<int, float>> d) {
+  vector<pair<int, float>> result_average = vector<pair<int, float>>();
+  int group_count = 0;
+  int max_group = -1;
+  for (int i = 0; i < d.size(); i++) {
+    if (d.at(i).first > max_group) { max_group = d.at(i).first; };
   }
   
-  for (int i = 0; i < average_by_group.size(); i++) {
-    printf("%3d %.2f %.2f\n", i, average_by_group.at(i), roundness_by_group.at(i));
+  vector<int> member_count = vector<int>(max_group + 1);
+  vector<float> member_cumulative = vector<float>(max_group + 1);
+  for (int i = 0; i < d.size(); i++) {
+    member_count.at(d.at(i).first)++;
+    member_cumulative.at(d.at(i).first) += d.at(i).second;
+  }
+  
+  for (int i = 0; i < max_group + 1; i++) {
+    result_average.push_back(pair<int, float>(i, (float) member_cumulative.at(i) / (float) member_count.at(i)));
+  }
+  
+  sort(result_average.begin(), result_average.end(), pair_value_comparator());
+  
+  debug_sorted(result_average);
+  return result_average;
+}
+
+void GrainCategorizer::debug_sorted(vector<pair<int, float>> data) {
+  for (int i = 0; i < data.size(); i++) {
+    printf("%3d %8.4f\n", data.at(i).first, data.at(i).second);
   }
 }

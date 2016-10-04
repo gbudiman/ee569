@@ -57,29 +57,29 @@ void f_2_3_a_rice_grain() {
     gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
   }
   
-  printf("==== by area\n");
-  gc.cluster_group_by_area();
-  gc.debug_groups();
-  
-  printf("==== by roundness\n");
-  gc.cluster_group_by_roundness();
-  gc.debug_groups();
-  
-  printf("==== by lightness\n");
-  gc.cluster_group_by_lightness();
-  gc.debug_groups();
+//  printf("==== by area\n");
+//  gc.cluster_group_by_area();
+//  gc.debug_groups();
+//  
+//  printf("==== by roundness\n");
+//  gc.cluster_group_by_roundness();
+//  gc.debug_groups();
+//  
+//  printf("==== by lightness\n");
+//  gc.cluster_group_by_lightness();
+//  gc.debug_groups();
   
 //  printf("====\n");
 //  gc.cluster_group_by_location();
 //  gc.debug_groups();
   
-  printf("==== by yellow chromaticity\n");
-  gc.cluster_group_by_yellow_chroma();
-  gc.debug_groups();
-  
-  printf("==== by red chromaticity\n");
-  gc.cluster_group_by_red_chroma();
-  gc.debug_groups();
+//  printf("==== by yellow chromaticity\n");
+//  gc.cluster_group_by_yellow_chroma();
+//  gc.debug_groups();
+//  
+//  printf("==== by red chromaticity\n");
+//  gc.cluster_group_by_red_chroma();
+//  gc.debug_groups();
   
   gc.compute_average_size();
   //rth.write_to_file("hw2_out/Rice_traced.raw");

@@ -38,7 +38,9 @@ public:
   void cluster_group_by_red_chroma();
   
   void compute_average_size();
+  void debug_sorted(std::vector<std::pair<int, float>>);
 private:
+  std::vector<std::pair<int, float>> averaging_functor(std::vector<std::pair<int, float>>);
 };
 
 #endif /* GrainCategorizer_hpp */
