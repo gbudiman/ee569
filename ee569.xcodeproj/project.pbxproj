@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */; };
 		07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF21D724CF6009F5F8D /* Picture.cpp */; };
 		07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF61D72523D009F5F8D /* RgbPixel.cpp */; };
 		07872F1D1D7BC2A600A2C487 /* PatchMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07872F1B1D7BC2A600A2C487 /* PatchMap.cpp */; };
@@ -91,6 +92,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mpeg7Classifier.cpp; sourceTree = "<group>"; };
+		07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mpeg7Classifier.hpp; sourceTree = "<group>"; };
 		07855AE71D724BB4009F5F8D /* ee569_core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_core; sourceTree = BUILT_PRODUCTS_DIR; };
 		07855AF21D724CF6009F5F8D /* Picture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Picture.cpp; sourceTree = "<group>"; };
 		07855AF31D724CF6009F5F8D /* Picture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Picture.hpp; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 				07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */,
 				07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */,
 				07DCB8A91DA0A21A00AFC522 /* BoundaryTracer.hpp */,
+				07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */,
+				07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,
 				07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */,
+				07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */,
 				07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */,
 				079284AD1D726C0200BD6E8D /* run_1_1_a_resizing.cpp in Sources */,
 				079284C11D740F1100BD6E8D /* run_1_2_b_histcolor_equalization.cpp in Sources */,

@@ -8,8 +8,10 @@
 
 #include "main.hpp"
 #include "Picture.hpp"
+#include "Mpeg7Classifier.hpp"
 
 void f_2_3_b_mpeg7() {
+  Mpeg7Classifier m7 = Mpeg7Classifier();
   int separation_threshold = 8;
   int energy_radius = 21;
   float energy_threshold = 0.3;
@@ -36,15 +38,17 @@ void f_2_3_b_mpeg7() {
 //  butterfly.morph(MORPH_SHRINKING);
 //  butterfly.write_to_file("hw2_out/Butterfly_shrinking.raw");
   
-  //butterfly = Picture("hw2_out/Butterfly_skeletonizing.raw", 335, 320, COLOR_GRAY);
-  //butterfly.compute_diagonal_lines(3);
-  //butterfly.compute_global_connectivity();
-  //butterfly.compute_branching(separation_threshold);
-  //butterfly.compute_concentration(sqrt((335.0*320.0)/(496.0*502.0)) * energy_radius, energy_threshold);
-  //butterfly.label_connected_components();
-  butterfly.label_connected_components(distance_threshold);
-  butterfly.write_to_file("hw2_out/Butterfly_labeled.raw");
+  butterfly = Picture("hw2_out/Butterfly_skeletonizing.raw", 335, 320, COLOR_GRAY);
+  m7.classify_by_diagonal_lines(butterfly.compute_diagonal_lines(3));
+  m7.classify_by_connectivities(butterfly.compute_global_connectivity());
+  m7.classify_by_branching_ratio(butterfly.compute_branching(separation_threshold));
+  m7.classify_by_energy_concentration(butterfly.compute_concentration(sqrt((335.0*320.0)/(496.0*502.0)) * energy_radius, energy_threshold));
+  
+  butterfly = Picture("hw2_out/Butterfly_traced.raw", 335, 320, COLOR_GRAY);
+  m7.classify_by_protrusions(butterfly.label_connected_components(distance_threshold));
+  //butterfly.write_to_file("hw2_out/Butterfly_labeled.raw");
 //
+  cout << "Fly\n";
   Picture fly = Picture("hw2_images/Fly.raw", 222,223, COLOR_BINARY);
 //  fly.copy_data_to_result();
 //  fly.write_to_file("hw2_out/Fly_gray.raw");
@@ -66,14 +70,16 @@ void f_2_3_b_mpeg7() {
 //  fly.morph(MORPH_SHRINKING);
 //  fly.write_to_file("hw2_out/Fly_shrinking.raw");
   
-  //fly = Picture("hw2_out/Fly_skeletonizing.raw", 222, 223, COLOR_GRAY);
-  //fly.compute_diagonal_lines(3);
-  //fly.compute_global_connectivity();
-  //fly.compute_branching(separation_threshold);
-  //fly.compute_concentration(sqrt((222.0*223.0)/(496.0*502.0)) * energy_radius, energy_threshold);
-  fly.label_connected_components(distance_threshold);
-  fly.write_to_file("hw2_out/Fly_labeled.raw");
-//  
+  fly = Picture("hw2_out/Fly_skeletonizing.raw", 222, 223, COLOR_GRAY);
+  m7.classify_by_diagonal_lines(fly.compute_diagonal_lines(3));
+  m7.classify_by_connectivities(fly.compute_global_connectivity());
+  m7.classify_by_branching_ratio(fly.compute_branching(separation_threshold));
+  m7.classify_by_energy_concentration(fly.compute_concentration(sqrt((222.0*223.0)/(496.0*502.0)) * energy_radius, energy_threshold));
+  fly = Picture("hw2_images/Fly.raw", 222,223, COLOR_BINARY);
+  m7.classify_by_protrusions(fly.label_connected_components(distance_threshold));
+  //fly.write_to_file("hw2_out/Fly_labeled.raw");
+//
+  cout << "Probe\n";
   Picture probe = Picture("hw2_images/Probe.raw", 496,502, COLOR_BINARY);
 //  probe.copy_data_to_result();
 //  probe.write_to_file("hw2_out/Probe_gray.raw");
@@ -94,11 +100,15 @@ void f_2_3_b_mpeg7() {
 //  probe = Picture("hw2_out/Probe_traced.raw", 496, 502, COLOR_GRAY);
 //  probe.morph(MORPH_SHRINKING);
 //  probe.write_to_file("hw2_out/Probe_shrinking.raw");
-  // probe = Picture("hw2_out/Probe_skeletonizing.raw", 496, 502, COLOR_GRAY);
-  //probe.compute_diagonal_lines(3);
-  //probe.compute_global_connectivity();
-  //probe.compute_branching(separation_threshold);
-  //probe.compute_concentration(energy_radius, energy_threshold);
-  probe.label_connected_components(distance_threshold);
-  probe.write_to_file("hw2_out/Probe_labeled.raw");
+  probe = Picture("hw2_out/Probe_skeletonizing.raw", 496, 502, COLOR_GRAY);
+  m7.classify_by_diagonal_lines(probe.compute_diagonal_lines(3));
+  m7.classify_by_connectivities(probe.compute_global_connectivity());
+  m7.classify_by_branching_ratio(probe.compute_branching(separation_threshold));
+  m7.classify_by_energy_concentration(probe.compute_concentration(energy_radius, energy_threshold));
+  
+  probe = Picture("hw2_out/Probe_traced.raw", 496, 502, COLOR_GRAY);
+  m7.classify_by_protrusions(probe.label_connected_components(distance_threshold));
+  //probe.write_to_file("hw2_out/Probe_labeled.raw");
+  
+  m7.rank_classficiation();
 }

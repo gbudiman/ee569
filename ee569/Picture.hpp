@@ -91,12 +91,12 @@ public:
   void fill_holes(std::vector<Coordinate>);
   void fill_holes2(std::vector<Coordinate>);
   
-  void compute_diagonal_lines(int);
-  void compute_global_connectivity();
-  void compute_branching(int);
-  void compute_concentration(int, float);
+  std::pair<int, int> compute_diagonal_lines(int);
+  vector<float> compute_global_connectivity();
+  std::pair<float, float> compute_branching(int);
+  float compute_concentration(int, float);
   
-  void label_connected_components(int);
+  int label_connected_components(int);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();

@@ -2147,7 +2147,7 @@ void Picture::morph(int operation) {
   }
 }
 
-void Picture::compute_diagonal_lines(int radius) {
+pair<int, int> Picture::compute_diagonal_lines(int radius) {
   int diagonal_falling_count = 0;
   int diagonal_rising_count = 0;
   for (int r = radius; r < dim_y - radius; r += 2*radius + 1) {
@@ -2178,12 +2178,14 @@ void Picture::compute_diagonal_lines(int radius) {
     }
   }
   
-  cout << diagonal_falling_count << endl;
-  cout << diagonal_rising_count << endl;
+  cout << "Rising diagonal lines:  " << diagonal_falling_count << endl;
+  cout << "Falling diagonal lines: " << diagonal_rising_count << endl;
+  return pair<int, int>(diagonal_falling_count, diagonal_rising_count);
+
 }
 
-void Picture::compute_global_connectivity() {
-  vector<uint32_t> connectivities = vector<uint32_t>(12);
+vector<float> Picture::compute_global_connectivity() {
+  vector<uint32_t> connectivities = vector<uint32_t>(13);
   uint32_t total_connectivity = 0;
   
   for (int r = 0; r < dim_y; r++) {
@@ -2193,19 +2195,23 @@ void Picture::compute_global_connectivity() {
     }
   }
   
-  for (int i = 1; i < 12; i++) {
+  for (int i = 1; i < 13; i++) {
     total_connectivity += connectivities.at(i);
   }
   
   printf("Global connectivity:\n");
-  for (int i = 1; i < 12; i++) {
+  vector<float> connectivity_percentage = vector<float>();
+  for (int i = 1; i < 13; i++) {
+    connectivity_percentage.push_back((float) connectivities.at(i) / (float) total_connectivity);
     printf("[%2d]: %4d (%.2f)\n", i, connectivities.at(i), (float) connectivities.at(i) / (float) total_connectivity);
   }
+  
+  return connectivity_percentage;
 }
 
-void Picture::compute_concentration(int radius, float threshold) {
+float Picture::compute_concentration(int radius, float threshold) {
   int exceeding_threshold_count = 0;
-  cout << radius << endl;
+
   for (int r = radius; r < dim_y - radius; r++) {
     for (int c = radius; c < dim_x - radius; c++) {
       Matrix m = extract_matrix(r, c, radius);
@@ -2215,10 +2221,13 @@ void Picture::compute_concentration(int radius, float threshold) {
     }
   }
   
-  cout << (float) exceeding_threshold_count / (dim_y * dim_x) << endl;
+  float concentration = (float) exceeding_threshold_count / (float) (dim_y * dim_x);
+  cout << "Energy concentration within radius of " << radius << ": " << concentration << endl;
+  
+  return concentration;
 }
 
-void Picture::compute_branching(int _threshold) {
+pair<float, float> Picture::compute_branching(int _threshold) {
   vector<int> buffer = vector<int>();
   int threshold = dim_x / _threshold;
   
@@ -2244,7 +2253,9 @@ void Picture::compute_branching(int _threshold) {
     average += buffer.at(i);
   }
   
-  cout << average / buffer.size() / dim_x << endl;
+  float branching_ratio_horizontal = average / (float) buffer.size() / (float) dim_x;
+  cout << "Horizontal branching ratio: " << branching_ratio_horizontal << endl;
+  // cout << average / buffer.size() / dim_x << endl;
   
   threshold = dim_y / _threshold;
   buffer = vector<int>();
@@ -2264,11 +2275,14 @@ void Picture::compute_branching(int _threshold) {
     
     last_pixel_row = 0;
   }
-  cout << average / buffer.size() / dim_y << endl;
-  cout << endl;
+  
+  float branching_ratio_vertical = average / (float) buffer.size() / (float) dim_y;
+  cout << "Vertical branching ratio: " << branching_ratio_vertical << endl;
+  
+  return pair<float, float>(branching_ratio_horizontal, branching_ratio_vertical);
 }
 
-void Picture::label_connected_components(int distance_threshold) {
+int Picture::label_connected_components(int distance_threshold) {
   map<uint32_t, int> labels = map<uint32_t, int>();
   
   for (int r = 0; r < dim_y; r++) {
@@ -2361,7 +2375,8 @@ void Picture::label_connected_components(int distance_threshold) {
   }
   
   //cout << max_label << endl;
-  cout << actual_label_count << endl;
+  cout << "Protrusions: " << actual_label_count << endl;
+  return actual_label_count;
 }
 
 uint32_t Picture::compute_connectivity(int bst) {
