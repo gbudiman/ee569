@@ -64,7 +64,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "dither 3 &quot;hw2_images/House.raw&quot; 512 512 &quot;hw2_images/tests/House_dither_8_4.raw&quot; 4"
+            argument = "mpeg7 &quot;hw2_images/Butterfly.raw&quot; 335 320 &quot;hw2_images/Fly.raw&quot; 222 223 &quot;hw2_images/Probe.raw&quot; 496 502"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

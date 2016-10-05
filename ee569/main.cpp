@@ -404,6 +404,41 @@ int main(int argc, char* argv[]) {
       sscanf(argv[7], "%d", &level);
       f_dither_multi(argv[3], px, py, method, argv[6], level);
     }
+  } else if (xcmp(argv[1], "rice")) {
+    if (argc != 6) {
+      cout << "Usage: main rice <source_img> <dim_x> <dim_y> <color>" << endl
+      << "Example: main rice source.raw 300 400 1" << endl << endl
+      << "source_img     : path to raw source image" << endl
+      << "dim_x          : source image x dimension" << endl
+      << "dim_y          : source image y dimension" << endl
+      << "color          : 1 for RGB, 0 for grayscale" << endl
+      << "output_img     : path to output image" << endl << endl;
+      
+      return -1;
+    }
+    
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_rice(argv[2], x, y, mode);
+  } else if (xcmp(argv[1], "mpeg7")) {
+    if (argc != 11) {
+      cout << "Usage: main mpeg7 <p1> <x1> <y2> <p2> <x2> <y2> <pn> <xn> <yn>" << endl
+      << "Example: main mpeg7 butterfly.raw 300 400 fly.raw 300 400 probe.raw 300 400" << endl << endl
+      << "p1, p2, ...    : path to base images. Specify corresponding (x1, y1) (x2, y2) and so on" << endl
+      << "pn             : path to probe image. Specify dimension in xy and yn" << endl << endl;
+      
+      return -1;
+    }
+    int x1, x2, y1, y2, xn, yn;
+    sscanf(argv[3], "%d", &x1);
+    sscanf(argv[4], "%d", &y1);
+    sscanf(argv[6], "%d", &x2);
+    sscanf(argv[7], "%d", &y2);
+    sscanf(argv[9], "%d", &xn);
+    sscanf(argv[10], "%d", &yn);
+    f_mpeg7(argv[2], x1, y1, argv[5], x2, y2, argv[8], xn, yn);
   } else {
     print_help();
   }

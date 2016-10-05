@@ -116,3 +116,48 @@ void f_2_3_a_rice_grain() {
 //  rpp.compute_spatial_data(gc);
 //  rpp.write_to_file("hw2_out/Rice_expanded.raw");
 }
+
+void f_rice(char* in, int x, int y, int mode) {
+  Picture rg = Picture(in, x, y, mode);
+  rg.to_grayscale();
+  rg.write_to_file("hw2_out/Rice_gray.raw");
+  
+  Picture rgray = Picture("hw2_out/Rice_gray.raw", x, y, COLOR_GRAY);
+
+  printf("Running adaptive thresholding with window size 75...\n");
+  rgray.adaptive_thresholding2(75);
+  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
+  
+  Picture rth = Picture("hw2_out/Rice_thresholded.raw", x, y, COLOR_GRAY);
+  rth.morph(MORPH_THIN);
+  rth.write_to_file("hw2_out/Rice_thinning.raw");
+  
+  rth = Picture("hw2_out/Rice_thresholded.raw", x, y, COLOR_GRAY);
+  rth.morph(MORPH_ERODE);
+  rth.write_to_file("hw2_out/Rice_eroding.raw");
+  
+  Picture reroded = Picture("hw2_out/Rice_eroding.raw", x, y, COLOR_GRAY);
+  rth = Picture("hw2_out/Rice_thresholded.raw", x, y, COLOR_GRAY);
+  vector<Coordinate> centers = reroded.get_center_of_mass();
+  vector<SpatialData> s = rth.measure_area(centers);
+  vector<SpatialData> chromas = rth.measure_chromaticity(rg, centers);
+  
+  GrainCategorizer gc = GrainCategorizer();
+  
+  for (int i = 0; i < s.size(); i++) {
+    gc.insert_area_data(s.at(i).spatial_center, s.at(i).area);
+  }
+  
+  for (int i = 0; i < chromas.size(); i++) {
+    gc.correlate_chroma(chromas.at(i).spatial_center, chromas.at(i).chroma);
+  }
+  
+  rth = Picture("hw2_out/Rice_thinning.raw", x, y, COLOR_GRAY);
+  vector<SpatialData> l = rth.measure_length();
+  
+  for (int i = 0; i < l.size(); i++) {
+    gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
+  }
+  
+  gc.compute_average_size();
+}
