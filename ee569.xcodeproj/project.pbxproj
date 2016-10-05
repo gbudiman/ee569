@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070F66591DA5B47B0075BE4D /* KCluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 070F66571DA5B47B0075BE4D /* KCluster.cpp */; };
 		07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */; };
 		07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF21D724CF6009F5F8D /* Picture.cpp */; };
 		07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF61D72523D009F5F8D /* RgbPixel.cpp */; };
@@ -92,6 +93,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		070F66571DA5B47B0075BE4D /* KCluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KCluster.cpp; sourceTree = "<group>"; };
+		070F66581DA5B47B0075BE4D /* KCluster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KCluster.hpp; sourceTree = "<group>"; };
 		07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mpeg7Classifier.cpp; sourceTree = "<group>"; };
 		07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mpeg7Classifier.hpp; sourceTree = "<group>"; };
 		07855AE71D724BB4009F5F8D /* ee569_core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_core; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -247,6 +250,8 @@
 				07DCB8A91DA0A21A00AFC522 /* BoundaryTracer.hpp */,
 				07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */,
 				07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */,
+				070F66571DA5B47B0075BE4D /* KCluster.cpp */,
+				070F66581DA5B47B0075BE4D /* KCluster.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				07DCB89E1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp in Sources */,
 				079284D51D7B96DA00BD6E8D /* run_1_3_b_nlm.cpp in Sources */,
 				079284B01D72864800BD6E8D /* run_1_1_b_cmyk.cpp in Sources */,
+				070F66591DA5B47B0075BE4D /* KCluster.cpp in Sources */,
 				07DCB8AA1DA0A21A00AFC522 /* BoundaryTracer.cpp in Sources */,
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,

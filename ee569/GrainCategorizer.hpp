@@ -14,6 +14,7 @@
 #include "SpatialData.hpp"
 #include "BoundingBox.hpp"
 #include "RgbPixel.hpp"
+#include "KCluster.hpp"
 
 class GrainCategorizer {
 public:
@@ -39,6 +40,8 @@ public:
   
   void compute_average_size();
   void debug_sorted(std::vector<std::pair<int, float>>);
+  
+  void categorize_by_area();
 private:
   std::vector<std::pair<int, float>> averaging_functor(std::vector<std::pair<int, float>>);
 };

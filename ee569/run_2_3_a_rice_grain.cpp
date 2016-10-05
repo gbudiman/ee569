@@ -82,6 +82,7 @@ void f_2_3_a_rice_grain() {
 //  gc.debug_groups();
   
   gc.compute_average_size();
+  gc.categorize_by_area();
   //rth.write_to_file("hw2_out/Rice_traced.raw");
   
 //  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
@@ -160,4 +161,5 @@ void f_rice(char* in, int x, int y, int mode) {
   }
   
   gc.compute_average_size();
+  gc.categorize_by_area();
 }

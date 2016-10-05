@@ -327,3 +327,29 @@ void GrainCategorizer::debug_sorted(vector<pair<int, float>> data) {
     printf("%3d %8.4f\n", data.at(i).first, data.at(i).second);
   }
 }
+
+void GrainCategorizer::categorize_by_area() {
+  vector<pair<Coordinate, float>> ds_area = vector<pair<Coordinate, float>>();
+  vector<pair<Coordinate, float>> ds_length = vector<pair<Coordinate, float>>();
+  vector<pair<Coordinate, float>> ds_roundness = vector<pair<Coordinate, float>>();
+  
+  for (auto i = grain_data.begin(); i != grain_data.end(); ++i) {
+    float area = (*i).area;
+    float length = (*i).length;
+    float width = (*i).width;
+    float roundness = width / length;
+    Coordinate c = (*i).spatial_center;
+    
+    if (area < GRAIN_AREA_THRESHOLD) { continue; }
+    ds_area.push_back(pair<Coordinate, float>(c, area));
+    ds_length.push_back(pair<Coordinate, float>(c, length));
+    ds_roundness.push_back(pair<Coordinate, float>(c, roundness));
+  }
+  
+  KCluster kca = KCluster(ds_area, 11, 5.0);
+  KCluster kcl = KCluster(ds_length, 11, 0.5);
+  KCluster kcr = KCluster(ds_roundness, 11, 0.01);
+  kca.categorize();
+  kcl.categorize();
+  kcr.categorize();
+}

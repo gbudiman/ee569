@@ -2744,23 +2744,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "f_rice(char* in, int x, int y, int mode)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
+            timestampString = "497398772.658691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "143"
@@ -2776,23 +2760,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "f_rice(char* in, int x, int y, int mode)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
+            timestampString = "497398772.658691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
@@ -2808,11 +2776,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
+            timestampString = "497398772.658691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "f_rice(char* in, int x, int y, int mode)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2824,7 +2792,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
+            timestampString = "497398772.658691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
@@ -2840,13 +2808,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_2_3_a_rice_grain.cpp"
-            timestampString = "497394917.473103"
+            timestampString = "497398772.658691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "f_rice(char* in, int x, int y, int mode)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_2_3_a_rice_grain.cpp"
+            timestampString = "497398772.658691"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "f_rice(char* in, int x, int y, int mode)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_2_3_a_rice_grain.cpp"
+            timestampString = "497398772.658691"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "f_rice(char* in, int x, int y, int mode)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/GrainCategorizer.cpp"
+            timestampString = "497402484.353453"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "GrainCategorizer::categorize_by_area()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/KCluster.cpp"
+            timestampString = "497401477.528096"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "KCluster::categorize()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
