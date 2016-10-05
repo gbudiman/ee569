@@ -62,6 +62,12 @@
             ReferencedContainer = "container:ee569.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "dither 3 &quot;hw2_images/House.raw&quot; 512 512 &quot;hw2_images/tests/House_dither_8_4.raw&quot; 4"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

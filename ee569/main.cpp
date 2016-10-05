@@ -19,17 +19,17 @@ int main(int argc, char* argv[]) {
   int debug = 26;
 
   if (RUN_ALL) {
-    f_1_1_a_cropping();
-    f_1_1_a_resizing();
-    f_1_1_b_cmyk();
-    f_1_1_b_hsl();
-    f_1_2_a_histogram_equalization();
-    f_1_2_b_histcolor_equalization();
-    f_1_2_c_sfx();
-    f_1_2_d_histogram_transform();
-    f_1_3_a_median_filtering();
-    f_1_3_a_cascaded_filter();
-    f_1_3_b_nlm();
+//    f_1_1_a_cropping();
+//    f_1_1_a_resizing();
+//    f_1_1_b_cmyk();
+//    f_1_1_b_hsl();
+//    f_1_2_a_histogram_equalization();
+//    f_1_2_b_histcolor_equalization();
+//    f_1_2_c_sfx();
+//    f_1_2_d_histogram_transform();
+//    f_1_3_a_median_filtering();
+//    f_1_3_a_cascaded_filter();
+//    f_1_3_b_nlm();
   } else {
     switch(debug) {
       case 0: f_1_1_a_cropping(); break;
@@ -313,7 +313,7 @@ int main(int argc, char* argv[]) {
   } else if (xcmp(argv[1], "psnr")) {
     if (argc != 7) {
       cout << "Usage: main psnr <source_img> <output_img> <dim_x> <dim_y> <color>" << endl
-      << "Example: main denoise gaussian source.raw 300 400 1 out.raw 2 2" << endl << endl
+      << "Example: main psnr source.raw 300 400 1" << endl << endl
       << "source_img     : path to raw source image" << endl
       << "output_img     : path to output image" << endl
       << "dim_x          : source image x dimension" << endl
@@ -327,6 +327,83 @@ int main(int argc, char* argv[]) {
     sscanf(argv[5], "%d", &y);
     sscanf(argv[6], "%d", &mode);
     f_psnr(argv[2], argv[3], x, y, mode);
+  } else if (xcmp(argv[1], "diamond_warp")) {
+    if (argc != 7) {
+      cout << "Usage: main diamond_warp <source_img> <dim_x> <dim_y> <color> <output_img>" << endl
+      << "Example: main diamond_warp source.raw 300 400 1 output.raw" << endl << endl
+      << "source_img     : path to raw source image" << endl
+      << "output_img     : path to output image" << endl
+      << "dim_x          : source image x dimension" << endl
+      << "dim_y          : source image y dimension" << endl
+      << "color          : 1 for RGB, 0 for grayscale" << endl << endl;
+      
+      return -1;
+    }
+    int x, y, mode;
+    sscanf(argv[3], "%d", &x);
+    sscanf(argv[4], "%d", &y);
+    sscanf(argv[5], "%d", &mode);
+    f_diamond_warp(argv[2], argv[6], x, y, mode);
+  } else if (xcmp(argv[1], "puzzle_match")) {
+    if (argc != 14) {
+      cout << "Usage: main puzzle_match <piece_img> <px> <py> <hole_1> <x1> <y1> <hole_2> <x2> <y2> <output_1> <output_2> <color>" << endl
+      << "Example: main puzzle_match pieces.raw 300 400 hillary.raw 300 400 trump.raw 300 400 hillary_output.raw trump_output.raw 1" << endl << endl
+      << "piece_img      : path to puzzle piece. Specify dimension in <px> and <py>" << endl
+      << "hole_1 / hole_2: path to image with hole. Specify dimension in corresponding <x> and <y>" << endl
+      << "output_1 / output_2: path to filled image" << endl
+      << "color          : 1 for RGB, 0 for grayscale" << endl << endl;
+      
+      return -1;
+    }
+    int px, py, x1, x2, y1, y2, mode;
+    sscanf(argv[3], "%d", &px);
+    sscanf(argv[4], "%d", &py);
+    sscanf(argv[6], "%d", &x1);
+    sscanf(argv[7], "%d", &y1);
+    sscanf(argv[9], "%d", &x2);
+    sscanf(argv[10], "%d", &y2);
+    sscanf(argv[13], "%d", &mode);
+    f_puzzle_match(argv[2], px, py, argv[5], x1, y1, argv[8], x2, y2, argv[11], argv[12], mode);
+  } else if (xcmp(argv[1], "homography")) {
+    if (argc != 10) {
+      cout << "Usage: main homography <base_img> <px> <py> <overlay_img> <x1> <y1> <output_img> <color>" << endl
+      << "Example: main homography field.raw 300 400 overlay.raw 300 400 output.raw 1" << endl << endl
+      << "base_img       : path to base image. Specify dimension in px, py" << endl
+      << "overlay_img    : path to logo to overlay. Specify dimension in x1, y1" << endl
+      << "output_img     : path to base+overlay result image" << endl
+      << "color          : 1 for RGB, 0 for grayscale" << endl << endl;
+      
+      return -1;
+    }
+    int px, py, x1, y1, mode;
+    sscanf(argv[3], "%d", &px);
+    sscanf(argv[4], "%d", &py);
+    sscanf(argv[6], "%d", &x1);
+    sscanf(argv[7], "%d", &y1);
+    sscanf(argv[9], "%d", &mode);
+    f_homography(argv[2], px, py, argv[5], x1, y1, argv[8], mode);
+  } else if (xcmp(argv[1], "dither")) {
+    if (argc < 7) {
+      cout << "Usage: main dither <method> <base_img> <px> <py> <output_img> [<intensity_level>]" << endl
+      << "Example: main dither 0 House.raw 300 400 output.raw" << endl << endl
+      << "method         : 0 - Bayer2, 1 - Bayer4, 2 - Bayer4A, 3 - Bayer8" << endl
+      <<                  "4 - Floyd-Steinberg, 5 - Jarvis, 6 - Stucki" << endl
+      << "intensity_level: Specify in integers. 4 level = [0 85 170 255]" << endl
+      << "base_img       : path to base image. Specify dimension in px, py" << endl
+      << "output_img     : path to base+overlay result image" << endl << endl;
+      
+      return -1;
+    }
+    int method, px, py, level;
+    sscanf(argv[2], "%d", &method);
+    sscanf(argv[4], "%d", &px);
+    sscanf(argv[5], "%d", &py);
+    if (argc == 7) {
+      f_dither(argv[3], px, py, method, argv[6]);
+    } else if (argc == 8) {
+      sscanf(argv[7], "%d", &level);
+      f_dither_multi(argv[3], px, py, method, argv[6], level);
+    }
   } else {
     print_help();
   }

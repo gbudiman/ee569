@@ -43,4 +43,10 @@ void f_2_1_c_homography();
 void f_2_2_a_dithering();
 void f_2_3_a_rice_grain();
 void f_2_3_b_mpeg7();
+
+void f_diamond_warp(char*, char*, int, int, int);
+void f_puzzle_match(char*, int, int, char*, int, int, char*, int, int, char*, char*, int);
+void f_homography(char*, int, int, char*, int, int, char*, int);
+void f_dither(char*, int, int, int, char*);
+void f_dither_multi(char*, int, int, int, char*, int);
 #endif /* project_inclusion_h */

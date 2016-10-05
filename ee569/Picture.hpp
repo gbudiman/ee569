@@ -71,7 +71,7 @@ public:
   void overlay_with(Picture);
   
   void dither(int);
-  void dither_multi_level(int);
+  void dither_multi_level(int, int);
   
   void adaptive_thresholding();
   void adaptive_thresholding2(int);

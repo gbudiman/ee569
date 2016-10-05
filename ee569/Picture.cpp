@@ -346,11 +346,6 @@ void Picture::crop(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
         case COLOR_RGB: row_data->push_back(data->at(y)->at(x)); break;
         case COLOR_GRAY: row_gray.push_back(data_gray->at(y).at(x)); break;
       }
-      
-      if (data_gray->at(y).at(x)) {
-        int i = 1;
-      }
-      //row_data->push_back(data->at(y)->at(x));
     }
     
     switch(type) {
@@ -1541,8 +1536,13 @@ void Picture::dither_stucki() {
   }
 }
 
-void Picture::dither_multi_level(int method) {
-  vector<int> levels = { 0, 85, 170, 255 };
+void Picture::dither_multi_level(int method, int _level) {
+  vector<int> levels = vector<int>();
+  int increment = 255 / (_level - 1);
+  for (int i = 0; i < _level; i++) {
+    levels.push_back(increment * i);
+  }
+  
   switch(method) {
     case DITHER_2: dither_2(levels); break;
     case DITHER_4: dither_4(levels); break;
@@ -1560,6 +1560,10 @@ void Picture::apply_dithering(Matrix dither, vector<int> levels) {
     use_multi_level = false;
   }
   
+  
+  int mid_point = 255 - cdf_gray->mean();
+  printf("Gamma mid-point = %d\n", mid_point);
+  
   for (int r = 0; r < dim_y; r++) {
     vector<uint8_t> row_gray = vector<uint8_t>();
     for (int c = 0; c < dim_x; c++) {
@@ -1567,11 +1571,9 @@ void Picture::apply_dithering(Matrix dither, vector<int> levels) {
       float bayer = dither.data.at(r % modulus).at(c % modulus);
       
       if (use_multi_level) {
-        int fcp = find_closest_palette((float) pixel/bayer * 127, levels);
-        //printf("%d | %.3f -> %d\n", pixel, bayer, fcp);
-
+        int fcp = find_closest_palette((float) pixel/bayer * mid_point, levels);
         
-        row_gray.push_back(fcp);
+        row_gray.push_back(fcp & 0xFF);
       } else {
         row_gray.push_back(pixel > bayer ? 255 : 0);
       }
@@ -1720,11 +1722,11 @@ int Picture::find_closest_palette(float val, std::vector<int> palettes) {
   float minima = __FLT_MAX__;
   int index = -1;
   
-  if (val < 85) {
-    return 0;
-  } else if (val > 170) {
-    return 255;
-  }
+//  if (val < 85) {
+//    return 0;
+//  } else if (val > 170) {
+//    return 255;
+//  }
   
   for (int i = 0; i < palettes.size(); i++) {
     float diff = abs(val - palettes.at(i));

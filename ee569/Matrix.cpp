@@ -81,7 +81,7 @@ void Matrix::thresholdize() {
   
   for (int r = 0; r < row_size; r++) {
     for (int c = 0; c < col_size; c++) {
-      data.at(r).at(c) = (data.at(r).at(c) + 0.5) * 255 / n_squared;
+      data.at(r).at(c) = (data.at(r).at(c) + 0.5) * 255.0 / n_squared;
     }
   }
 }

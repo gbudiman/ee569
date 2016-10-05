@@ -9,7 +9,7 @@
 
 CC=g++-6
 CFLAGS=-Ofast
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix tracer bounding_box spatial_data boundary_tracer mpeg7_classifier runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
 picture:
@@ -63,6 +63,21 @@ mark_pattern_matrix:
 bitstream_matrix:
 	$(CC) $(CFLAGS) -c BitStreamMatrix.cpp
 
+tracer:
+	$(CC) $(CFLAGS) -c Tracer.cpp
+
+bounding_box:
+	$(CC) $(CFLAGS) -c BoundingBox.cpp
+
+spatial_data:
+	$(CC) $(CFLAGS) -c SpatialData.cpp
+
+boundary_tracer:
+	$(CC) $(CFLAGS) -c BoundaryTracer.cpp
+
+mpeg7_classifier:
+	$(CC) $(CFLAGS) -c Mpeg7Classifier.cpp
+
 runs:
 	$(CC) $(CFLAGS) -c run_1_1_a_cropping.cpp
 	$(CC) $(CFLAGS) -c run_1_1_a_resizing.cpp
@@ -82,6 +97,7 @@ runs:
 	$(CC) $(CFLAGS) -c run_f_2_1_b_puzzle_matching.cpp
 	$(CC) $(CFLAGS) -c run_2_2_a_dithering.cpp
 	$(CC) $(CFLAGS) -c run_2_3_a_rice_grain.cpp
+	$(CC) $(CFLAGS) -c run_2_3_b_mpeg7.cpp
 
 clean:
 	rm *.o main

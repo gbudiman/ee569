@@ -47,3 +47,15 @@ void f_2_2_a_dithering() {
   house.dither(DITHER_STUCKI);
   house.write_to_file("hw2_out/House_stucki.raw");
 }
+
+void f_dither(char* in, int x, int y, int method, char* out) {
+  Picture base = Picture(in, x, y, COLOR_GRAY);
+  base.dither(method);
+  base.write_to_file(out);
+}
+
+void f_dither_multi(char* in, int x, int y, int method, char* out, int level) {
+  Picture base = Picture(in, x, y, COLOR_GRAY);
+  base.dither_multi_level(method, level);
+  base.write_to_file(out);
+}

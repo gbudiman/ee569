@@ -142,3 +142,13 @@ void Histogram::rescale(float scale) {
     data->at(i) = rescaled_value;
   }
 }
+
+int Histogram::mean() {
+  int seek = data->back() / 2;
+  int mean = -1;
+  
+  for (auto i = 0; i < data->size(); i++) {
+    if (data->at(i) > seek) { mean = i; break; }
+  }
+  return mean;
+}

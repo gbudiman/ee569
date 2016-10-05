@@ -62,7 +62,7 @@
 #define NLM_H 0.001 // 0.001 // don't use 0.01
 #define NLM_H_SQUARED 2.0 * NLM_H * NLM_H
 
-#define RUN_ALL false
+#define RUN_ALL 1
 
 #define DIAMOND_REGION_A 0
 #define DIAMOND_REGION_B 1
@@ -79,6 +79,8 @@
 #define DITHER_FSB 4
 #define DITHER_JJN 5
 #define DITHER_STUCKI 6
+
+#define GAMMA_MID_POINT 102
 
 #define GRAIN_BORDER_THRESHOLD 5
 #define GRAIN_AREA_THRESHOLD 20

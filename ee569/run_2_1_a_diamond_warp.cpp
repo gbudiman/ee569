@@ -18,3 +18,9 @@ void f_2_1_a_diamond_warp() {
   kitten->diamond_warp();
   kitten->write_to_file("hw2_out/Kitten_2_warped.raw");
 }
+
+void f_diamond_warp(char *in, char *out, int x, int y, int mode) {
+  Picture* p = new Picture(in, x, y, mode);
+  p->diamond_warp();
+  p->write_to_file(out);
+}

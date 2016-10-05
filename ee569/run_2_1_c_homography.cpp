@@ -21,3 +21,10 @@ void f_2_1_c_homography() {
   field.overlay_with(tartan);
   field.write_to_file("hw2_out/tartan_field.raw");
 }
+
+void f_homography(char* in, int ix, int iy, char* ov, int ox, int oy, char* out, int mode) {
+  Picture base = Picture(in, ix, iy, mode);
+  Picture overlay = Picture(ov, ox, oy, mode);
+  base.overlay_with(overlay);
+  base.write_to_file(out);
+}
