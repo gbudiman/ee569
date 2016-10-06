@@ -331,7 +331,7 @@ void GrainCategorizer::debug_sorted(vector<pair<int, float>> data) {
   }
 }
 
-void GrainCategorizer::categorize_by_area() {
+KCluster GrainCategorizer::categorize_by_kmeans() {
   vector<pair<Coordinate, float>> ds_area = vector<pair<Coordinate, float>>();
   vector<pair<Coordinate, float>> ds_length = vector<pair<Coordinate, float>>();
   vector<pair<Coordinate, float>> ds_roundness = vector<pair<Coordinate, float>>();
@@ -363,6 +363,8 @@ void GrainCategorizer::categorize_by_area() {
   kcc.categorize();
   
   debug_combined(kcc.data);
+  
+  return kcc;
 }
 
 void GrainCategorizer::debug_combined(vector<vector<pair<Coordinate, float>>> data) {

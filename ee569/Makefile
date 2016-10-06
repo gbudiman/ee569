@@ -9,7 +9,7 @@
 
 CC=g++-6
 CFLAGS=-Ofast
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix tracer bounding_box spatial_data boundary_tracer mpeg7_classifier runs
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix tracer bounding_box spatial_data boundary_tracer mpeg7_classifier kcluster runs
 	$(CC) $(CFLAGS) *.o main.cpp -o main
 
 picture:
@@ -77,6 +77,9 @@ boundary_tracer:
 
 mpeg7_classifier:
 	$(CC) $(CFLAGS) -c Mpeg7Classifier.cpp
+
+kcluster:
+	$(CC) $(CFLAGS) -c KCluster.cpp
 
 runs:
 	$(CC) $(CFLAGS) -c run_1_1_a_cropping.cpp

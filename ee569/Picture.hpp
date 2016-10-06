@@ -91,6 +91,8 @@ public:
   void fill_holes(std::vector<Coordinate>);
   void fill_holes2(std::vector<Coordinate>);
   
+  void highlight_overlay(std::vector<std::vector<uint8_t>>*);
+  
   std::pair<int, int> compute_diagonal_lines(int);
   vector<float> compute_global_connectivity();
   std::pair<float, float> compute_branching(int);
@@ -101,6 +103,7 @@ public:
   uint32_t get_dim_x();
   uint32_t get_dim_y();
   uint32_t get_type();
+  std::vector<std::vector<uint8_t>>* get_result_gray();
   std::vector<std::vector<RgbPixel>*>* get_rgb_data();
   
   Histogram *hist_r;

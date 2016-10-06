@@ -11,6 +11,7 @@
 #include "Picture.hpp"
 #include "GrainCategorizer.hpp"
 #include "SpatialData.hpp"
+#include "KCluster.hpp"
 using namespace std;
 
 void f_2_3_a_rice_grain() {
@@ -82,7 +83,24 @@ void f_2_3_a_rice_grain() {
 //  gc.debug_groups();
   
   gc.compute_average_size();
-  gc.categorize_by_area();
+  KCluster kcc = gc.categorize_by_kmeans();
+  for (int i = 0; i < kcc.data.size(); i++) {
+    rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
+    vector<Coordinate> group_centers = vector<Coordinate>();
+    for (int j = 0; j < kcc.data.at(i).size(); j++) {
+      group_centers.push_back(kcc.data.at(i).at(j).first);
+    }
+    rth.measure_area(group_centers);
+    
+    Picture gp = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
+    gp.highlight_overlay(rth.get_result_gray());
+    
+    string out_path = "hw2_out/Rice_overlay_" + to_string(i) + ".raw";
+    
+    gp.write_to_file(out_path);
+    int z = 0;
+  }
+  
   //rth.write_to_file("hw2_out/Rice_traced.raw");
   
 //  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
@@ -161,5 +179,21 @@ void f_rice(char* in, int x, int y, int mode) {
   }
   
   gc.compute_average_size();
-  gc.categorize_by_area();
+  KCluster kcc = gc.categorize_by_kmeans();
+  for (int i = 0; i < kcc.data.size(); i++) {
+    rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
+    vector<Coordinate> group_centers = vector<Coordinate>();
+    for (int j = 0; j < kcc.data.at(i).size(); j++) {
+      group_centers.push_back(kcc.data.at(i).at(j).first);
+    }
+    rth.measure_area(group_centers);
+    
+    Picture gp = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
+    gp.highlight_overlay(rth.get_result_gray());
+    
+    string out_path = "hw2_out/Rice_overlay_" + to_string(i) + ".raw";
+    
+    gp.write_to_file(out_path);
+    int z = 0;
+  }
 }

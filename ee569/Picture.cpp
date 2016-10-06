@@ -3088,6 +3088,18 @@ void Picture::copy_data_to_result() {
   }
 }
 
+void Picture::highlight_overlay(vector<vector<uint8_t>>* other) {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      if (other->at(r).at(c) == 255) {
+        result_gray->at(r).at(c) = data_gray->at(r).at(c);
+      }
+    }
+  }
+}
+
 void Picture::write_gray(string out_path) {
   ofstream out;
   out.open(out_path, ios::out | ios::binary);
@@ -3354,4 +3366,8 @@ uint32_t Picture::get_type() {
 
 vector<vector<RgbPixel>*>* Picture::get_rgb_data() {
   return data;
+}
+
+vector<vector<uint8_t>>* Picture::get_result_gray() {
+  return result_gray;
 }

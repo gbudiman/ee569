@@ -41,7 +41,7 @@ public:
   void compute_average_size();
   void debug_sorted(std::vector<std::pair<int, float>>);
   
-  void categorize_by_area();
+  KCluster categorize_by_kmeans();
 private:
   std::vector<std::pair<int, float>> averaging_functor(std::vector<std::pair<int, float>>);
   void debug_combined(std::vector<std::vector<std::pair<Coordinate, float>>>);
