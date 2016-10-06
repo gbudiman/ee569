@@ -44,6 +44,12 @@ public:
   void categorize_by_area();
 private:
   std::vector<std::pair<int, float>> averaging_functor(std::vector<std::pair<int, float>>);
+  void debug_combined(std::vector<std::vector<std::pair<Coordinate, float>>>);
+  SpatialData find_by_coordinate(Coordinate);
+  
+  float area_multiplier;
+  float length_multiplier;
+  float roundness_multiplier;
 };
 
 #endif /* GrainCategorizer_hpp */

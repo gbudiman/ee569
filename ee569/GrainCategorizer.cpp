@@ -11,6 +11,9 @@ using namespace std;
 
 GrainCategorizer::GrainCategorizer() {
   grains = vector<vector<Coordinate>>();
+  area_multiplier = 0.1f;
+  length_multiplier = 4.0f;
+  roundness_multiplier = 20.0f;
 }
 
 void GrainCategorizer::add(int r, int c) {
@@ -332,6 +335,7 @@ void GrainCategorizer::categorize_by_area() {
   vector<pair<Coordinate, float>> ds_area = vector<pair<Coordinate, float>>();
   vector<pair<Coordinate, float>> ds_length = vector<pair<Coordinate, float>>();
   vector<pair<Coordinate, float>> ds_roundness = vector<pair<Coordinate, float>>();
+  vector<pair<Coordinate, float>> ds_combined = vector<pair<Coordinate, float>>();
   
   for (auto i = grain_data.begin(); i != grain_data.end(); ++i) {
     float area = (*i).area;
@@ -340,16 +344,45 @@ void GrainCategorizer::categorize_by_area() {
     float roundness = width / length;
     Coordinate c = (*i).spatial_center;
     
+    float combined = area * area_multiplier + length * length_multiplier + roundness * roundness_multiplier;
+    
     if (area < GRAIN_AREA_THRESHOLD) { continue; }
     ds_area.push_back(pair<Coordinate, float>(c, area));
     ds_length.push_back(pair<Coordinate, float>(c, length));
     ds_roundness.push_back(pair<Coordinate, float>(c, roundness));
+    ds_combined.push_back(pair<Coordinate, float>(c, combined));
   }
   
   KCluster kca = KCluster(ds_area, 11, 5.0);
   KCluster kcl = KCluster(ds_length, 11, 0.5);
   KCluster kcr = KCluster(ds_roundness, 11, 0.01);
+  KCluster kcc = KCluster(ds_combined, 11, 0.1);
   kca.categorize();
   kcl.categorize();
   kcr.categorize();
+  kcc.categorize();
+  
+  debug_combined(kcc.data);
+}
+
+void GrainCategorizer::debug_combined(vector<vector<pair<Coordinate, float>>> data) {
+  for (int i = 0; i < data.size(); i++) {
+    printf("Group %d === (%3lu members)\n",  i, data.at(i).size());
+    for (int j = 0; j < data.at(i).size(); j++) {
+      Coordinate coord = data.at(i).at(j).first;
+      SpatialData sd = find_by_coordinate(coord);
+      
+      float ranked = sd.area * area_multiplier + sd.length * length_multiplier + (sd.width / sd.length) * roundness_multiplier;
+      int actual_group = pseudo_group(sd.spatial_center.row, sd.spatial_center.col);
+      printf("[%3d] (%3d, %3d) | %4.0f | %5.4f | %5.4f = %5.4f\n", actual_group, sd.spatial_center.col, sd.spatial_center.row, sd.area, sd.length, sd.width / sd.length, ranked);
+    }
+  }
+}
+
+SpatialData GrainCategorizer::find_by_coordinate(Coordinate coord) {
+  for (int i = 0; i < grain_data.size(); i++) {
+    if (grain_data.at(i).spatial_center == coord) { return grain_data.at(i); }
+  }
+  
+  return SpatialData();
 }
