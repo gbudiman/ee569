@@ -16,28 +16,29 @@ using namespace std;
 
 void f_2_3_a_rice_grain() {
   Picture rg = Picture("hw2_images/Rice.raw", 690, 500, COLOR_RGB);
-//  rg.to_grayscale();
-//  rg.write_to_file("hw2_out/Rice_gray.raw");
-//  
-//  Picture rgray = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
-//  rgray.prepare_gnuplot_histogram_data("hw2_out/Rice_gray.raw", STRIP_EXTENSION);
-//  rgray.adaptive_thresholding2(75);
-//  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
+  rg.to_grayscale();
+  rg.write_to_file("hw2_out/Rice_gray.raw");
+  
+  Picture rgray = Picture("hw2_out/Rice_gray.raw", 690, 500, COLOR_GRAY);
+  rgray.prepare_gnuplot_histogram_data("hw2_out/Rice_gray.raw", STRIP_EXTENSION);
+  rgray.adaptive_thresholding2(75);
+  rgray.write_to_file("hw2_out/Rice_thresholded.raw");
 
   Picture rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-//  rth.morph(MORPH_THIN);
-//  rth.write_to_file("hw2_out/Rice_thinning.raw");
-//  
-//  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
-//  rth.morph(MORPH_ERODE);
-//  vector<Coordinate> centers = rth.get_center_of_mass();
+  rth.morph(MORPH_THIN);
+  rth.write_to_file("hw2_out/Rice_thinning.raw");
+  
+  rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
+  rth.morph(MORPH_ERODE);
+  //vector<Coordinate> centers = rth.get_center_of_mass();
+  rth.write_to_file("hw2_out/Rice_eroding.raw");
 
   rth = Picture("hw2_out/Rice_eroding.raw", 690, 500, COLOR_GRAY);
   vector<Coordinate> centers = rth.get_center_of_mass();
 
   GrainCategorizer gc = GrainCategorizer();
   
-  //rth.write_to_file("hw2_out/Rice_eroding.raw");
+  
   rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);
   vector<SpatialData> s = rth.measure_area(centers);
   vector<SpatialData> chromas = rth.measure_chromaticity(rg, centers);
@@ -70,9 +71,10 @@ void f_2_3_a_rice_grain() {
 //  gc.cluster_group_by_lightness();
 //  gc.debug_groups();
   
-//  printf("====\n");
-//  gc.cluster_group_by_location();
-//  gc.debug_groups();
+  printf("====\n");
+  printf("  Center   | Area |  Len x Wid  | Round |    RGB Mean   | Lum  | Yel  |  Red   // Group\n");
+  gc.cluster_group_by_location();
+  gc.debug_groups();
   
 //  printf("==== by yellow chromaticity\n");
 //  gc.cluster_group_by_yellow_chroma();
@@ -178,7 +180,13 @@ void f_rice(char* in, int x, int y, int mode) {
     gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
   }
   
+  printf("  Center   | Area |  Len x Wid  | Round |    RGB Mean   | Lum  | Yel  |  Red   // Group\n");
+  gc.cluster_group_by_location();
+  gc.debug_groups();
+  
   gc.compute_average_size();
+  
+  
   KCluster kcc = gc.categorize_by_kmeans();
   for (int i = 0; i < kcc.data.size(); i++) {
     rth = Picture("hw2_out/Rice_thresholded.raw", 690, 500, COLOR_GRAY);

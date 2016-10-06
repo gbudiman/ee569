@@ -126,6 +126,7 @@ void f_mpeg7(char* a, int ax, int ay, char* b, int bx, int by, char* n, int nx, 
   
   butterfly = Picture("hw2_out/Butterfly_gray.raw", ax, ay, COLOR_GRAY);
   vector<Coordinate> traces = butterfly.trace_boundary();
+  butterfly.write_to_file("hw2_out/Butterfly_boundary.raw");
   butterfly.fill_holes2(traces);
   butterfly.write_to_file("hw2_out/Butterfly_traced.raw");
   
@@ -156,6 +157,7 @@ void f_mpeg7(char* a, int ax, int ay, char* b, int bx, int by, char* n, int nx, 
   
   fly = Picture("hw2_out/Fly_gray.raw", bx, by, COLOR_GRAY);
   traces = fly.trace_boundary();
+  fly.write_to_file("hw2_out/Fly_boundary.raw");
   fly.fill_holes2(traces);
   fly.write_to_file("hw2_out/Fly_traced.raw");
   
@@ -186,6 +188,7 @@ void f_mpeg7(char* a, int ax, int ay, char* b, int bx, int by, char* n, int nx, 
   
   probe = Picture("hw2_out/Probe_gray.raw", nx, ny, COLOR_GRAY);
   traces = probe.trace_boundary();
+  probe.write_to_file("hw2_out/Probe_boundary.raw");
   probe.fill_holes2(traces);
   probe.write_to_file("hw2_out/Probe_traced.raw");
   
