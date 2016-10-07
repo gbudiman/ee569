@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/24/16.
+//  Finalized on 10/6/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -146,6 +148,7 @@ void GrainCategorizer::correlate_chroma(Coordinate coord, RgbPixel p) {
 }
 
 int GrainCategorizer::pseudo_group(int r, int c) {
+  // grouping based on location
   int r_mult, c_add;
   
   if (r < 155) {

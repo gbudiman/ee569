@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/22/16.
+//  Finalized on 10/6/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -180,7 +182,7 @@ void f_rice(char* in, int x, int y, int mode) {
     gc.correlate_length(l.at(i).bounding_box, l.at(i).length);
   }
   
-  printf("  Center   | Area |  Len x Wid  | Round |    RGB Mean   | Lum  | Yel  |  Red   // Group\n");
+  printf("  Center   | Area |  Len x Wid  | Round |    RGB Mean   | Lum  | Red  |  Yel   // Group\n");
   gc.cluster_group_by_location();
   gc.debug_groups();
   

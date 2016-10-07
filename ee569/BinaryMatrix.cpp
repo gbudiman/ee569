@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 9/23/16.
+//  Finalized on 10/6/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 
@@ -55,6 +57,7 @@ bool BinaryMatrix::match(Matrix img) {
 }
 
 bool BinaryMatrix::strict_match(Matrix img) {
+  // not used
   return true;
 }
 

@@ -3,6 +3,11 @@ Gloria Budiman gbudiman@usc.edu
 6528-1836-50
 Finalized on 9/12/2016
 
+EE569 HW2
+Gloria Budiman gbudiman@usc.edu
+6528-1836-50
+Finalized on 10/6/2016
+
 ########################
 ### Project Organization
 ########################
@@ -20,7 +25,11 @@ Folder structure looks like the following during development:
     - Makefile
     - README
     - test.sh
-  + images
+    - test_hw2.sh  <=========== NEW FOR HW2
+    - hw2_out/     <=========== intermediary image for HW2
+  + hw2_images (HW2)
+    - tests/ (the default output when running test_hw2.sh)
+  + images (HW1)
     - P1/
     - P2/
     - P3/
@@ -49,8 +58,12 @@ To trigger help message to, simply issue incomplete command
 > ./main
 
 A complete example is provided in test.sh for all problems (except BM3D)
+test_hw2.sh for HW2 problems
 
 ASSUMPTIONS: User will supply either correct type for ALL arguments OR supply NO argument. When no argument is provided, help message will be provided. However, when user passes ALL arguments, but one or more are of the wrong type or in the wrong order, there will be no exception handler (i.e. the program will simply terminate with uncaught exception)
+
+All intermediate-step images are stored in ee569/hw2_out/ when using test_hw2.sh
+They are in root hw2_out/ when project is run from Xcode (you need to set RUN_ALL in main.hpp to 0 to be able to run from Xcode)
 
 ########
 ### BM3D
@@ -90,5 +103,29 @@ Folder plots/ includes some sample histogram output
   Not used
 - NlmWeight class
   NLM weighting function - simple data structure
+- Matrix class
+  For Matrix computation with floating-point members
+- BinaryMatrix class
+  Simplified Matrix class that only hold true/false value
+- GrainCategorizer class
+  Class for methods used in categorizing grains
+- Coordinate class
+  Simple row-column coordinate system
+- MorphMatrix class
+  Filter-type I (Conditional Mark patterns) for STK operation
+- MarkPatternMatrix class
+  Filter-type II (Unconditional Mark patterns) for STK operation
+- BitStreamMatrix class
+  Optimized Matrix represented in bitstrem integer for performance optimization
+- Tracer class
+  Class for tracing thinned image
+- BoundingBox class
+  A rectangular bounding box
+- SpatialData class
+  A collection of properties, including center-of-mass (Coordinate), length, width, area, chromaticity-mean(RgbPixel)
+- BoundaryTracer class
+  Used in contour-tracing
+- Mpeg7Classifier class
+  Classification class for MPEG7 datasets
 - project_inclusion.hpp
   Global function declaration

@@ -2220,9 +2220,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "GrainCategorizer::cluster_group_by_area()"
-            landmarkType = "5">
+            endingLineNumber = "229">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2861,7 +2859,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "361"
             endingLineNumber = "361"
-            landmarkName = "GrainCategorizer::categorize_by_area()"
+            landmarkName = "GrainCategorizer::categorize_by_kmeans()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
