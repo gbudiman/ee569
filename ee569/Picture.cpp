@@ -3229,6 +3229,54 @@ void Picture::write_hsl(string out_path) {
   cout << "File written to " << out_l << "\n";
 }
 
+void Picture::extend_boundary(int extension) {
+  int extended_y = dim_y + 2 * extension;
+  int extended_x = dim_x + 2 * extension;
+  
+  result_gray = new vector<vector<uint8_t>>(extended_y);
+  for (int r = 0; r < extended_y; r++) {
+    result_gray->at(r) = vector<uint8_t>(extended_x);
+  }
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r+extension).at(c+extension) = data_gray->at(r).at(c);
+    }
+  }
+  
+  // extend upwards
+  for (int r = 0; r < extension; r++) {
+    int wrap = (extension + 1) - r;
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r).at(c+extension) = data_gray->at(wrap).at(c);
+    }
+  }
+  
+  // extend downwards
+  for (int r = dim_y; r < dim_y + extension; r++) {
+    int wrap = r - (r - dim_y + 1) * 2;
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r+extension).at(c+extension) = data_gray->at(wrap).at(c);
+    }
+  }
+  
+  // extend left
+  for (int c = 0; c < extension; c++) {
+    int wrap = (extension + 1) - c;
+    for (int r = 0; r < dim_y + 2 * extension; r++) {
+      result_gray->at(r).at(c) = result_gray->at(r).at(wrap);
+    }
+  }
+ 
+  // extend right
+  for (int c = dim_x; c < dim_x + extension; c++) {
+    int wrap = c - (c - dim_x + 1) * 2;g
+    for (int r = 0; r < dim_y + 2 * extension; r++) {
+      result_gray->at(r).at(c + extension) = result_gray->at(r).at(wrap + extension);
+    }
+  }
+}
+
 void Picture::to_cmyk() {
   type = COLOR_CMYK;
   

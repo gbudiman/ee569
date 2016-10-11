@@ -29,11 +29,6 @@ void LawsFilter::generate_filter_banks() {
   base_matrices.push_back(w5);
   base_matrices.push_back(r5);
   
-//  vector<float> t52 = {2,3,2,3,2,3,2,3,2,3};
-//  Matrix m52 = Matrix(t52, 2);
-//  Matrix m25 = m52.transpose();
-//  
-//  m52.multiply(m25);
   for (int i = 0; i < base_matrices.size(); i++) {
     Matrix multiplicator = Matrix(base_matrices.at(i), 5);
     for (int j = 0; j < base_matrices.size(); j++) {

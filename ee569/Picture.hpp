@@ -42,6 +42,8 @@ public:
   void crop(uint32_t, uint32_t, uint32_t, uint32_t);
   void resize(uint32_t, uint32_t);
   
+  void extend_boundary(int);
+  
   bool set_compare(std::vector<Coordinate>, Coordinate);
   
   void to_cmyk();

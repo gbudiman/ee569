@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "497406619.25381"
+            timestampString = "497849625.418888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3279"
-            endingLineNumber = "3279"
+            startingLineNumber = "3328"
+            endingLineNumber = "3328"
             landmarkName = "Picture::load_rgb()"
             landmarkType = "5">
             <Locations>
@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "497406619.25381"
+            timestampString = "497849625.418888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3335"
-            endingLineNumber = "3335"
+            startingLineNumber = "3384"
+            endingLineNumber = "3384"
             landmarkName = "Picture::load_binary()"
             landmarkType = "5">
          </BreakpointContent>
@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "497406619.25381"
+            timestampString = "497849625.418888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3305"
-            endingLineNumber = "3305"
+            startingLineNumber = "3354"
+            endingLineNumber = "3354"
             landmarkName = "Picture::load_gray()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2924,6 +2924,22 @@
             startingLineNumber = "95"
             endingLineNumber = "95"
             landmarkName = "Matrix::multiply(Matrix other)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "497849589.032589"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3258"
+            endingLineNumber = "3258"
+            landmarkName = "Picture::extend_boundary(int extension)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

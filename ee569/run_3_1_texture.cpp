@@ -23,6 +23,10 @@ void f_3_1_texture() {
   
   for (int i = 0; i < pictures.size(); i++) {
     process(pictures.at(i));
+    pictures.at(i).extend_boundary(2);
+    pictures.at(i).write_to_file("hw3_out/P1/Texture1_extended.raw");
   }
+  
+  
 }
 
