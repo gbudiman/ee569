@@ -32,8 +32,12 @@ public:
   Picture();
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void copy_result_to_data();
+  void copy_result_to_data(bool);
   void copy_data_to_result();
   void sum_result_and_data();
+  float average_all_pixels();
+  void subtract_average_to_laws_workspace();
+  float average_laws_response(int);
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -65,6 +69,7 @@ public:
   void apply_mean_filter(uint32_t, uint32_t);
   void apply_gaussian_filter(int, float);
   void apply_nlm_filter(int, int, float);
+  void apply_laws_filter(vector<float>, int);
   
   void diamond_warp();
   void find_piece(std::string, std::string);
@@ -163,6 +168,7 @@ private:
   int find_closest_palette(float, std::vector<int>);
   
   void initialize_result(uint8_t);
+  std::vector<int> extract_laws_workspace_unwrapped_matrix(int, int, int);
   Matrix extract_matrix(int, int, int);
   Matrix extract_matrix(Coordinate, int);
   Matrix extract_mask(int, int, int);
@@ -198,6 +204,8 @@ private:
   std::vector<std::vector<uint8_t>>* data_gray;
   std::vector<std::vector<uint8_t>>* second_phase_gray;
   std::vector<std::vector<uint8_t>>* result_gray;
+  std::vector<std::vector<int>>* laws_workspace;
+  std::vector<std::vector<int>>* laws_response;
   
   std::vector<int16_t> *tf_gray;
   std::vector<int16_t> *tf_red;

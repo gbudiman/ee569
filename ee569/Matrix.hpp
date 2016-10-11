@@ -26,6 +26,7 @@ public:
   bool exceed_threshold(float);
   
   Matrix transpose();
+  std::vector<float> unwrap();
 private:
 };
 

@@ -740,6 +740,39 @@ void Picture::apply_transfer_function_rgb(vector<int16_t> *l_r, vector<int16_t> 
   remap_histogram_rgb(tf_red, tf_green, tf_blue);
 }
 
+void Picture::apply_laws_filter(vector<float> unwrapped_filter, int extension) {
+  laws_response = new vector<vector<int>>(dim_y);
+  
+  for (int r = 0; r < dim_y; r++) {
+    laws_response->at(r) = vector<int>(dim_x);
+  }
+  
+  for (int r = extension; r < dim_y - extension; r++) {
+    for (int c = extension; c < dim_x - extension; c++) {
+      vector<int> image = extract_laws_workspace_unwrapped_matrix(r, c, extension);
+      float result = 0;
+      for (int i = 0; i < unwrapped_filter.size(); i++) {
+        result += (float) abs(image.at(i)) * unwrapped_filter.at(i);
+      }
+      
+      //result_gray->at(r).at(c) = result;
+      laws_response->at(r).at(c) = result;
+    }
+  }
+}
+
+vector<int> Picture::extract_laws_workspace_unwrapped_matrix(int row, int col, int radius) {
+  vector<int> unwrapped = vector<int>();
+  
+  for (int r = row - radius; r <= row + radius; r++) {
+    for (int c = col - radius; c <= col + radius; c++) {
+      unwrapped.push_back(laws_workspace->at(r).at(c));
+    }
+  }
+  
+  return unwrapped;
+}
+
 void Picture::apply_nlm_filter(int search_radius, int patch_radius, float decay_factor) {
   result = new vector<vector<RgbPixel>*>();
   
@@ -3075,6 +3108,28 @@ void Picture::copy_result_to_data() {
   }
 }
 
+void Picture::copy_result_to_data(bool update_dimension) {
+  //printf("updating %d->%d, %d->%d\n", dim_y, result_gray->size(), dim_x, result_gray->at(0).size());
+  dim_x = result_gray->at(0).size();
+  dim_y = result_gray->size();
+  
+  switch(type) {
+    case COLOR_GRAY:
+      data_gray = new vector<vector<uint8_t>>(dim_y);
+      for (int r = 0; r < dim_y; r++) {
+        data_gray->at(r) = vector<uint8_t>(dim_x);
+      }
+      break;
+//    case COLOR_RGB:
+//      data = new vector<vector<RgbPixel>*>(dim_y);
+//      for (int r = 0; r < dim_y; r++) {
+//        data->at(r) = new vector<RgbPixel>(dim_x);
+//      }
+//      break;
+  }
+  copy_result_to_data();
+}
+
 void Picture::copy_data_to_result() {
   initialize_result(0);
   
@@ -3085,6 +3140,45 @@ void Picture::copy_data_to_result() {
         case COLOR_GRAY: result_gray->at(r).at(c) = data_gray->at(r).at(c); break;
       }
     }  
+  }
+}
+
+float Picture::average_all_pixels() {
+  //printf("Dimension: %d x %d\n", dim_y, dim_x);
+  
+  float result = 0;
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result += data_gray->at(r).at(c);
+    }
+  }
+  
+  return result / (dim_x * dim_y);
+}
+
+float Picture::average_laws_response(int extension) {
+  //printf("%d x %d\n", dim_x, dim_y);
+  float result = 0;
+  for (int r = extension; r < dim_y - extension; r++) {
+    for (int c = extension; c < dim_x - extension; c++) {
+      result += abs(laws_response->at(r).at(c));
+    }
+  }
+  
+  return result / ((dim_x - 2 * extension) * (dim_y - 2 * extension));
+}
+
+void Picture::subtract_average_to_laws_workspace() {
+  float avg = average_all_pixels();
+  laws_workspace = new vector<vector<int>>(dim_y);
+  for (int r = 0; r < dim_y; r++) {
+    laws_workspace->at(r) = vector<int>(dim_x);
+  }
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      laws_workspace->at(r).at(c) = (int) data_gray->at(r).at(c) - avg;
+    }
   }
 }
 
@@ -3270,7 +3364,7 @@ void Picture::extend_boundary(int extension) {
  
   // extend right
   for (int c = dim_x; c < dim_x + extension; c++) {
-    int wrap = c - (c - dim_x + 1) * 2;g
+    int wrap = c - (c - dim_x + 1) * 2;
     for (int r = 0; r < dim_y + 2 * extension; r++) {
       result_gray->at(r).at(c + extension) = result_gray->at(r).at(wrap + extension);
     }

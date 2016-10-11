@@ -50,6 +50,18 @@ Matrix Matrix::transpose() {
   return new_matrix;
 }
 
+vector<float> Matrix::unwrap() {
+  vector<float> unwrapped = vector<float>();
+  
+  for (int r = 0; r < data.size(); r++) {
+    for (int c = 0; c < data.at(0).size(); c++) {
+      unwrapped.push_back(data.at(r).at(c));
+    }
+  }
+  
+  return unwrapped;
+}
+
 Matrix Matrix::multiply(Matrix other) {
   vector<vector<float>> result = vector<vector<float>>();
   //printf("Current: [%lu x %lu]\n", data.size(), data.at(0).size());
