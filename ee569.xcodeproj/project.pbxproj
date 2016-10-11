@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		070F66591DA5B47B0075BE4D /* KCluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 070F66571DA5B47B0075BE4D /* KCluster.cpp */; };
+		071095131DAC7C5000F22D1B /* run_3_1_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */; };
+		071095161DAC7D8D00F22D1B /* LawsFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095141DAC7D8D00F22D1B /* LawsFilter.cpp */; };
 		07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */; };
 		07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF21D724CF6009F5F8D /* Picture.cpp */; };
 		07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF61D72523D009F5F8D /* RgbPixel.cpp */; };
@@ -95,6 +97,9 @@
 /* Begin PBXFileReference section */
 		070F66571DA5B47B0075BE4D /* KCluster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KCluster.cpp; sourceTree = "<group>"; };
 		070F66581DA5B47B0075BE4D /* KCluster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KCluster.hpp; sourceTree = "<group>"; };
+		071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_3_1_texture.cpp; sourceTree = "<group>"; };
+		071095141DAC7D8D00F22D1B /* LawsFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LawsFilter.cpp; sourceTree = "<group>"; };
+		071095151DAC7D8D00F22D1B /* LawsFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LawsFilter.hpp; sourceTree = "<group>"; };
 		07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mpeg7Classifier.cpp; sourceTree = "<group>"; };
 		07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mpeg7Classifier.hpp; sourceTree = "<group>"; };
 		07855AE71D724BB4009F5F8D /* ee569_core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_core; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -252,6 +257,8 @@
 				07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */,
 				070F66571DA5B47B0075BE4D /* KCluster.cpp */,
 				070F66581DA5B47B0075BE4D /* KCluster.hpp */,
+				071095141DAC7D8D00F22D1B /* LawsFilter.cpp */,
+				071095151DAC7D8D00F22D1B /* LawsFilter.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -300,6 +307,7 @@
 				07DCB8851D932EC900AFC522 /* run_2_2_a_dithering.cpp */,
 				07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */,
 				07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */,
+				071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */,
 				079284AE1D726DD800BD6E8D /* project_inclusion.hpp */,
 			);
 			path = ee569;
@@ -453,6 +461,7 @@
 				07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */,
 				07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */,
 				079284AB1D726BC500BD6E8D /* run_1_1_a_cropping.cpp in Sources */,
+				071095161DAC7D8D00F22D1B /* LawsFilter.cpp in Sources */,
 				079284BF1D72E3DB00BD6E8D /* run_1_2_a_histogram_equalization.cpp in Sources */,
 				07872F1D1D7BC2A600A2C487 /* PatchMap.cpp in Sources */,
 				079284C61D74F68700BD6E8D /* run_1_2_d_histogram_transform.cpp in Sources */,
@@ -469,6 +478,7 @@
 				079284AD1D726C0200BD6E8D /* run_1_1_a_resizing.cpp in Sources */,
 				079284C11D740F1100BD6E8D /* run_1_2_b_histcolor_equalization.cpp in Sources */,
 				07DCB89C1D9DEA7000AFC522 /* BitStreamMatrix.cpp in Sources */,
+				071095131DAC7C5000F22D1B /* run_3_1_texture.cpp in Sources */,
 				079284D31D7B645500BD6E8D /* Kernel.cpp in Sources */,
 				07DCB8881D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp in Sources */,
 				07A489CB1D7BE308009C1FD1 /* NlmWeight.cpp in Sources */,

@@ -51,4 +51,6 @@ void f_dither(char*, int, int, int, char*);
 void f_dither_multi(char*, int, int, int, char*, int);
 void f_rice(char*, int, int, int);
 void f_mpeg7(char*, int, int, char*, int, int, char*, int, int);
+
+void f_3_1_texture();
 #endif /* project_inclusion_h */

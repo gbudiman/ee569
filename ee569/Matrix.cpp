@@ -29,10 +29,33 @@ Matrix::Matrix(vector<float> x, int col) {
   }
 }
 
+Matrix Matrix::transpose() {
+  vector<vector<float>> staging_vectors;
+  
+  unsigned long dim_y = data.size();
+  unsigned long dim_x = data.at(0).size();
+  
+  staging_vectors = vector<vector<float>>(dim_x);
+  for (int r = 0; r < staging_vectors.size(); r++) {
+    staging_vectors.at(r) = vector<float>(dim_y);
+  }
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      staging_vectors.at(c).at(r) = data.at(r).at(c);
+    }
+  }
+  
+  Matrix new_matrix = Matrix(staging_vectors);
+  return new_matrix;
+}
+
 Matrix Matrix::multiply(Matrix other) {
   vector<vector<float>> result = vector<vector<float>>();
-  int result_row_length = other.data.size();
-  int result_col_length = other.data.at(0).size();
+  //printf("Current: [%lu x %lu]\n", data.size(), data.at(0).size());
+  //printf("Other  : [%lu x %lu]\n", other.data.size(), other.data.at(0).size());
+  unsigned long result_row_length = data.size(); //other.data.size();
+  unsigned long result_col_length = other.data.at(0).size();
   
   for (int row = 0; row < result_row_length; row++) {
     vector<float> row_data = vector<float>();
@@ -42,19 +65,31 @@ Matrix Matrix::multiply(Matrix other) {
     result.push_back(row_data);
   }
   
-  for (int iter_a = 0; iter_a < result_col_length; iter_a++) {
-    for (int iter_b = 0; iter_b < result_row_length; iter_b++) {
+//  for (int iter_a = 0; iter_a < result_col_length; iter_a++) {
+//    for (int iter_b = 0; iter_b < result_row_length; iter_b++) {
+//      float acc = 0;
+//      for (int iter_c = iter_b; iter_c <= iter_b; iter_c++) {
+//        for (int iter_d = 0; iter_d < result_row_length; iter_d++) {
+//          printf("([%d, %d] = [%d, %d] X [%d, %d]\n", iter_a, iter_b, iter_c, iter_d, iter_d, iter_a);
+//          acc += data.at(iter_b).at(iter_d) * other.data.at(iter_d).at(iter_a);
+//        }
+//        
+//        //acc += data.at(iter_b).at(iter_c) * other.data.at(iter_c).at(iter_b);
+//      }
+//      
+//      result.at(iter_b).at(iter_a) = acc;
+//    }
+//  }
+  
+  for (int ia = 0; ia < data.size(); ia++) {
+    for (int ic = 0; ic < other.data.at(0).size(); ic++) {
       float acc = 0;
-      for (int iter_c = iter_b; iter_c <= iter_b; iter_c++) {
-        for (int iter_d = 0; iter_d < result_row_length; iter_d++) {
-          //printf("([%d, %d] = [%d, %d] X [%d, %d]\n", iter_a, iter_b, iter_c, iter_d, iter_d, iter_a);
-          acc += data.at(iter_c).at(iter_d) * other.data.at(iter_d).at(iter_a);
-        }
-        
-        //acc += data.at(iter_b).at(iter_c) * other.data.at(iter_c).at(iter_b);
+      for (int ib = 0; ib < data.at(0).size(); ib++) {
+        //printf("  # [%d, %d] x [%d, %d]\n", ic, ib, ib, ia);
+        acc += data.at(ic).at(ib) * other.data.at(ib).at(ia);
       }
-      
-      result.at(iter_b).at(iter_a) = acc;
+      //printf("Save to [%d, %d]\n", ic, ia);
+      result.at(ic).at(ia) = acc;
     }
   }
   

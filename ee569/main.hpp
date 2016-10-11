@@ -62,7 +62,7 @@
 #define NLM_H 0.001 // 0.001 // don't use 0.01
 #define NLM_H_SQUARED 2.0 * NLM_H * NLM_H
 
-#define RUN_ALL 1
+#define RUN_ALL 0
 
 #define DIAMOND_REGION_A 0
 #define DIAMOND_REGION_B 1
