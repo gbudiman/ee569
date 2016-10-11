@@ -9,6 +9,8 @@
 #include "main.hpp"
 #include "Picture.hpp"
 #include "LawsFilter.hpp"
+#include "Statistics.hpp"
+
 using namespace std;
 
 void process(Picture p) {
@@ -27,6 +29,7 @@ vector<string> expand_filter_names(vector<string> in) {
 }
 
 void f_3_1_texture() {
+  Statistics stats = Statistics();
   vector<string> filter_base = { "L5", "E5", "S5", "W5", "R5" };
   vector<string> filter_names = expand_filter_names(filter_base);
   vector<Picture> pictures = vector<Picture>();
@@ -65,8 +68,21 @@ void f_3_1_texture() {
       printf("%7.1f ", avgs.at(i));
     }
     printf("\n");
+    
+    stats.add_row(avgs);
   }
   
+  stats.compute_column_variance();
+  for (int i = 0; i < stats.variance.size(); i++) {
+    printf("  ----  ");
+  }
   
+  printf("\n");
+  
+  for (int i = 0; i < stats.variance.size(); i++) {
+    printf("%7.1f ", stats.variance.at(i));
+  }
+  
+  printf("\n");
 }
 
