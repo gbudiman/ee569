@@ -11,6 +11,7 @@
 		071095131DAC7C5000F22D1B /* run_3_1_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */; };
 		071095161DAC7D8D00F22D1B /* LawsFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095141DAC7D8D00F22D1B /* LawsFilter.cpp */; };
 		071095191DAD8B4400F22D1B /* Statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095171DAD8B4400F22D1B /* Statistics.cpp */; };
+		0710952F1DADA0EB00F22D1B /* PCAWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */; };
 		07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */; };
 		07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF21D724CF6009F5F8D /* Picture.cpp */; };
 		07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF61D72523D009F5F8D /* RgbPixel.cpp */; };
@@ -103,6 +104,8 @@
 		071095151DAC7D8D00F22D1B /* LawsFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LawsFilter.hpp; sourceTree = "<group>"; };
 		071095171DAD8B4400F22D1B /* Statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Statistics.cpp; sourceTree = "<group>"; };
 		071095181DAD8B4400F22D1B /* Statistics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Statistics.hpp; sourceTree = "<group>"; };
+		0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PCAWrapper.cpp; sourceTree = "<group>"; };
+		0710952E1DADA0EB00F22D1B /* PCAWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PCAWrapper.hpp; sourceTree = "<group>"; };
 		07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mpeg7Classifier.cpp; sourceTree = "<group>"; };
 		07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mpeg7Classifier.hpp; sourceTree = "<group>"; };
 		07855AE71D724BB4009F5F8D /* ee569_core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_core; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +267,8 @@
 				071095151DAC7D8D00F22D1B /* LawsFilter.hpp */,
 				071095171DAD8B4400F22D1B /* Statistics.cpp */,
 				071095181DAD8B4400F22D1B /* Statistics.hpp */,
+				0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */,
+				0710952E1DADA0EB00F22D1B /* PCAWrapper.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,
 				07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */,
+				0710952F1DADA0EB00F22D1B /* PCAWrapper.cpp in Sources */,
 				07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */,
 				07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */,
 				079284AD1D726C0200BD6E8D /* run_1_1_a_resizing.cpp in Sources */,
@@ -639,8 +645,27 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = /usr/local/opt/opencv3/include;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/opencv3/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -650,8 +675,27 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = /usr/local/opt/opencv3/include;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/opt/opencv3/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

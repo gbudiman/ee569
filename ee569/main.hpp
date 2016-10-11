@@ -26,6 +26,9 @@
 #include <vector>
 #include <thread>
 
+#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
 #define COLOR_CMYK    2

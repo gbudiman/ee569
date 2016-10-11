@@ -10,8 +10,10 @@
 #include "Picture.hpp"
 #include "LawsFilter.hpp"
 #include "Statistics.hpp"
+#include "PCAWrapper.hpp"
 
 using namespace std;
+using namespace cv;
 
 void process(Picture p) {
   
@@ -30,6 +32,8 @@ vector<string> expand_filter_names(vector<string> in) {
 
 void f_3_1_texture() {
   Statistics stats = Statistics();
+  Mat m = Mat::zeros(12, 25, CV_32F);
+  
   vector<string> filter_base = { "L5", "E5", "S5", "W5", "R5" };
   vector<string> filter_names = expand_filter_names(filter_base);
   vector<Picture> pictures = vector<Picture>();
@@ -61,6 +65,7 @@ void f_3_1_texture() {
       float avg = base.average_laws_response(boundary_extension);
       
       avgs.push_back(avg);
+      m.at<float>(h, i) = avg;
       base = pictures.at(h);
     }
     
@@ -71,6 +76,7 @@ void f_3_1_texture() {
     
     stats.add_row(avgs);
   }
+  
   
   stats.compute_column_variance();
   for (int i = 0; i < stats.variance.size(); i++) {
@@ -84,5 +90,18 @@ void f_3_1_texture() {
   }
   
   printf("\n");
+  
+  Mat projection_result;
+  PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW, 3);
+  pca.project(m, projection_result);
+  cout << projection_result << endl;
+  
+  Mat best_labels;
+  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1.0), 3, KMEANS_RANDOM_CENTERS);
+  cout << best_labels << endl;
+  
+  Mat best_labels_unreduced;
+  kmeans(projection_result, 4, best_labels_unreduced, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1.0), 3, KMEANS_RANDOM_CENTERS);
+  cout << best_labels_unreduced << endl;
 }
 
