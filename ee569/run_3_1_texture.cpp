@@ -97,11 +97,11 @@ void f_3_1_texture() {
   cout << projection_result << endl;
   
   Mat best_labels;
-  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1.0), 3, KMEANS_RANDOM_CENTERS);
+  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.1), 5, KMEANS_RANDOM_CENTERS);
   cout << best_labels << endl;
   
   Mat best_labels_unreduced;
-  kmeans(projection_result, 4, best_labels_unreduced, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1.0), 3, KMEANS_RANDOM_CENTERS);
+  kmeans(projection_result, 4, best_labels_unreduced, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.01), 12, KMEANS_RANDOM_CENTERS);
   cout << best_labels_unreduced << endl;
 }
 
