@@ -10,6 +10,7 @@
 
 #include "Picture.hpp"
 using namespace std;
+using namespace cv;
 
 Picture::Picture() {
   is_pseudo = true;
@@ -767,6 +768,34 @@ vector<int> Picture::extract_laws_workspace_unwrapped_matrix(int row, int col, i
   for (int r = row - radius; r <= row + radius; r++) {
     for (int c = col - radius; c <= col + radius; c++) {
       unwrapped.push_back(laws_workspace->at(r).at(c));
+    }
+  }
+  
+  return unwrapped;
+}
+
+vector<int> Picture::extract_laws_response_unwrapped_matrix(int row, int col, int radius) {
+  vector<int> unwrapped = vector<int>();
+  
+  for (int r = row - radius; r <= row + radius; r++) {
+    for (int c = col - radius; c <= col + radius; c++) {
+      unwrapped.push_back(laws_response->at(r).at(c));
+    }
+  }
+  
+  return unwrapped;
+}
+
+vector<uint8_t> Picture::extract_result_unwrapped_matrix(int row, int col, int radius) {
+  vector<uint8_t> unwrapped = vector<uint8_t>();
+  
+  for (int r = row - radius; r <= row + radius; r++) {
+    for (int c = col - radius; c <= col + radius; c++) {
+      if (r < dim_y && r >= 0 && c < dim_x && c >= 0) {
+        unwrapped.push_back(result_gray->at(r).at(c));
+      } else {
+        unwrapped.push_back(0);
+      }
     }
   }
   
@@ -3143,6 +3172,39 @@ void Picture::copy_data_to_result() {
   }
 }
 
+void Picture::normalize_laws_filter_response(int extension) {
+  initialize_result(0);
+  pair<float, float> min_max_response = filter_response_peaks();
+  float range = min_max_response.second - min_max_response.first;
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      float response = laws_response->at(r).at(c);
+      result_gray->at(r).at(c) = (response + min_max_response.first) / range * 255;
+    }
+  }
+}
+
+pair<float, float> Picture::filter_response_peaks() {
+  float min = numeric_limits<float>::min();
+  float max = numeric_limits<float>::max();
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      float response = laws_response->at(r).at(c);
+      if (response > min) {
+        min = response;
+      }
+      
+      if (response < max) {
+        max = response;
+      }
+    }
+  }
+  
+  return pair<float, float>(min, max);
+}
+
 float Picture::average_all_pixels() {
   //printf("Dimension: %d x %d\n", dim_y, dim_x);
   
@@ -3154,6 +3216,27 @@ float Picture::average_all_pixels() {
   }
   
   return result / (dim_x * dim_y);
+}
+
+vector<vector<float>> Picture::window_laws_response(int radius) {
+  vector<vector<float>> staging = vector<vector<float>>(dim_y);
+  
+  for (int i = 0; i < dim_y; i++) {
+    staging.at(i) = vector<float>(dim_x);
+  }
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      float sum = 0;
+      vector<uint8_t> lrm = extract_result_unwrapped_matrix(r, c, radius);
+      for (int i = 0; i < lrm.size(); i++) {
+        sum += lrm.at(i) * lrm.at(i);
+      }
+      staging.at(r).at(c) = sum;
+    }
+  }
+  
+  return staging;
 }
 
 float Picture::average_laws_response(int extension) {
@@ -3401,6 +3484,19 @@ void Picture::to_hsl() {
     
     data_hsl->push_back(row_data);
   }
+}
+
+Mat Picture::to_cv2_mat() {
+  Mat result = Mat::zeros(dim_y, dim_x, CV_8UC3);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      RgbPixel p = data->at(r)->at(c);
+      result.at<Vec3b>(r, c) = Vec3b(p.r, p.g, p.b);
+    }
+  }
+  
+  return result;
 }
 
 void Picture::load_rgb() {

@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 31;
+  int debug = 32;
 
   if (RUN_ALL) {
 //    f_1_1_a_cropping();
@@ -54,6 +54,8 @@ int main(int argc, char* argv[]) {
       case 26: f_2_3_b_mpeg7(); break;
         
       case 31: f_3_1_texture(); break;
+      case 32: f_3_1_segmentation(); break;
+      case 33: f_3_2_salient_points(); break;
     }
     
     return 0;
@@ -466,4 +468,15 @@ void print_help() {
   << "  denoise" << endl
   << "  psnr" << endl << endl
   << "Example: main denoise" << endl;
+}
+
+vector<string> expand_filter_names(vector<string> in) {
+  vector<string> result = vector<string>();
+  for (int i = 0; i < in.size(); i++) {
+    for (int j = 0; j < in.size(); j++) {
+      result.push_back(in.at(i) + in.at(j));
+    }
+  }
+  
+  return result;
 }

@@ -11,7 +11,6 @@
 		071095131DAC7C5000F22D1B /* run_3_1_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */; };
 		071095161DAC7D8D00F22D1B /* LawsFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095141DAC7D8D00F22D1B /* LawsFilter.cpp */; };
 		071095191DAD8B4400F22D1B /* Statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 071095171DAD8B4400F22D1B /* Statistics.cpp */; };
-		0710952F1DADA0EB00F22D1B /* PCAWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */; };
 		07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */; };
 		07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF21D724CF6009F5F8D /* Picture.cpp */; };
 		07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07855AF61D72523D009F5F8D /* RgbPixel.cpp */; };
@@ -38,6 +37,9 @@
 		07A489CD1D80C6C3009C1FD1 /* run_1_3_a_cascaded_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A489CC1D80C6C3009C1FD1 /* run_1_3_a_cascaded_filter.cpp */; };
 		07A489CF1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A489CE1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp */; };
 		07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A489D01D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp */; };
+		07C98ADC1DAEF90300E5BB0D /* run_3_1_segmentation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07C98ADB1DAEF90300E5BB0D /* run_3_1_segmentation.cpp */; };
+		07C98ADE1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07C98ADD1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp */; };
+		07C98AE11DB05B3100E5BB0D /* FilterEnergy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07C98ADF1DB05B3100E5BB0D /* FilterEnergy.cpp */; };
 		07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB87E1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp */; };
 		07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8801D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp */; };
 		07DCB8841D92595B00AFC522 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8821D92595B00AFC522 /* Matrix.cpp */; };
@@ -104,8 +106,6 @@
 		071095151DAC7D8D00F22D1B /* LawsFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LawsFilter.hpp; sourceTree = "<group>"; };
 		071095171DAD8B4400F22D1B /* Statistics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Statistics.cpp; sourceTree = "<group>"; };
 		071095181DAD8B4400F22D1B /* Statistics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Statistics.hpp; sourceTree = "<group>"; };
-		0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PCAWrapper.cpp; sourceTree = "<group>"; };
-		0710952E1DADA0EB00F22D1B /* PCAWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PCAWrapper.hpp; sourceTree = "<group>"; };
 		07274B6E1DA39F800095D80B /* Mpeg7Classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mpeg7Classifier.cpp; sourceTree = "<group>"; };
 		07274B6F1DA39F800095D80B /* Mpeg7Classifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mpeg7Classifier.hpp; sourceTree = "<group>"; };
 		07855AE71D724BB4009F5F8D /* ee569_core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569_core; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +148,10 @@
 		07A489CC1D80C6C3009C1FD1 /* run_1_3_a_cascaded_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_1_3_a_cascaded_filter.cpp; sourceTree = "<group>"; };
 		07A489CE1D835FF6009C1FD1 /* run_1_3_psnr_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_1_3_psnr_calculator.cpp; sourceTree = "<group>"; };
 		07A489D01D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_1_3_b_cascaded_filter.cpp; sourceTree = "<group>"; };
+		07C98ADB1DAEF90300E5BB0D /* run_3_1_segmentation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_3_1_segmentation.cpp; sourceTree = "<group>"; };
+		07C98ADD1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_3_2_salient_points.cpp; sourceTree = "<group>"; };
+		07C98ADF1DB05B3100E5BB0D /* FilterEnergy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterEnergy.cpp; sourceTree = "<group>"; };
+		07C98AE01DB05B3100E5BB0D /* FilterEnergy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FilterEnergy.hpp; sourceTree = "<group>"; };
 		07DBE8071D723EBE0082F3D7 /* ee569 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ee569; sourceTree = BUILT_PRODUCTS_DIR; };
 		07DBE8181D72403E0082F3D7 /* main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hpp; sourceTree = "<group>"; };
 		07DCB87E1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_2_1_a_diamond_warp.cpp; sourceTree = "<group>"; };
@@ -267,8 +271,8 @@
 				071095151DAC7D8D00F22D1B /* LawsFilter.hpp */,
 				071095171DAD8B4400F22D1B /* Statistics.cpp */,
 				071095181DAD8B4400F22D1B /* Statistics.hpp */,
-				0710952D1DADA0EB00F22D1B /* PCAWrapper.cpp */,
-				0710952E1DADA0EB00F22D1B /* PCAWrapper.hpp */,
+				07C98ADF1DB05B3100E5BB0D /* FilterEnergy.cpp */,
+				07C98AE01DB05B3100E5BB0D /* FilterEnergy.hpp */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -318,6 +322,8 @@
 				07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */,
 				07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */,
 				071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */,
+				07C98ADB1DAEF90300E5BB0D /* run_3_1_segmentation.cpp */,
+				07C98ADD1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp */,
 				079284AE1D726DD800BD6E8D /* project_inclusion.hpp */,
 			);
 			path = ee569;
@@ -469,6 +475,7 @@
 				07855AF41D724CF6009F5F8D /* Picture.cpp in Sources */,
 				07DCB8931D99BCB800AFC522 /* run_2_1_c_homography.cpp in Sources */,
 				07DCB87F1D91DE9600AFC522 /* run_2_1_a_diamond_warp.cpp in Sources */,
+				07C98ADE1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp in Sources */,
 				07DCB8811D91EBFF00AFC522 /* run_f_2_1_b_puzzle_matching.cpp in Sources */,
 				079284AB1D726BC500BD6E8D /* run_1_1_a_cropping.cpp in Sources */,
 				071095161DAC7D8D00F22D1B /* LawsFilter.cpp in Sources */,
@@ -483,7 +490,6 @@
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,
 				07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */,
-				0710952F1DADA0EB00F22D1B /* PCAWrapper.cpp in Sources */,
 				07274B701DA39F800095D80B /* Mpeg7Classifier.cpp in Sources */,
 				07855AF81D72523D009F5F8D /* RgbPixel.cpp in Sources */,
 				079284AD1D726C0200BD6E8D /* run_1_1_a_resizing.cpp in Sources */,
@@ -509,6 +515,8 @@
 				079284C41D74CF3A00BD6E8D /* TransferFunction.cpp in Sources */,
 				079284B61D72971900BD6E8D /* HslPixel.cpp in Sources */,
 				07A489CD1D80C6C3009C1FD1 /* run_1_3_a_cascaded_filter.cpp in Sources */,
+				07C98ADC1DAEF90300E5BB0D /* run_3_1_segmentation.cpp in Sources */,
+				07C98AE11DB05B3100E5BB0D /* FilterEnergy.cpp in Sources */,
 				079284A71D726B4400BD6E8D /* main.cpp in Sources */,
 				07DCB8A41DA0654400AFC522 /* BoundingBox.cpp in Sources */,
 			);
@@ -665,6 +673,7 @@
 					"-lopencv_video",
 					"-lopencv_videoio",
 					"-lopencv_videostab",
+					"-lopencv_xfeatures2d",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -695,6 +704,7 @@
 					"-lopencv_video",
 					"-lopencv_videoio",
 					"-lopencv_videostab",
+					"-lopencv_xfeatures2d",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

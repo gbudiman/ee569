@@ -53,4 +53,6 @@ void f_rice(char*, int, int, int);
 void f_mpeg7(char*, int, int, char*, int, int, char*, int, int);
 
 void f_3_1_texture();
+void f_3_1_segmentation();
+void f_3_2_salient_points();
 #endif /* project_inclusion_h */

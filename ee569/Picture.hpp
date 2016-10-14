@@ -38,6 +38,9 @@ public:
   float average_all_pixels();
   void subtract_average_to_laws_workspace();
   float average_laws_response(int);
+  void normalize_laws_filter_response(int);
+  pair<float, float> filter_response_peaks();
+  vector<vector<float>> window_laws_response(int);
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -57,6 +60,8 @@ public:
   void prepare_gnuplot_histogram_data(std::string, bool);
   void prepare_gnuplot_transfer_function(std::string);
   void prepare_gnuplot_transfer_function(std::string, bool);
+  
+  cv::Mat to_cv2_mat();
   
   void equalize(uint8_t);
   void histogram_match_gray(Histogram*);
@@ -169,6 +174,8 @@ private:
   
   void initialize_result(uint8_t);
   std::vector<int> extract_laws_workspace_unwrapped_matrix(int, int, int);
+  std::vector<int> extract_laws_response_unwrapped_matrix(int, int, int);
+  std::vector<uint8_t> extract_result_unwrapped_matrix(int, int, int);
   Matrix extract_matrix(int, int, int);
   Matrix extract_matrix(Coordinate, int);
   Matrix extract_mask(int, int, int);
@@ -206,6 +213,7 @@ private:
   std::vector<std::vector<uint8_t>>* result_gray;
   std::vector<std::vector<int>>* laws_workspace;
   std::vector<std::vector<int>>* laws_response;
+  std::vector<std::vector<uint8_t>>* windowed_laws_response;
   
   std::vector<int16_t> *tf_gray;
   std::vector<int16_t> *tf_red;

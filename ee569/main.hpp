@@ -28,6 +28,9 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
+#include <opencv2/features2d.hpp>
+#include <opencv2/xfeatures2d.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB
@@ -113,5 +116,6 @@
 
 bool xcmp(char*, const char*);
 void print_help();
+std::vector<std::string> expand_filter_names(std::vector<std::string>);
 
 #endif /* main_h */

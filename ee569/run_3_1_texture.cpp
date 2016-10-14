@@ -10,24 +10,12 @@
 #include "Picture.hpp"
 #include "LawsFilter.hpp"
 #include "Statistics.hpp"
-#include "PCAWrapper.hpp"
 
 using namespace std;
 using namespace cv;
 
 void process(Picture p) {
   
-}
-
-vector<string> expand_filter_names(vector<string> in) {
-  vector<string> result = vector<string>();
-  for (int i = 0; i < in.size(); i++) {
-    for (int j = 0; j < in.size(); j++) {
-      result.push_back(in.at(i) + in.at(j));
-    }
-  }
-  
-  return result;
 }
 
 void f_3_1_texture() {
