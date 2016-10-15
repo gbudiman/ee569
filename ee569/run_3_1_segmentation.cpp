@@ -27,7 +27,7 @@ void f_3_1_segmentation() {
   comb1.copy_result_to_data(true);
   comb1.subtract_average_to_laws_workspace();
   
-  for (int i = 0; i < laws_filter.filter_banks.size(); i++) {
+  for (int i = 0; i < 5/*laws_filter.filter_banks.size()*/; i++) {
     Matrix filter = laws_filter.filter_banks.at(i);
     vector<float> unwrapped_filter = filter.unwrap();
     comb1.apply_laws_filter(unwrapped_filter, boundary_extension);
@@ -37,10 +37,22 @@ void f_3_1_segmentation() {
     
     comb1.normalize_laws_filter_response(boundary_extension);
     comb1.write_to_file("hw3_out/P1_comb1_responses/resp_" + filter_names.at(i) + ".raw");
-    filter_energy.add(comb1.window_laws_response(7));
-    
-    int z = 0;
+    vector<vector<float>> energy = comb1.window_laws_response(7);
+    filter_energy.add(energy);
+    comb1.slurp(energy);
+    comb1.write_to_file("hw3_out/P1_comb1_responses/energy_" + filter_names.at(i) + ".raw");
   }
   
   filter_energy.normalize();
+  for (int i = 1; i < filter_energy.data.size(); i++) {
+    Picture p = Picture("", 504, 429, COLOR_GRAY);
+    p.slurp(filter_energy.data.at(i));
+    p.write_to_file("hw3_out/P1_comb1_responses/energy_normalized_" + filter_names.at(i) + ".raw");
+  }
+  
+  Mat wrapped_kmeans = filter_energy.generate_kmeans();
+  filter_energy.unwrap_kmeans(wrapped_kmeans, 504);
+  Picture leveled = Picture("", 504, 429, COLOR_GRAY);
+  leveled.slurp(filter_energy.unwrap_kmeans(wrapped_kmeans, 504));
+  leveled.write_to_file("hw3_out/P1_comb1_responses/leveled.raw");
 }

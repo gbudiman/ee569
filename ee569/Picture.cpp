@@ -36,6 +36,26 @@ void Picture::write_to_file(string _path) {
   }
 }
 
+void Picture::slurp(vector<vector<float>> s) {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r).at(c) = (uint8_t) s.at(r).at(c);
+    }
+  }
+}
+
+void Picture::slurp(vector<vector<uint8_t>> s) {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r).at(c) = (uint8_t) s.at(r).at(c);
+    }
+  }
+}
+
 void Picture::write_to_file(string _path, bool strip_extension) {
   // strip extension will remove the extension
   // thus making it possible to append anything before the extension
@@ -3220,6 +3240,7 @@ float Picture::average_all_pixels() {
 
 vector<vector<float>> Picture::window_laws_response(int radius) {
   vector<vector<float>> staging = vector<vector<float>>(dim_y);
+  float divisor = (radius * 2 + 1) * (radius * 2 + 1) * (radius * 2 + 1) * (radius * 2 + 1);
   
   for (int i = 0; i < dim_y; i++) {
     staging.at(i) = vector<float>(dim_x);
@@ -3232,7 +3253,7 @@ vector<vector<float>> Picture::window_laws_response(int radius) {
       for (int i = 0; i < lrm.size(); i++) {
         sum += lrm.at(i) * lrm.at(i);
       }
-      staging.at(r).at(c) = sum;
+      staging.at(r).at(c) = sum / divisor;
     }
   }
   

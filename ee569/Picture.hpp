@@ -41,6 +41,9 @@ public:
   void normalize_laws_filter_response(int);
   pair<float, float> filter_response_peaks();
   vector<vector<float>> window_laws_response(int);
+  void slurp(std::vector<std::vector<float>>);
+  void slurp(std::vector<std::vector<uint8_t>>);
+
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);

@@ -18,8 +18,12 @@ public:
   void normalize();
   std::pair<float, float> min_max(int);
   
-private:
+  cv::Mat generate_kmeans();
+  std::vector<std::vector<uint8_t>> unwrap_kmeans(cv::Mat, int);
+  
   std::vector<std::vector<std::vector<float>>> data;
+private:
+  void scale(int, float, float);
 };
 
 #endif /* FilterEnergy_hpp */
