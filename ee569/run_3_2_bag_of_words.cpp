@@ -28,6 +28,18 @@ Mat make_bow_cluster(Mat imgmat, string dict, vector<KeyPoint>& kp_img, Mat& d_i
   return vocab_jeep;
 }
 
+void extract_descriptor(Mat img, Mat& training_descriptors) {
+  vector<KeyPoint> keypoints;
+  Mat descriptors;
+  
+  auto sift_detector = xfeatures2d::SIFT::create();
+  auto sift_extractor = xfeatures2d::SiftDescriptorExtractor::create();
+  sift_detector->detect(img, keypoints);
+  sift_extractor->compute(img, keypoints, descriptors);
+  
+  training_descriptors.push_back(descriptors);
+}
+
 void bow_match(Mat dictionary, Mat base, vector<KeyPoint> base_keypoint, Mat base_descriptor, Mat input, string s_name) {
 //void bow_match(Mat base, Mat dictionary, vector<KeyPoint> base_keypoint, Mat base_descriptor, Mat input) {
   Mat img_matches;
@@ -52,22 +64,78 @@ void bow_match(Mat dictionary, Mat base, vector<KeyPoint> base_keypoint, Mat bas
   imwrite("hw3_out/P2_BOW/m_" + s_name + ".jpg", img_matches);
 }
 
+void make_histogram_plot(Mat data) {
+  int hist_size = 8;
+  float range[] = { 0, 8 };
+  const float* hist_range = { range };
+  bool uniform = true; bool accumulate = false;
+  Mat result;
+  calcHist(&data, 1, 0, Mat(), result, 1, &hist_size, &hist_range, uniform, accumulate);
+  
+  cout << result << endl;
+  int z = 0;
+}
+
+void extract_codewords(Mat data) {
+  vector<KeyPoint> keypoints;
+  Mat descriptors;
+  
+  auto sift_detector = xfeatures2d::SIFT::create();
+  auto sift_extractor = xfeatures2d::SiftDescriptorExtractor::create();
+  sift_detector->detect(data, keypoints);
+  sift_extractor->compute(data, keypoints, descriptors);
+  
+  BOWKMeansTrainer bow_trainer(8);
+  bow_trainer.add(descriptors);
+  Mat vocabulary = bow_trainer.cluster();
+  
+  make_histogram_plot(vocabulary);
+}
+
 void f_3_2_bag_of_words() {
   Mat jeep = imread("hw3_images/P2/Jeep.jpg");
   Mat bus = imread("hw3_images/P2/Bus.jpg");
   Mat rav1 = imread("hw3_images/P2/rav4_1.jpg");
   Mat rav2 = imread("hw3_images/P2/rav4_2.jpg");
   
-  vector<KeyPoint> kp_jeep, kp_bus, kp_rav1;
-  Mat d_jeep, d_bus, d_rav1;
-
-  Mat dict_jeep = make_bow_cluster(jeep, "jeep", kp_jeep, d_jeep);
-  Mat dict_bus = make_bow_cluster(bus, "bus", kp_bus, d_bus);
-  Mat dict_rav1 = make_bow_cluster(rav1, "rav1", kp_rav1, d_rav1);
+  Mat training_descriptors;
   
-  //bow_match(jeep, dict_jeep, kp_jeep, d_jeep, rav2);
-  bow_match(dict_jeep, jeep, kp_jeep, d_jeep, rav2, "jeep");
-  bow_match(dict_bus, bus, kp_bus, d_bus, rav2, "bus");
-  bow_match(dict_rav1, rav1, kp_rav1, d_rav1, rav2, "rav1");
+  extract_descriptor(jeep, training_descriptors);
+  extract_descriptor(bus, training_descriptors);
+  extract_descriptor(rav1, training_descriptors);
+  //extract_descriptor(rav2, training_descriptors);
+  
+  BOWKMeansTrainer bow_trainer(8);
+  bow_trainer.add(training_descriptors);
+  Mat vocabulary = bow_trainer.cluster();
+  
+  make_histogram_plot(vocabulary);
+  Ptr<DescriptorExtractor> extractor = xfeatures2d::SiftDescriptorExtractor::create();
+  Ptr<DescriptorMatcher> matcher = new FlannBasedMatcher();
+  BOWImgDescriptorExtractor bow_de(extractor, matcher);
+  
+  bow_de.setVocabulary(vocabulary);
+  
+  map<string, Mat> classes_training_data;
+  
+  extract_codewords(jeep);
+  extract_codewords(bus);
+  extract_codewords(rav1);
+  extract_codewords(rav2);
+  
   int z = 0;
+  
+//  vector<KeyPoint> kp_jeep, kp_bus, kp_rav1;
+//  Mat d_jeep, d_bus, d_rav1;
+//
+//  Mat dict_jeep = make_bow_cluster(jeep, "jeep", kp_jeep, d_jeep);
+//  Mat dict_bus = make_bow_cluster(bus, "bus", kp_bus, d_bus);
+//  Mat dict_rav1 = make_bow_cluster(rav1, "rav1", kp_rav1, d_rav1);
+//  
+//  //bow_match(jeep, dict_jeep, kp_jeep, d_jeep, rav2);
+//  bow_match(dict_jeep, jeep, kp_jeep, d_jeep, rav2, "jeep");
+//  bow_match(dict_bus, bus, kp_bus, d_bus, rav2, "bus");
+//  bow_match(dict_rav1, rav1, kp_rav1, d_rav1, rav2, "rav1");
 }
+
+
