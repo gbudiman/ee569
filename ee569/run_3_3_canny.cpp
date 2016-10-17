@@ -17,40 +17,50 @@ char* window_name = "Canny Edge Detector";
 int low_threshold;
 int const max_low_threshold = 100;
 
-int canny_ratio = 300;
+int canny_ratio = 30;
 int const max_canny_ratio = 1000;
+int canny_divisor = 10;
+
+int kernel_size = 0;
+int const max_kernel_size = 2;
 
 void draw() {
-  printf("%d x %.2f => %.2f\n", low_threshold, (float) canny_ratio / 100.0, low_threshold * ((float) canny_ratio / 100.0));
+  
   dst = Scalar::all(0);
   src.copyTo(dst, detected_edges);
   imshow(window_name, dst);
 }
 
 void canny_threshold(int, void*) {
-  blur(src_gray, detected_edges, Size(3, 3));
-  Canny(detected_edges, detected_edges, low_threshold, low_threshold * ((float) canny_ratio / 100.0), 3);
-  draw();
-}
-
-void func_canny_ratio(int, void*) {
-  blur(src_gray, detected_edges, Size(3, 3));
-  Canny(detected_edges, detected_edges, low_threshold, low_threshold * ((float) canny_ratio / 100.0), 3);
-  draw();
-}
-
-void f_3_3_canny() {
-  //CannyWrapper canny = CannyWrapper(Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat());
-  //canny.process();
+  int real_kernel_size = (kernel_size + 1) * 2 + 1;
+  blur(src_gray, detected_edges, Size(real_kernel_size, real_kernel_size));
   
-  src = Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat();
+  printf("[%d]: %d x %.2f => %.2f\n",
+         real_kernel_size,
+         low_threshold,
+         (float) canny_ratio / canny_divisor,
+         low_threshold * ((float) canny_ratio / canny_divisor));
+  
+  Canny(detected_edges, detected_edges, low_threshold, low_threshold * ((float) canny_ratio / canny_divisor), real_kernel_size);
+  draw();
+}
+
+void process() {
   dst.create(src.size(), src.type());
   cvtColor(src, src_gray, CV_RGB2GRAY);
   
   namedWindow(window_name, CV_WINDOW_AUTOSIZE);
   createTrackbar("Min Threshold", window_name, &low_threshold, max_low_threshold, canny_threshold);
-  createTrackbar("Ratio / 100", window_name, &canny_ratio, max_canny_ratio, func_canny_ratio);
+  createTrackbar("Ratio / 100", window_name, &canny_ratio, max_canny_ratio, canny_threshold);
+  createTrackbar("Kernel [3/5/7]", window_name, &kernel_size, max_kernel_size, canny_threshold);
   canny_threshold(0, 0);
   waitKey(0);
-  
+}
+
+void f_3_3_canny() {
+  src = Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat();
+  process();
+
+  src = Picture("hw3_images/P3/Jaguar.raw", 481, 321, COLOR_RGB).to_cv2_mat();
+  process();
 }
