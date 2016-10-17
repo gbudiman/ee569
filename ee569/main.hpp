@@ -31,6 +31,8 @@
 #include <opencv2/features2d.hpp>
 #include <opencv2/xfeatures2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/ximgproc.hpp>
+#include <opencv2/core/utility.hpp>
 
 #define COLOR_GRAY    0
 #define COLOR_RGB     1 // 8-bit RGB

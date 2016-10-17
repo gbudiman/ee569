@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 35;
+  int debug = 36;
 
   if (RUN_ALL) {
 //    f_1_1_a_cropping();
@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
       case 33: f_3_2_salient_points(); break;
       case 34: f_3_2_bag_of_words(); break;
       case 35: f_3_3_canny(); break;
+      case 36: f_3_3_structured_edge(); break;
     }
     
     return 0;
