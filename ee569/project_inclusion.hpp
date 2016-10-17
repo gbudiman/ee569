@@ -56,4 +56,6 @@ void f_3_1_texture();
 void f_3_1_segmentation();
 void f_3_2_salient_points();
 void f_3_2_bag_of_words();
+void f_3_3_canny();
 #endif /* project_inclusion_h */
+

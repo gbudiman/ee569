@@ -3508,13 +3508,20 @@ void Picture::to_hsl() {
 }
 
 Mat Picture::to_cv2_mat() {
-  Mat result = Mat::zeros(dim_y, dim_x, CV_8UC3);
+  Mat result;
   
-  for (int r = 0; r < dim_y; r++) {
-    for (int c = 0; c < dim_x; c++) {
-      RgbPixel p = data->at(r)->at(c);
-      result.at<Vec3b>(r, c) = Vec3b(p.r, p.g, p.b);
-    }
+  switch(type) {
+    case COLOR_RGB:
+      result = Mat::zeros(dim_y, dim_x, CV_8UC3);
+      
+      for (int r = 0; r < dim_y; r++) {
+        for (int c = 0; c < dim_x; c++) {
+          RgbPixel p = data->at(r)->at(c);
+          result.at<Vec3b>(r, c) = Vec3b(p.r, p.g, p.b);
+        }
+      }
+      
+      break;
   }
   
   return result;
