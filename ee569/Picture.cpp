@@ -27,6 +27,18 @@ Picture::Picture(string _path, uint32_t _dim_x, uint32_t _dim_y, uint32_t _type)
   generate_histogram();
 }
 
+Picture Picture::color_format_to_grayscale_raw(int x, int y, string path) {
+  Picture base = Picture("", x, y, COLOR_GRAY);
+  Mat base_mat = imread(path);
+  cvtColor(base_mat, base_mat, COLOR_RGB2GRAY);
+  base.slurp(base_mat);
+  base.initialize_data(0);
+  base.copy_result_to_data();
+  base.initialize_result(0);
+  
+  return base;
+}
+
 void Picture::write_to_file(string _path) {
   switch(type) {
     case COLOR_GRAY: write_gray(_path); break;
@@ -52,6 +64,18 @@ void Picture::slurp(vector<vector<uint8_t>> s) {
   for (int r = 0; r < dim_y; r++) {
     for (int c = 0; c < dim_x; c++) {
       result_gray->at(r).at(c) = (uint8_t) s.at(r).at(c);
+    }
+  }
+}
+
+void Picture::slurp(Mat m) {
+  initialize_result(0);
+  
+  uint8_t* input = (uint8_t*) m.data;
+  
+  for (int r = 0; r < m.rows; r++) {
+    for (int c = 0; c < m.cols; c++) {
+      result_gray->at(r).at(c) = input[m.step * r + c];
     }
   }
 }
@@ -102,6 +126,18 @@ void Picture::write_separate_rgb_channel(string _path) {
   write_gray(out_red, split_red);
   write_gray(out_green, split_green);
   write_gray(out_blue, split_blue);
+}
+
+void Picture::invert() {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r).at(c) = data_gray->at(r).at(c) ^ 0xFF;
+    }
+  }
+  
+  copy_result_to_data();
 }
 
 void Picture::prepare_gnuplot_transfer_function(string out_path) {
@@ -814,7 +850,20 @@ vector<uint8_t> Picture::extract_result_unwrapped_matrix(int row, int col, int r
       if (r < dim_y && r >= 0 && c < dim_x && c >= 0) {
         unwrapped.push_back(result_gray->at(r).at(c));
       } else {
-        unwrapped.push_back(0);
+        int f_r = r;
+        int f_c = c;
+        
+        if (r < 0) { f_r = abs(r); }
+        if (c < 0) { f_c = abs(c); }
+        if (r >= (int) dim_y) {
+          int overshoot = r - (dim_y - 1);
+          f_r = (dim_y - 1) - overshoot;
+        }
+        if (c >= (int) dim_x) {
+          int overshoot = c - (dim_x - 1);
+          f_c = (dim_x - 1) - overshoot;
+        }
+        unwrapped.push_back(result_gray->at(f_r).at(f_c));
       }
     }
   }
@@ -3146,6 +3195,27 @@ void Picture::initialize_result(uint8_t val) {
   }
 }
 
+
+void Picture::initialize_data(uint8_t val) {
+  if (type == COLOR_GRAY) {
+    for (int r = 0; r < dim_y; r++) {
+      vector<uint8_t> row_gray = vector<uint8_t>();
+      for (int c = 0; c < dim_x; c++) {
+        row_gray.push_back(val);
+      }
+      data_gray->push_back(row_gray);
+    }
+  } else {
+    for (int r = 0; r < dim_y; r++) {
+      vector<RgbPixel>* row_pixel = new vector<RgbPixel>();
+      for (int c = 0; c < dim_x; c++) {
+        row_pixel->push_back(RgbPixel(val, val, val));
+      }
+      data->push_back(row_pixel);
+    }
+  }
+}
+
 void Picture::copy_result_to_data() {
   for (int r = 0; r < dim_y; r++) {
     for (int c = 0; c < dim_x; c++) {
@@ -3242,6 +3312,9 @@ vector<vector<float>> Picture::window_laws_response(int radius) {
   vector<vector<float>> staging = vector<vector<float>>(dim_y);
   float divisor = (radius * 2 + 1) * (radius * 2 + 1) * (radius * 2 + 1) * (radius * 2 + 1);
   
+  float smax = numeric_limits<float>::min();
+  float smin = numeric_limits<float>::max();
+  
   for (int i = 0; i < dim_y; i++) {
     staging.at(i) = vector<float>(dim_x);
   }
@@ -3253,7 +3326,19 @@ vector<vector<float>> Picture::window_laws_response(int radius) {
       for (int i = 0; i < lrm.size(); i++) {
         sum += lrm.at(i) * lrm.at(i);
       }
-      staging.at(r).at(c) = sum / divisor;
+      
+      if (sum > smax) { smax = sum; }
+      if (sum < smin) { smin = sum; }
+      staging.at(r).at(c) = sum;
+    }
+  }
+  
+  float divisor_range = smax - smin;
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      float d = staging.at(r).at(c);
+      float new_d = (d - smin) / divisor_range * 255.0;
+      staging.at(r).at(c) = new_d;
     }
   }
   
@@ -3527,6 +3612,46 @@ Mat Picture::to_cv2_mat() {
   return result;
 }
 
+void Picture::compare_f_measure(Picture _base, Picture _other, int& true_positive, int& true_negative, int& false_negative, int& false_positive) {
+  initialize_result(0);
+  true_positive = 0;
+  true_negative = 0;
+  false_negative = 0;
+  false_positive = 0;
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      uint8_t edge_map = _base.data_gray->at(r).at(c);
+      uint8_t ground_truth = _other.data_gray->at(r).at(c);
+      
+      if (edge_map == ground_truth) {
+        // values are equal
+        if (edge_map == 0x0) {
+          true_positive++;
+          result->at(r)->at(c) = RgbPixel(0, 255, 0);
+          // true positive
+        } else {
+          true_negative++;
+          result->at(r)->at(c) = RgbPixel(255, 255, 255);
+          // true negative
+        }
+      } else {
+        // values are different
+        if (edge_map == 0xFF) {
+          false_negative++;
+          result->at(r)->at(c) = RgbPixel(255, 0, 0);
+          // white == non-edge pixels in edge map
+          // false negative
+        } else {
+          false_positive++;
+          result->at(r)->at(c) = RgbPixel(0, 0, 255);
+          // false positive
+        }
+      }
+    }
+  }
+}
+
 void Picture::load_rgb() {
   ifstream in(path, std::ios::binary);
   uint8_t _byte;
@@ -3636,4 +3761,8 @@ vector<vector<RgbPixel>*>* Picture::get_rgb_data() {
 
 vector<vector<uint8_t>>* Picture::get_result_gray() {
   return result_gray;
+}
+
+vector<vector<uint8_t>>* Picture::get_data_gray() {
+  return data_gray;
 }

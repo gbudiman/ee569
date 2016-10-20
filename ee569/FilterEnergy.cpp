@@ -18,6 +18,21 @@ void FilterEnergy::add(vector<vector<float>> e) {
   data.push_back(e);
 }
 
+void FilterEnergy::add(vector<vector<uint8_t>>* e) {
+  vector<vector<float>> f = vector<vector<float>>(e->size());
+  for (int r = 0; r < e->size(); r++) {
+    f.at(r) = vector<float>(e->at(0).size());
+  }
+  
+  for (int r = 0; r < e->size(); r++) {
+    for (int c = 0; c < e->at(0).size(); c++) {
+      f.at(r).at(c) = (float) e->at(r).at(c);
+    }
+  }
+  
+  data.push_back(f);
+}
+
 void FilterEnergy::normalize() {
   // Assume the first data is the L5'L5 energy response
 //  pair<float, float> d_min_max = min_max(0);
@@ -90,8 +105,8 @@ pair<float, float> FilterEnergy::min_max(int i) {
   return pair<float, float>(min, max);
 }
 
-Mat FilterEnergy::generate_kmeans() {
-  Mat m = Mat::zeros(504 * 429, 24, CV_8U);
+Mat FilterEnergy::generate_kmeans(int x, int y, int label_count) {
+  Mat m = Mat::zeros(x * y, 24, CV_32F);
   Mat projection_result;
   Mat best_labels;
   
@@ -99,26 +114,27 @@ Mat FilterEnergy::generate_kmeans() {
     int z = 0;
     for (int r = 0; r < data.at(i).size(); r++) {
       for (int c = 0; c < data.at(i).at(0).size(); c++) {
-        m.at<uint8_t>(z, i) = data.at(i).at(r).at(c);
+        m.at<float>(z, i) = data.at(i).at(r).at(c);
         z++;
       }
     }
   }
   
-  PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW);
-  pca.project(m, projection_result);
+//  PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW);
+//  pca.project(m, projection_result);
 //  kmeans
-  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.01), 8, KMEANS_PP_CENTERS);
+  kmeans(m, label_count, best_labels, TermCriteria(TermCriteria::EPS, 4000, 0.0001), 80, KMEANS_RANDOM_CENTERS);
   return best_labels;
 }
 
-vector<vector<uint8_t>> FilterEnergy::unwrap_kmeans(Mat m, int cols) {
+vector<vector<uint8_t>> FilterEnergy::unwrap_kmeans(Mat m, int cols, int levels) {
   vector<vector<uint8_t>> result = vector<vector<uint8_t>>();
   
   int col_counter = 0;
   vector<uint8_t> result_row = vector<uint8_t>();
   for (auto i = m.begin<uint8_t>(); i != m.end<uint8_t>(); ++i) {
-    result_row.push_back(*i * 85);
+    
+    result_row.push_back(*i * (255 / (levels - 1)));
     
     if (col_counter % cols == cols - 1) {
       result.push_back(result_row);

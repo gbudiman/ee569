@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3545"
-            endingLineNumber = "3545"
+            startingLineNumber = "3670"
+            endingLineNumber = "3670"
             landmarkName = "Picture::load_rgb()"
             landmarkType = "5">
             <Locations>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "Picture::generate_histogram()"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "542"
-            endingLineNumber = "542"
+            startingLineNumber = "578"
+            endingLineNumber = "578"
             landmarkName = "Picture::get_nonzero_cdf(uint8_t channel, uint8_t &amp;lo, uint8_t &amp;hi)"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498115910.678317"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3337"
-            endingLineNumber = "3337">
+            startingLineNumber = "3422"
+            endingLineNumber = "3422">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
+            startingLineNumber = "940"
+            endingLineNumber = "940"
             landmarkName = "Picture::remap_histogram_gray(std::vector&lt;int16_t&gt; *luteq)"
             landmarkType = "5">
          </BreakpointContent>
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "967"
-            endingLineNumber = "967"
+            startingLineNumber = "1016"
+            endingLineNumber = "1016"
             landmarkName = "Picture::apply_median_filter(uint32_t filter_size, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3601"
-            endingLineNumber = "3601"
+            startingLineNumber = "3726"
+            endingLineNumber = "3726"
             landmarkName = "Picture::load_binary()"
             landmarkType = "5">
          </BreakpointContent>
@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3571"
-            endingLineNumber = "3571"
+            startingLineNumber = "3696"
+            endingLineNumber = "3696"
             landmarkName = "Picture::load_gray()"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "753"
-            endingLineNumber = "753"
+            startingLineNumber = "789"
+            endingLineNumber = "789"
             landmarkName = "Picture::perform_equalization(uint8_t channel, uint8_t method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1003"
-            endingLineNumber = "1003"
+            startingLineNumber = "1052"
+            endingLineNumber = "1052"
             landmarkName = "Picture::remap_histogram_rgb(std::vector&lt;int16_t&gt; *l_r, std::vector&lt;int16_t&gt; *l_g, std::vector&lt;int16_t&gt; *l_b)"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1000"
-            endingLineNumber = "1000"
+            startingLineNumber = "1049"
+            endingLineNumber = "1049"
             landmarkName = "Picture::remap_histogram_rgb(std::vector&lt;int16_t&gt; *l_r, std::vector&lt;int16_t&gt; *l_g, std::vector&lt;int16_t&gt; *l_b)"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "735"
-            endingLineNumber = "735"
+            startingLineNumber = "771"
+            endingLineNumber = "771"
             landmarkName = "Picture::perform_equalization(uint8_t channel, uint8_t method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "730"
-            endingLineNumber = "730"
+            startingLineNumber = "766"
+            endingLineNumber = "766"
             landmarkName = "Picture::perform_equalization(uint8_t channel, uint8_t method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -344,11 +344,11 @@
             ignoreCount = "245"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1030"
-            endingLineNumber = "1030"
+            startingLineNumber = "1079"
+            endingLineNumber = "1079"
             landmarkName = "Picture::histogram_match_gray(Histogram *ref)"
             landmarkType = "5">
          </BreakpointContent>
@@ -360,11 +360,11 @@
             ignoreCount = "247"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1028"
-            endingLineNumber = "1028"
+            startingLineNumber = "1077"
+            endingLineNumber = "1077"
             landmarkName = "Picture::histogram_match_gray(Histogram *ref)"
             landmarkType = "5">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "Picture::prepare_gnuplot_transfer_function(string out_path)"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "744"
-            endingLineNumber = "744"
+            startingLineNumber = "780"
+            endingLineNumber = "780"
             landmarkName = "Picture::perform_equalization(uint8_t channel, uint8_t method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -408,11 +408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "509"
-            endingLineNumber = "509"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
             landmarkName = "Picture::equalize(uint8_t method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "Picture::prepare_gnuplot_transfer_function(string out_path)"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "Picture::prepare_gnuplot_transfer_function(string out_path)"
             landmarkType = "5">
          </BreakpointContent>
@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "Picture::dump_transfer_function(string out_path, vector&lt;int16_t&gt; *data)"
             landmarkType = "5">
          </BreakpointContent>
@@ -584,11 +584,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3154"
-            endingLineNumber = "3154"
+            startingLineNumber = "3224"
+            endingLineNumber = "3224"
             landmarkName = "Picture::copy_result_to_data()"
             landmarkType = "5">
          </BreakpointContent>
@@ -648,11 +648,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "586"
-            endingLineNumber = "586"
+            startingLineNumber = "622"
+            endingLineNumber = "622"
             landmarkName = "Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -696,11 +696,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "624"
-            endingLineNumber = "624"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
             landmarkName = "Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -712,11 +712,11 @@
             ignoreCount = "256"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
+            startingLineNumber = "1042"
+            endingLineNumber = "1042"
             landmarkName = "Picture::apply_mean_filter(uint32_t filter_size, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -728,11 +728,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "996"
-            endingLineNumber = "996"
+            startingLineNumber = "1045"
+            endingLineNumber = "1045"
             landmarkName = "Picture::remap_histogram_rgb(std::vector&lt;int16_t&gt; *l_r, std::vector&lt;int16_t&gt; *l_g, std::vector&lt;int16_t&gt; *l_b)"
             landmarkType = "5">
          </BreakpointContent>
@@ -744,11 +744,11 @@
             ignoreCount = "2304"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
+            startingLineNumber = "632"
+            endingLineNumber = "632"
             landmarkName = "Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -760,11 +760,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "612"
-            endingLineNumber = "612"
+            startingLineNumber = "648"
+            endingLineNumber = "648"
             landmarkName = "Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -952,11 +952,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "635"
-            endingLineNumber = "635"
+            startingLineNumber = "671"
+            endingLineNumber = "671"
             landmarkName = "Picture::create_kernel_and_overwrite_median(int kernel_size, int center_r, int center_c, uint32_t channel_mask)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1016,11 +1016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "961"
-            endingLineNumber = "961"
+            startingLineNumber = "1010"
+            endingLineNumber = "1010"
             landmarkName = "Picture::create_patch_matrix(int r, int c, int radius, int channel)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1032,11 +1032,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "934"
-            endingLineNumber = "934"
+            startingLineNumber = "983"
+            endingLineNumber = "983"
             landmarkName = "Picture::create_patch_matrix(int r, int c, int radius, int channel)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1096,11 +1096,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -1144,11 +1144,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -1160,11 +1160,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -1176,11 +1176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
             <Locations>
@@ -1272,11 +1272,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -1288,11 +1288,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1208"
-            endingLineNumber = "1208"
+            startingLineNumber = "1257"
+            endingLineNumber = "1257"
             landmarkName = "Picture::find_piece(string piece_one, string piece_two)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1304,11 +1304,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1226"
-            endingLineNumber = "1226"
+            startingLineNumber = "1275"
+            endingLineNumber = "1275"
             landmarkName = "Picture::find_piece(string piece_one, string piece_two)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1320,11 +1320,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1222"
-            endingLineNumber = "1222"
+            startingLineNumber = "1271"
+            endingLineNumber = "1271"
             landmarkName = "Picture::find_piece(string piece_one, string piece_two)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1336,11 +1336,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1249"
-            endingLineNumber = "1249"
+            startingLineNumber = "1298"
+            endingLineNumber = "1298"
             landmarkName = "Picture::find_piece(string piece_one, string piece_two)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1368,11 +1368,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1428"
-            endingLineNumber = "1428"
+            startingLineNumber = "1477"
+            endingLineNumber = "1477"
             landmarkName = "Picture::dither(int method)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1384,11 +1384,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1743"
-            endingLineNumber = "1743"
+            startingLineNumber = "1792"
+            endingLineNumber = "1792"
             landmarkName = "Picture::dither_2(vector&lt;int&gt; levels)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1400,11 +1400,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1691"
-            endingLineNumber = "1691"
+            startingLineNumber = "1740"
+            endingLineNumber = "1740"
             landmarkName = "Picture::dither_8(vector&lt;int&gt; levels)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1416,11 +1416,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1655"
-            endingLineNumber = "1655"
+            startingLineNumber = "1704"
+            endingLineNumber = "1704"
             landmarkName = "Picture::apply_dithering(Matrix dither, vector&lt;int&gt; levels)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1432,11 +1432,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1658"
-            endingLineNumber = "1658"
+            startingLineNumber = "1707"
+            endingLineNumber = "1707"
             landmarkName = "Picture::apply_dithering(Matrix dither, vector&lt;int&gt; levels)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1448,11 +1448,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1806"
-            endingLineNumber = "1806"
+            startingLineNumber = "1855"
+            endingLineNumber = "1855"
             landmarkName = "Picture::find_closest_palette(float val, std::vector&lt;int&gt; palettes)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1464,11 +1464,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1656"
-            endingLineNumber = "1656"
+            startingLineNumber = "1705"
+            endingLineNumber = "1705"
             landmarkName = "Picture::apply_dithering(Matrix dither, vector&lt;int&gt; levels)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1480,11 +1480,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1821"
-            endingLineNumber = "1821"
+            startingLineNumber = "1870"
+            endingLineNumber = "1870"
             landmarkName = "Picture::find_closest_palette(float val, std::vector&lt;int&gt; palettes)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1496,11 +1496,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1876"
-            endingLineNumber = "1876"
+            startingLineNumber = "1925"
+            endingLineNumber = "1925"
             landmarkName = "Picture::adaptive_thresholding()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1528,11 +1528,11 @@
             ignoreCount = "22770"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2500"
-            endingLineNumber = "2500"
+            startingLineNumber = "2549"
+            endingLineNumber = "2549"
             landmarkName = "Picture::morph_erode()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1544,11 +1544,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2488"
-            endingLineNumber = "2488"
+            startingLineNumber = "2537"
+            endingLineNumber = "2537"
             landmarkName = "Picture::morph_erode()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1560,11 +1560,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2481"
-            endingLineNumber = "2481"
+            startingLineNumber = "2530"
+            endingLineNumber = "2530"
             landmarkName = "Picture::compute_connectivity(int bst)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1640,11 +1640,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2743"
-            endingLineNumber = "2743"
+            startingLineNumber = "2792"
+            endingLineNumber = "2792"
             landmarkName = "Picture::compute_spatial_data(GrainCategorizer gc)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1656,11 +1656,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2751"
-            endingLineNumber = "2751"
+            startingLineNumber = "2800"
+            endingLineNumber = "2800"
             landmarkName = "Picture::compute_spatial_data(GrainCategorizer gc)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1672,11 +1672,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2806"
-            endingLineNumber = "2806"
+            startingLineNumber = "2855"
+            endingLineNumber = "2855"
             landmarkName = "Picture::compute_spatial_data(GrainCategorizer gc)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1688,11 +1688,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1399"
-            endingLineNumber = "1399"
+            startingLineNumber = "1448"
+            endingLineNumber = "1448"
             landmarkName = "Picture::overlay_with(Picture other)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1736,11 +1736,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "Picture::crop(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1752,11 +1752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
             landmarkName = "Picture::crop(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1768,11 +1768,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2174"
-            endingLineNumber = "2174"
+            startingLineNumber = "2223"
+            endingLineNumber = "2223"
             landmarkName = "Picture::morph(int operation)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1784,11 +1784,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2189"
-            endingLineNumber = "2189"
+            startingLineNumber = "2238"
+            endingLineNumber = "2238"
             landmarkName = "Picture::morph(int operation)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1848,11 +1848,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2177"
-            endingLineNumber = "2177"
+            startingLineNumber = "2226"
+            endingLineNumber = "2226"
             landmarkName = "Picture::morph(int operation)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1864,11 +1864,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2033"
-            endingLineNumber = "2033"
+            startingLineNumber = "2082"
+            endingLineNumber = "2082"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1880,11 +1880,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2037"
-            endingLineNumber = "2037"
+            startingLineNumber = "2086"
+            endingLineNumber = "2086"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1896,11 +1896,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2056"
-            endingLineNumber = "2056"
+            startingLineNumber = "2105"
+            endingLineNumber = "2105"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1912,11 +1912,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2091"
-            endingLineNumber = "2091"
+            startingLineNumber = "2140"
+            endingLineNumber = "2140"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1928,11 +1928,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2170"
-            endingLineNumber = "2170"
+            startingLineNumber = "2219"
+            endingLineNumber = "2219"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1944,11 +1944,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1468"
-            endingLineNumber = "1468"
+            startingLineNumber = "1517"
+            endingLineNumber = "1517"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1960,11 +1960,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1480"
-            endingLineNumber = "1480"
+            startingLineNumber = "1529"
+            endingLineNumber = "1529"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1976,11 +1976,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1469"
-            endingLineNumber = "1469"
+            startingLineNumber = "1518"
+            endingLineNumber = "1518"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1992,11 +1992,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1465"
-            endingLineNumber = "1465"
+            startingLineNumber = "1514"
+            endingLineNumber = "1514"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2008,11 +2008,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1472"
-            endingLineNumber = "1472"
+            startingLineNumber = "1521"
+            endingLineNumber = "1521"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2024,11 +2024,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1478"
-            endingLineNumber = "1478"
+            startingLineNumber = "1527"
+            endingLineNumber = "1527"
             landmarkName = "Picture::dither_fsb()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2040,11 +2040,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1957"
-            endingLineNumber = "1957"
+            startingLineNumber = "2006"
+            endingLineNumber = "2006"
             landmarkName = "Picture::measure_length()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2088,11 +2088,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1960"
-            endingLineNumber = "1960"
+            startingLineNumber = "2009"
+            endingLineNumber = "2009"
             landmarkName = "Picture::measure_length()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2168,11 +2168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2040"
-            endingLineNumber = "2040"
+            startingLineNumber = "2089"
+            endingLineNumber = "2089"
             landmarkName = "Picture::expand_area(Coordinate coord, int measure_chroma, RgbPixel &amp;chroma)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2184,11 +2184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2001"
-            endingLineNumber = "2001"
+            startingLineNumber = "2050"
+            endingLineNumber = "2050"
             landmarkName = "Picture::measure_chromaticity(Picture other, vector&lt;Coordinate&gt; coords)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2262,11 +2262,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2950"
-            endingLineNumber = "2950"
+            startingLineNumber = "2999"
+            endingLineNumber = "2999"
             landmarkName = "Picture::fill_holes2(std::vector&lt;Coordinate&gt; _traces)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2278,11 +2278,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2949"
-            endingLineNumber = "2949"
+            startingLineNumber = "2998"
+            endingLineNumber = "2998"
             landmarkName = "Picture::fill_holes2(std::vector&lt;Coordinate&gt; _traces)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2294,11 +2294,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2951"
-            endingLineNumber = "2951"
+            startingLineNumber = "3000"
+            endingLineNumber = "3000"
             landmarkName = "Picture::fill_holes2(std::vector&lt;Coordinate&gt; _traces)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2310,11 +2310,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2953"
-            endingLineNumber = "2953"
+            startingLineNumber = "3002"
+            endingLineNumber = "3002"
             landmarkName = "Picture::fill_holes2(std::vector&lt;Coordinate&gt; _traces)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2326,11 +2326,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2953"
-            endingLineNumber = "2953"
+            startingLineNumber = "3002"
+            endingLineNumber = "3002"
             landmarkName = "Picture::fill_holes2(std::vector&lt;Coordinate&gt; _traces)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2342,11 +2342,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2237"
-            endingLineNumber = "2237"
+            startingLineNumber = "2286"
+            endingLineNumber = "2286"
             landmarkName = "Picture::compute_diagonal_lines(int radius)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2358,11 +2358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2288"
-            endingLineNumber = "2288"
+            startingLineNumber = "2337"
+            endingLineNumber = "2337"
             landmarkName = "Picture::compute_global_connectivity()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2374,11 +2374,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2425"
-            endingLineNumber = "2425"
+            startingLineNumber = "2474"
+            endingLineNumber = "2474"
             landmarkName = "Picture::label_connected_components(int distance_threshold)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2390,11 +2390,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2365"
-            endingLineNumber = "2365"
+            startingLineNumber = "2414"
+            endingLineNumber = "2414"
             landmarkName = "Picture::compute_branching(int _threshold)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2406,11 +2406,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2461"
-            endingLineNumber = "2461"
+            startingLineNumber = "2510"
+            endingLineNumber = "2510"
             landmarkName = "Picture::label_connected_components(int distance_threshold)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2454,11 +2454,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -2470,11 +2470,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
             <Locations>
@@ -2550,11 +2550,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -2566,11 +2566,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -2582,27 +2582,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "main(int argc, char* argv[])"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/main.cpp"
-            timestampString = "498399244.938508"
+            timestampString = "498634386.557064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "373"
             endingLineNumber = "373"
+            landmarkName = "main(int argc, char* argv[])"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/main.cpp"
+            timestampString = "498634386.557064"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -2662,11 +2662,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1628"
-            endingLineNumber = "1628"
+            startingLineNumber = "1677"
+            endingLineNumber = "1677"
             landmarkName = "Picture::dither_multi_level(int method, int _level)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2934,11 +2934,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498115910.678317"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3456"
-            endingLineNumber = "3456"
+            startingLineNumber = "3541"
+            endingLineNumber = "3541"
             landmarkName = "Picture::extend_boundary(int extension)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2982,11 +2982,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498115910.678317"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3272"
-            endingLineNumber = "3272"
+            startingLineNumber = "3357"
+            endingLineNumber = "3357"
             landmarkName = "Picture::average_laws_response(int extension)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2998,11 +2998,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "774"
-            endingLineNumber = "774"
+            startingLineNumber = "810"
+            endingLineNumber = "810"
             landmarkName = "Picture::apply_laws_filter(vector&lt;float&gt; unwrapped_filter, int extension)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3014,11 +3014,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "780"
-            endingLineNumber = "780"
+            startingLineNumber = "816"
+            endingLineNumber = "816"
             landmarkName = "Picture::apply_laws_filter(vector&lt;float&gt; unwrapped_filter, int extension)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3046,11 +3046,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498104014.007253"
+            timestampString = "498443151.116462"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "771"
-            endingLineNumber = "771"
+            startingLineNumber = "807"
+            endingLineNumber = "807"
             landmarkName = "Picture::apply_laws_filter(vector&lt;float&gt; unwrapped_filter, int extension)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3125,28 +3125,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "498116291.331004"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "f_3_1_segmentation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498115910.678317"
+            timestampString = "498519011.426361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3253"
-            endingLineNumber = "3253"
+            startingLineNumber = "3326"
+            endingLineNumber = "3326"
             landmarkName = "Picture::window_laws_response(int radius)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3174,11 +3158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3526"
-            endingLineNumber = "3526"
+            startingLineNumber = "3611"
+            endingLineNumber = "3611"
             landmarkName = "Picture::to_cv2_mat()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3286,28 +3270,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/FilterEnergy.cpp"
-            timestampString = "498118597.280916"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "FilterEnergy::unwrap_kmeans(Mat m, int cols)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/FilterEnergy.cpp"
-            timestampString = "498118597.280916"
+            timestampString = "498525655.024611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
             endingLineNumber = "131"
-            landmarkName = "FilterEnergy::unwrap_kmeans(Mat m, int cols)"
+            landmarkName = "FilterEnergy::unwrap_kmeans(Mat m, int cols, int levels)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3318,12 +3286,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/FilterEnergy.cpp"
-            timestampString = "498118597.280916"
+            timestampString = "498527235.16103"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "FilterEnergy::generate_kmeans()"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "FilterEnergy::unwrap_kmeans(Mat m, int cols, int levels)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/FilterEnergy.cpp"
+            timestampString = "498525655.024611"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "FilterEnergy::generate_kmeans(int x, int y, int label_count)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3334,11 +3318,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498115905.245818"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3260"
-            endingLineNumber = "3260"
+            startingLineNumber = "3345"
+            endingLineNumber = "3345"
             landmarkName = "Picture::window_laws_response(int radius)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3346,79 +3330,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "498117300.590469"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "f_3_1_segmentation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "498117300.590469"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "f_3_1_segmentation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "498163141.452484"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "f_3_1_segmentation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "498163141.452484"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "f_3_1_segmentation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498341164.708719"
+            timestampString = "498636896.789754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "f_3_2_bag_of_words()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3430,11 +3350,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498341164.708719"
+            timestampString = "498636896.789754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "f_3_2_bag_of_words()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3446,43 +3366,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498341135.825509"
+            timestampString = "498635479.419437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "f_3_2_bag_of_words()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498341135.825509"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "f_3_2_bag_of_words()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498340831.737646"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "make_histogram_plot(Mat data)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3494,11 +3382,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498339944.54658"
+            timestampString = "498635479.419437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "make_histogram_plot(Mat data)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3510,11 +3398,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498340831.737646"
+            timestampString = "498635479.419437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "make_histogram_plot(Mat data)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3526,11 +3414,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_2_bag_of_words.cpp"
-            timestampString = "498341162.051004"
+            timestampString = "498636896.789754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
             landmarkName = "f_3_2_bag_of_words()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3542,11 +3430,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3527"
-            endingLineNumber = "3527"
+            startingLineNumber = "3612"
+            endingLineNumber = "3612"
             landmarkName = "Picture::to_cv2_mat()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3558,11 +3446,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353819.70414"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3517"
-            endingLineNumber = "3517"
+            startingLineNumber = "3602"
+            endingLineNumber = "3602"
             landmarkName = "Picture::to_cv2_mat()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3574,11 +3462,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/Picture.cpp"
-            timestampString = "498353957.551541"
+            timestampString = "498610272.630155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3524"
-            endingLineNumber = "3524"
+            startingLineNumber = "3609"
+            endingLineNumber = "3609"
             landmarkName = "Picture::to_cv2_mat()"
             landmarkType = "5">
          </BreakpointContent>
@@ -3596,6 +3484,262 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "canny_threshold(int, void*)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "498439715.458128"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "Picture::slurp(Mat m)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "498439715.458128"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "Picture::slurp(Mat m)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "498439787.564914"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "Picture::color_format_to_grayscale_raw(int x, int y, string path)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "498519011.426361"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3206"
+            endingLineNumber = "3206"
+            landmarkName = "Picture::initialize_data(uint8_t val)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_3_ground_truth.cpp"
+            timestampString = "498445759.49233"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "f_3_3_ground_truth_e()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/FilterEnergy.cpp"
+            timestampString = "498525655.024611"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "FilterEnergy::normalize()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/Picture.cpp"
+            timestampString = "498519114.08578"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "853"
+            endingLineNumber = "853"
+            landmarkName = "Picture::extract_result_unwrapped_matrix(int row, int col, int radius)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/FilterEnergy.cpp"
+            timestampString = "498525655.024611"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "FilterEnergy::generate_kmeans(int x, int y, int label_count)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/FilterEnergy.cpp"
+            timestampString = "498526714.345951"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "FilterEnergy::generate_kmeans(int x, int y, int label_count)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/FilterEnergy.cpp"
+            timestampString = "498527235.16103"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "FilterEnergy::unwrap_kmeans(Mat m, int cols, int levels)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498636896.789754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "f_3_2_bag_of_words()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498635836.160454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "compute_euclidean_distance(Mat codebook, Mat row)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498636116.20399"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "compute_euclidean_distance(Mat codebook, Mat row)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498636106.303682"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "compute_euclidean_distance(Mat codebook, Mat row)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498636107.414144"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "compute_euclidean_distance(Mat codebook, Mat row)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ee569/run_3_2_bag_of_words.cpp"
+            timestampString = "498636226.908255"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "fit_codewords(Mat codebook, Mat descriptors)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

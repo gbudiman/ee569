@@ -29,6 +29,8 @@
 
 class Picture {
 public:
+  static Picture color_format_to_grayscale_raw(int, int, string);
+  
   Picture();
   Picture(std::string, uint32_t, uint32_t, uint32_t);
   void copy_result_to_data();
@@ -43,7 +45,10 @@ public:
   vector<vector<float>> window_laws_response(int);
   void slurp(std::vector<std::vector<float>>);
   void slurp(std::vector<std::vector<uint8_t>>);
+  void slurp(cv::Mat);
+  void invert();
 
+  void compare_f_measure(Picture, Picture, int&, int&, int&, int&);
   
   void write_to_file(std::string);
   void write_to_file(std::string, bool);
@@ -119,6 +124,7 @@ public:
   uint32_t get_dim_y();
   uint32_t get_type();
   std::vector<std::vector<uint8_t>>* get_result_gray();
+  std::vector<std::vector<uint8_t>>* get_data_gray();
   std::vector<std::vector<RgbPixel>*>* get_rgb_data();
   
   Histogram *hist_r;
@@ -176,6 +182,7 @@ private:
   int find_closest_palette(float, std::vector<int>);
   
   void initialize_result(uint8_t);
+  void initialize_data(uint8_t);
   std::vector<int> extract_laws_workspace_unwrapped_matrix(int, int, int);
   std::vector<int> extract_laws_response_unwrapped_matrix(int, int, int);
   std::vector<uint8_t> extract_result_unwrapped_matrix(int, int, int);

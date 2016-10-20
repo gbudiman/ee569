@@ -21,38 +21,69 @@ void f_3_1_segmentation() {
   
   int boundary_extension = 2;
   LawsFilter laws_filter = LawsFilter();
-  Picture comb1 = Picture("hw3_images/P1/Comb_1.raw", 500, 425, COLOR_GRAY);
+//  Picture comb1 = Picture("hw3_images/P1/Comb_1.raw", 500, 425, COLOR_GRAY);
+//  
+//  comb1.extend_boundary(boundary_extension);
+//  comb1.copy_result_to_data(true);
+//  comb1.subtract_average_to_laws_workspace();
+//  
+//  for (int i = 0; i < laws_filter.filter_banks.size(); i++) {
+//    Matrix filter = laws_filter.filter_banks.at(i);
+//    vector<float> unwrapped_filter = filter.unwrap();
+//    comb1.apply_laws_filter(unwrapped_filter, boundary_extension);
+//    
+//    float avg = comb1.average_laws_response(boundary_extension);
+//    printf("%7.2f\n", avg);
+//    
+//    comb1.normalize_laws_filter_response(boundary_extension);
+//    comb1.copy_result_to_data();
+//    comb1.crop(2, 2, 501, 426);
+//    comb1.write_to_file("hw3_out/P1_comb1_responses/resp_" + filter_names.at(i) + ".raw");
+//    Picture s_resp = Picture("hw3_out/P1_comb1_responses/resp_" + filter_names.at(i) + ".raw", 500, 425, COLOR_GRAY);
+//    s_resp.copy_data_to_result();
+//    vector<vector<float>> energy = s_resp.window_laws_response(40);
+//    filter_energy.add(energy);
+//    s_resp.slurp(energy);
+//    s_resp.write_to_file("hw3_out/P1_comb1_responses/energy_" + filter_names.at(i) + ".raw");
+//  }
+//  
+//  Mat wrapped_kmeans = filter_energy.generate_kmeans(500, 425, 4);
+//  Picture leveled = Picture("", 500, 425, COLOR_GRAY);
+//  leveled.slurp(filter_energy.unwrap_kmeans(wrapped_kmeans, 500, 4));
+//  leveled.write_to_file("hw3_out/P1_comb1_responses/leveled.raw");
   
-  comb1.extend_boundary(boundary_extension);
-  comb1.copy_result_to_data(true);
-  comb1.subtract_average_to_laws_workspace();
+  Picture comb2 = Picture("hw3_images/P1/Comb_2.raw", 512, 512, COLOR_GRAY);
+  int window_radius = 13;
   
-  for (int i = 0; i < 5/*laws_filter.filter_banks.size()*/; i++) {
+  comb2.extend_boundary(boundary_extension);
+  comb2.copy_result_to_data(true);
+  comb2.subtract_average_to_laws_workspace();
+  
+  for (int i = 0; i < laws_filter.filter_banks.size(); i++) {
     Matrix filter = laws_filter.filter_banks.at(i);
     vector<float> unwrapped_filter = filter.unwrap();
-    comb1.apply_laws_filter(unwrapped_filter, boundary_extension);
+    comb2.apply_laws_filter(unwrapped_filter, boundary_extension);
     
-    float avg = comb1.average_laws_response(boundary_extension);
-    printf("%7.2f\n", avg);
+    float avg = comb2.average_laws_response(boundary_extension);
     
-    comb1.normalize_laws_filter_response(boundary_extension);
-    comb1.write_to_file("hw3_out/P1_comb1_responses/resp_" + filter_names.at(i) + ".raw");
-    vector<vector<float>> energy = comb1.window_laws_response(7);
+    comb2.normalize_laws_filter_response(boundary_extension);
+    comb2.copy_result_to_data();
+    comb2.crop(2, 2, 513, 513);
+    comb2.write_to_file("hw3_out/P1_comb2_responses/resp_" + filter_names.at(i) + ".raw");
+    Picture s_resp = Picture("hw3_out/P1_comb2_responses/resp_" + filter_names.at(i) + ".raw", 512, 512, COLOR_GRAY);
+    s_resp.copy_data_to_result();
+    vector<vector<float>> energy = s_resp.window_laws_response(window_radius);
     filter_energy.add(energy);
-    comb1.slurp(energy);
-    comb1.write_to_file("hw3_out/P1_comb1_responses/energy_" + filter_names.at(i) + ".raw");
+    //s_resp.slurp(energy);
+    //s_resp.write_to_file("hw3_out/P1_comb1_responses/energy_" + filter_names.at(i) + ".raw");
   }
   
-  filter_energy.normalize();
-  for (int i = 1; i < filter_energy.data.size(); i++) {
-    Picture p = Picture("", 504, 429, COLOR_GRAY);
-    p.slurp(filter_energy.data.at(i));
-    p.write_to_file("hw3_out/P1_comb1_responses/energy_normalized_" + filter_names.at(i) + ".raw");
-  }
-  
-  Mat wrapped_kmeans = filter_energy.generate_kmeans();
-  filter_energy.unwrap_kmeans(wrapped_kmeans, 504);
-  Picture leveled = Picture("", 504, 429, COLOR_GRAY);
-  leveled.slurp(filter_energy.unwrap_kmeans(wrapped_kmeans, 504));
-  leveled.write_to_file("hw3_out/P1_comb1_responses/leveled.raw");
+  Mat wrapped_kmeans = filter_energy.generate_kmeans(512, 512, 6);
+  Picture leveled = Picture("", 512, 512, COLOR_GRAY);
+  leveled.slurp(filter_energy.unwrap_kmeans(wrapped_kmeans, 512, 6));
+  leveled.write_to_file("hw3_out/P1_comb2_responses/leveled_" + to_string(window_radius) + ".raw");
+}
+
+void f_3_1_segmentation_with_bypass() {
+
 }

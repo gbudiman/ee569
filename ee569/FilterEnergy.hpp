@@ -15,11 +15,12 @@ class FilterEnergy {
 public:
   FilterEnergy();
   void add(std::vector<std::vector<float>>);
+  void add(std::vector<std::vector<uint8_t>>*);
   void normalize();
   std::pair<float, float> min_max(int);
   
-  cv::Mat generate_kmeans();
-  std::vector<std::vector<uint8_t>> unwrap_kmeans(cv::Mat, int);
+  cv::Mat generate_kmeans(int, int, int);
+  std::vector<std::vector<uint8_t>> unwrap_kmeans(cv::Mat, int, int);
   
   std::vector<std::vector<std::vector<float>>> data;
 private:

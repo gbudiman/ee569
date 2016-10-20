@@ -22,7 +22,11 @@ void threshold_callback (int, void*) {
   imshow("Threshold", thresholded_display);
 }
 
-void cycle(Mat img) {
+void write_output(string out) {
+  imwrite(out, thresholded_display);
+}
+
+void cycle(Mat img, string path_out) {
   img.convertTo(img, DataType<float>::type, 1/255.0);
   
   Mat edges(img.size(), img.type());
@@ -36,10 +40,11 @@ void cycle(Mat img) {
   createTrackbar("Threshold", "Threshold", &threshold_parameter, max_threshold, threshold_callback);
   threshold_callback(0, 0);
   waitKey(0);
+  write_output(path_out);
 }
 
 void f_3_3_structured_edge() {
-  cycle(Picture("hw3_images/P3/Elephant.raw", 481, 321, COLOR_RGB).to_cv2_mat());
-  cycle(Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat());
-  cycle(Picture("hw3_images/P3/Jaguar.raw", 481, 321, COLOR_RGB).to_cv2_mat());
+  cycle(Picture("hw3_images/P3/Elephant.raw", 481, 321, COLOR_RGB).to_cv2_mat(), "hw3_out/P3/Elephant_emt.png");
+  cycle(Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat(), "hw3_out/P3/Zebra_emt.png");
+  cycle(Picture("hw3_images/P3/Jaguar.raw", 481, 321, COLOR_RGB).to_cv2_mat(), "hw3_out/P3/Jaguar_emt.png");
 }
