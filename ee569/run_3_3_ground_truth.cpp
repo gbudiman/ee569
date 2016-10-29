@@ -11,6 +11,11 @@
 using namespace cv;
 using namespace std;
 
+int g_threshold_parameter = 127;
+int const g_max_threshold = 255;
+Mat g_thresholded;
+Mat g_thresholded_display;
+
 void mass_process(string base_path, string grounds_path, int x, int y, int ground_count) {
   printf("------------ %s ------------\n", base_path.c_str());
   Picture base = Picture::color_format_to_grayscale_raw(x, y, base_path);
@@ -23,13 +28,46 @@ void mass_process(string base_path, string grounds_path, int x, int y, int groun
   FMeasure f_measure = FMeasure(base);
   for (int i = 0; i < ground_truths.size(); i++) {
     f_measure.compare_against(ground_truths.at(i));
+    f_measure.result.write_to_file(base_path + "_annot.raw");
   }
 }
 
+void g_threshold_callback (int, void*) {
+  g_thresholded_display = Scalar::all(0);
+
+  threshold(g_thresholded, g_thresholded_display, g_threshold_parameter, 255, THRESH_BINARY_INV);
+  printf("Threshold: %d\n", g_threshold_parameter);
+  g_thresholded_display = Scalar::all(255) - g_thresholded_display;
+  imshow("Threshold", g_thresholded_display);
+}
+
+void g_write_output(string out) {
+  imwrite(out, g_thresholded_display);
+}
+
+void g_cycle(Mat img, string path_out) {
+  //img.convertTo(img, DataType<float>::type, 1/255.0);
+  
+  g_thresholded = img;
+  
+  namedWindow("Threshold", CV_WINDOW_AUTOSIZE);
+  imshow("Edges", g_thresholded);
+  
+  createTrackbar("Threshold", "Threshold", &g_threshold_parameter, g_max_threshold, g_threshold_callback);
+  g_threshold_callback(0, 0);
+  waitKey(0);
+  g_write_output(path_out);
+}
+
 void f_3_3_ground_truth() {
-  mass_process("hw3_out/P3/Elephant_emt.png", "hw3_images/P3/Elephant_gt", 481, 321, 6);
-  mass_process("hw3_out/P3/Jaguar_emt.png", "hw3_images/P3/Jaguar_gt", 481, 321, 6);
-  mass_process("hw3_out/P3/Zebra_emt.png", "hw3_images/P3/Zebra_gt", 481, 321, 5);
+  g_cycle(imread("hw3_out/P3_edge_map/elephant.png"), "hw3_out/P3_edge_map/elephant_thresholded.png");
+  mass_process("hw3_out/P3_edge_map/elephant_thresholded.png", "hw3_images/P3/Elephant_gt", 481, 321, 6);
+  
+  g_cycle(imread("hw3_out/P3_edge_map/jaguar.png"), "hw3_out/P3_edge_map/jaguar_thresholded.png");
+  mass_process("hw3_out/P3_edge_map/jaguar_thresholded.png", "hw3_images/P3/Jaguar_gt", 481, 321, 6);
+  
+  g_cycle(imread("hw3_out/P3_edge_map/zebra.png"), "hw3_out/P3_edge_map/zebra_thresholded.png");
+  mass_process("hw3_out/P3_edge_map/zebra_thresholded.png", "hw3_images/P3/Zebra_gt", 481, 321, 5);
 }
 
 void f_3_3_ground_truth_e() {

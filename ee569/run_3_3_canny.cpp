@@ -45,7 +45,7 @@ void canny_threshold(int, void*) {
   draw();
 }
 
-void process() {
+void process(string outpath) {
   dst.create(src.size(), src.type());
   cvtColor(src, src_gray, CV_RGB2GRAY);
   
@@ -55,12 +55,13 @@ void process() {
   createTrackbar("Kernel [3/5/7]", window_name, &kernel_size, max_kernel_size, canny_threshold);
   canny_threshold(0, 0);
   waitKey(0);
+  imwrite(outpath, dst);
 }
 
 void f_3_3_canny() {
   src = Picture("hw3_images/P3/Zebra.raw", 481, 321, COLOR_RGB).to_cv2_mat();
-  process();
+  process("hw3_out/P3_canny/Zebra.png");
 
   src = Picture("hw3_images/P3/Jaguar.raw", 481, 321, COLOR_RGB).to_cv2_mat();
-  process();
+  process("hw3_out/P3_canny/Jaguar.png");
 }

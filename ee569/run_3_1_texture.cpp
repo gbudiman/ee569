@@ -19,6 +19,7 @@ void process(Picture p) {
 }
 
 void f_3_1_texture() {
+  int boundary_extension = 2;
   Statistics stats = Statistics();
   Mat m = Mat::zeros(12, 25, CV_32F);
   
@@ -31,8 +32,7 @@ void f_3_1_texture() {
     pictures.push_back(Picture("hw3_images/P1/Texture" + to_string(i) + ".raw", 128, 128, COLOR_GRAY));
   }
   
-  int boundary_extension = 2;
-  
+  printf("Tex# ");
   for (int i = 0; i < filter_names.size(); i++) {
     printf("  %s  ", filter_names.at(i).c_str());
   }
@@ -50,6 +50,8 @@ void f_3_1_texture() {
       Matrix filter = laws_filter.filter_banks.at(i);
       vector<float> unwrapped_filter = filter.unwrap();
       base.apply_laws_filter(unwrapped_filter, boundary_extension);
+      base.normalize_laws_filter_response(boundary_extension);
+      //base.write_to_file("hw3_out/P1_Laws_Texture_Response/Texture" + to_string(h + 1) + "_" + filter_names.at(i) + ".raw");
       float avg = base.average_laws_response(boundary_extension);
       
       avgs.push_back(avg);
@@ -57,6 +59,7 @@ void f_3_1_texture() {
       base = pictures.at(h);
     }
     
+    printf("%4d ", h + 1);
     for (int i = 0; i < filter_names.size(); i++) {
       printf("%7.1f ", avgs.at(i));
     }
@@ -67,12 +70,14 @@ void f_3_1_texture() {
   
   
   stats.compute_column_variance();
+  printf("---- ");
   for (int i = 0; i < stats.variance.size(); i++) {
     printf("  ----  ");
   }
   
   printf("\n");
   
+  printf(" Var ");
   for (int i = 0; i < stats.variance.size(); i++) {
     printf("%7.1f ", stats.variance.at(i));
   }
@@ -80,16 +85,22 @@ void f_3_1_texture() {
   printf("\n");
   
   Mat projection_result;
-  PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW, 3);
-  pca.project(m, projection_result);
+  Mat m_sliced = m(Rect(1, 0, 24, 12));
+  //Mat m_sliced = m(Rect(0, 0, 25, 12));
+  PCA pca = PCA(m_sliced, Mat(), PCA::DATA_AS_ROW, 3);
+  pca.project(m_sliced, projection_result);
   cout << projection_result << endl;
   
   Mat best_labels;
-  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.1), 5, KMEANS_RANDOM_CENTERS);
+  Mat centers;
+  kmeans(projection_result, 4, best_labels, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 4000, 0.0001), 800, KMEANS_RANDOM_CENTERS, centers);
   cout << best_labels << endl;
+  cout << centers << endl;
   
   Mat best_labels_unreduced;
-  kmeans(projection_result, 4, best_labels_unreduced, TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.01), 12, KMEANS_RANDOM_CENTERS);
+  Mat centers_unreduced;
+  kmeans(m, 4, best_labels_unreduced, TermCriteria(TermCriteria::EPS, 4000, 0.0001), 800, KMEANS_RANDOM_CENTERS, centers_unreduced);
   cout << best_labels_unreduced << endl;
+  cout << centers_unreduced << endl;
 }
 
