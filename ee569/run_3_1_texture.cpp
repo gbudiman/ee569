@@ -3,6 +3,8 @@
 //  ee569
 //
 //  Created by Gloria Budiman on 10/10/16.
+//  Finalized on 10/31/16
+//  gbudiman@usc.edu 6528-1836-50
 //  Copyright © 2016 gbudiman. All rights reserved.
 //
 

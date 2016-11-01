@@ -3826,15 +3826,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ee569/run_3_1_segmentation.cpp"
-            timestampString = "499075974.052652"
+            timestampString = "499593317.337627"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "f_3_1_segmentation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3963,7 +3963,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
             endingLineNumber = "16"
-            landmarkName = "min_max_distance(Mat descriptors, vector&lt;DMatch&gt; matches, double min_threshold = 0.02)"
+            landmarkName = "min_max_distance(Mat descriptors, vector&lt;DMatch&gt; matches, double min_threshold = 0.02, double hard_threshold = 0.3)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

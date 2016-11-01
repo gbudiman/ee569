@@ -16,20 +16,9 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 35;
+  int debug = 32;
 
   if (RUN_ALL) {
-//    f_1_1_a_cropping();
-//    f_1_1_a_resizing();
-//    f_1_1_b_cmyk();
-//    f_1_1_b_hsl();
-//    f_1_2_a_histogram_equalization();
-//    f_1_2_b_histcolor_equalization();
-//    f_1_2_c_sfx();
-//    f_1_2_d_histogram_transform();
-//    f_1_3_a_median_filtering();
-//    f_1_3_a_cascaded_filter();
-//    f_1_3_b_nlm();
   } else {
     switch(debug) {
       case 0: f_1_1_a_cropping(); break;
@@ -478,7 +467,7 @@ vector<string> expand_filter_names(vector<string> in) {
   vector<string> result = vector<string>();
   for (int i = 0; i < in.size(); i++) {
     for (int j = 0; j < in.size(); j++) {
-      result.push_back(in.at(i) + in.at(j));
+      result.push_back(in.at(j) + 'T' + in.at(i));
     }
   }
   

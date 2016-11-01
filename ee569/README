@@ -8,6 +8,18 @@ Gloria Budiman gbudiman@usc.edu
 6528-1836-50
 Finalized on 10/6/2016
 
+EE569 HW3
+Gloria Budiman gbudiman@usc.edu
+6528-1836-50
+
+########################
+### Note for HW3 Grading
+########################
+
+It is highly recommended to use included ee569.xcodeproj to avoid compilation issue with OpenCV inclusion. To check individual problem, change the value of int debug in main.cpp to appropriate value. Problems in HW3 are numbered in debug value of 31 to 37 inclusive. Image output are stored in hw3_out (see Project Organization section below for more details).
+
+Compilation requires OpenCV 3.1.0. Please adjust the include path accordingly per grader's machine configuration.
+
 ########################
 ### Project Organization
 ########################
@@ -25,10 +37,12 @@ Folder structure looks like the following during development:
     - Makefile
     - README
     - test.sh
-    - test_hw2.sh  <=========== NEW FOR HW2
-    - hw2_out/     <=========== intermediary image for HW2
+    - test_hw2.sh  
+    - hw2_out/    
   + hw2_images (HW2)
-    - tests/ (the default output when running test_hw2.sh)
+    - tests/
+  + hw3_images (HW3) <=== base input image for HW3
+  + hw3_out (HW3)    <=== base output image for HW3
   + images (HW1)
     - P1/
     - P2/
@@ -40,6 +54,8 @@ Folder structure looks like the following during development:
 ###############
 ### Compilation
 ###############
+NOTE FOR HW3: Make compilation is not supported. Please use included .xcodeproj file.
+
 Compiled on Mac El Capitan using g++-6 version 6.1.0
 C++14 is required. C++11 will not work
 
@@ -127,5 +143,13 @@ Folder plots/ includes some sample histogram output
   Used in contour-tracing
 - Mpeg7Classifier class
   Classification class for MPEG7 datasets
+- LawsFilter class
+  Helper class for Laws Filter implementation
+- Statistics class
+  Basic statistical methods to compute variance, mean, std.dev and so on
+- FilterEnergy class
+  Simple class for computing windowing function over Laws filter response
+- FMeasure class
+  Class for computing FMeasure of edge detection accuracy
 - project_inclusion.hpp
   Global function declaration

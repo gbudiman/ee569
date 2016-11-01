@@ -9,98 +9,119 @@
 
 CC=g++-6
 CFLAGS=-Ofast
-all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix tracer bounding_box spatial_data boundary_tracer mpeg7_classifier kcluster runs
-	$(CC) $(CFLAGS) *.o main.cpp -o main
+CVLIBS=-I/usr/local/opt/opencv3/include -L/usr/local/opt/opencv3/lib
+CVFLAGS=-lopencv_calib3d -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgcodecs -lopencv_imgproc -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_video -lopencv_videoio -lopencv_videostab -lopencv_xfeatures2d -lopencv_ximgproc -lopencv_xobjdetect -lopencv_ccalib -lopencv_saliency -lopencv_surface_matching -lopencv_xphoto
+all: picture rgbpixel cmykpixel hslpixel histogram tfh psnr kernel patch_map nlm_weight matrix binary_matrix grain_categorizer morph_matrix mark_pattern_matrix coordinate bitstream_matrix tracer bounding_box spatial_data boundary_tracer mpeg7_classifier kcluster laws_filter statistics filter_energy f_measure runs
+	$(CC) $(CFLAGS) $(CVLIBS) $(CVFLAGS) *.o main.cpp -o main
 
 picture:
-	$(CC) $(CFLAGS) -c Picture.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Picture.cpp
 
 rgbpixel:
-	$(CC) $(CFLAGS) -c RgbPixel.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c RgbPixel.cpp
 
 cmykpixel:
-	$(CC) $(CFLAGS) -c CmykPixel.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c CmykPixel.cpp
 
 hslpixel:
-	$(CC) $(CFLAGS) -c HslPixel.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c HslPixel.cpp
 
 histogram:
-	$(CC) $(CFLAGS) -c Histogram.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Histogram.cpp
 
 tfh:
-	$(CC) $(CFLAGS) -c TransferFunction.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c TransferFunction.cpp
 
 psnr:
-	$(CC) $(CFLAGS) -c Psnr.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Psnr.cpp
 
 kernel:
-	$(CC) $(CFLAGS) -c Kernel.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Kernel.cpp
 
 patch_map:
-	$(CC) $(CFLAGS) -c PatchMap.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c PatchMap.cpp
 
 nlm_weight:
-	$(CC) $(CFLAGS) -c NlmWeight.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c NlmWeight.cpp
 
 binary_matrix:
-	$(CC) $(CFLAGS) -c BinaryMatrix.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c BinaryMatrix.cpp
 
 matrix:
-	$(CC) $(CFLAGS) -c Matrix.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Matrix.cpp
 
 grain_categorizer:
-	$(CC) $(CFLAGS) -c GrainCategorizer.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c GrainCategorizer.cpp
 
 coordinate:
-	$(CC) $(CFLAGS) -c Coordinate.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Coordinate.cpp
 
 morph_matrix:
-	$(CC) $(CFLAGS) -c MorphMatrix.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c MorphMatrix.cpp
 
 mark_pattern_matrix:
-	$(CC) $(CFLAGS) -c MarkPatternMatrix.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c MarkPatternMatrix.cpp
 
 bitstream_matrix:
-	$(CC) $(CFLAGS) -c BitStreamMatrix.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c BitStreamMatrix.cpp
 
 tracer:
-	$(CC) $(CFLAGS) -c Tracer.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Tracer.cpp
 
 bounding_box:
-	$(CC) $(CFLAGS) -c BoundingBox.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c BoundingBox.cpp
 
 spatial_data:
-	$(CC) $(CFLAGS) -c SpatialData.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c SpatialData.cpp
 
 boundary_tracer:
-	$(CC) $(CFLAGS) -c BoundaryTracer.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c BoundaryTracer.cpp
 
 mpeg7_classifier:
-	$(CC) $(CFLAGS) -c Mpeg7Classifier.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Mpeg7Classifier.cpp
 
 kcluster:
-	$(CC) $(CFLAGS) -c KCluster.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c KCluster.cpp
+
+laws_filter:
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c LawsFilter.cpp
+
+statistics:
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c Statistics.cpp
+
+filter_energy:
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c FilterEnergy.cpp
+
+f_measure:
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c FMeasure.cpp
 
 runs:
-	$(CC) $(CFLAGS) -c run_1_1_a_cropping.cpp
-	$(CC) $(CFLAGS) -c run_1_1_a_resizing.cpp
-	$(CC) $(CFLAGS) -c run_1_1_b_cmyk.cpp
-	$(CC) $(CFLAGS) -c run_1_1_b_hsl.cpp
-	$(CC) $(CFLAGS) -c run_1_2_a_histogram_equalization.cpp
-	$(CC) $(CFLAGS) -c run_1_2_b_histcolor_equalization.cpp
-	$(CC) $(CFLAGS) -c run_1_2_c_sfx.cpp
-	$(CC) $(CFLAGS) -c run_1_2_d_histogram_transform.cpp
-	$(CC) $(CFLAGS) -c run_1_3_a_median_filtering.cpp
-	$(CC) $(CFLAGS) -c run_1_3_a_cascaded_filter.cpp
-	$(CC) $(CFLAGS) -c run_1_3_b_nlm.cpp
-	$(CC) $(CFLAGS) -c run_1_3_b_cascaded_filter.cpp
-	$(CC) $(CFLAGS) -c run_1_3_psnr_calculator.cpp
-	$(CC) $(CFLAGS) -c run_2_1_a_diamond_warp.cpp
-	$(CC) $(CFLAGS) -c run_2_1_c_homography.cpp
-	$(CC) $(CFLAGS) -c run_f_2_1_b_puzzle_matching.cpp
-	$(CC) $(CFLAGS) -c run_2_2_a_dithering.cpp
-	$(CC) $(CFLAGS) -c run_2_3_a_rice_grain.cpp
-	$(CC) $(CFLAGS) -c run_2_3_b_mpeg7.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_1_a_cropping.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_1_a_resizing.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_1_b_cmyk.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_1_b_hsl.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_2_a_histogram_equalization.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_2_b_histcolor_equalization.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_2_c_sfx.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_2_d_histogram_transform.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_3_a_median_filtering.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_3_a_cascaded_filter.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_3_b_nlm.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_3_b_cascaded_filter.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_1_3_psnr_calculator.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_2_1_a_diamond_warp.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_2_1_c_homography.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_f_2_1_b_puzzle_matching.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_2_2_a_dithering.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_2_3_a_rice_grain.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_2_3_b_mpeg7.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_3_1_texture.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) -c run_3_1_segmentation.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c run_3_2_salient_points.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c run_3_2_bag_of_words.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c run_3_3_canny.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c run_3_3_structured_edge.cpp
+	$(CC) $(CVLIBS) $(CFLAGS) $(CVFLAGS) -c run_3_3_ground_truth.cpp
 
 clean:
 	rm *.o main
