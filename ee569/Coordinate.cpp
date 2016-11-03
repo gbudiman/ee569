@@ -29,6 +29,13 @@ bool Coordinate::has_connectivity(Coordinate other) {
   return false;
 }
 
+bool Coordinate::has_four_connectivity(Coordinate other) {
+  int diff_row = abs(other.row - row);
+  int diff_col = abs(other.col - col);
+  
+  return (diff_row + diff_col <= 16);
+}
+
 bool Coordinate::operator==(const Coordinate &other) {
   return (row == other.row && col == other.col);
 }

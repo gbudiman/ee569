@@ -376,11 +376,11 @@ void Picture::get_peak_hist(int _count, int spread) {
     }
   }
   
-  int step = 255 / (count);
+  int step = 255 / (count - 1);
   vector<pair<int, int>> cluster_pair;
   for (int i = 0; i < clusters.size(); i++) {
     //cout << (i + 1) * step << endl;
-    cluster_pair.push_back(pair<int, int>(clusters.at(i), (i + 1) * step));
+    cluster_pair.push_back(pair<int, int>(clusters.at(i), (i) * step));
   }
   
   initialize_result(0);
@@ -403,6 +403,73 @@ void Picture::get_peak_hist(int _count, int spread) {
     }
   }
   int z= 0;
+}
+
+void Picture::segment_base(int segment) {
+  vector<vector<Coordinate>> container = vector<vector<Coordinate>>(segment);
+  vector<vector<Coordinate>> dissplit = vector<vector<Coordinate>>();
+  for (int i = 0; i < segment; i++) {
+    container.at(i) = vector<Coordinate>();
+  }
+  
+  int step = 255 / (segment - 1);
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      int intensity = data_gray->at(r).at(c) / step;
+      
+      container.at(intensity).push_back(Coordinate(r, c));
+    }
+  }
+  
+  int last_dissplit_search = 0;
+  for (int i = 0; i < container.size(); i++) {
+    cout << "At container " << i << endl;
+    for (int j = 0; j < container.at(i).size(); j++) {
+      //cout << i << " / " << j << endl;
+      Coordinate coord = container.at(i).at(j);
+      
+      if (dissplit.size() == 0) {
+        vector<Coordinate> first_insert = vector<Coordinate>();
+        first_insert.push_back(coord);
+        dissplit.push_back(first_insert);
+      } else {
+        bool has_been_inserted = false;
+        for (int k = last_dissplit_search; k < dissplit.size(); k++) {
+          bool has_connectivity = false;
+          for (int l = dissplit.at(k).size() - 1; l >= 0; l--) {
+            Coordinate other = dissplit.at(k).at(l);
+            //if (coord.distance_less_than(other, 5)) {
+            if (coord.has_four_connectivity(other)) {
+              has_connectivity = true;
+              break;
+            }
+          }
+          
+          if (has_connectivity) {
+            dissplit.at(k).push_back(coord);
+            has_been_inserted = true;
+            break;
+          }
+        }
+        
+        if (!has_been_inserted) {
+          vector<Coordinate> new_insert = vector<Coordinate>();
+          new_insert.push_back(coord);
+          dissplit.push_back(new_insert);
+        }
+      }
+    }
+    last_dissplit_search = dissplit.size();
+  }
+  
+  initialize_result(0);
+  step = 255 / (dissplit.size() - 1);
+  for (int i = 0; i < dissplit.size(); i++) {
+    for (int j = 0; j < dissplit.at(i).size(); j++) {
+      Coordinate coord = dissplit.at(i).at(j);
+      result_gray->at(coord.row).at(coord.col) = i * step;
+    }
+  }
 }
 
 bool Picture::within_cluster_distance(vector<uint8_t> v, int val, int max_dist) {
@@ -3487,6 +3554,98 @@ void Picture::highlight_overlay(vector<vector<uint8_t>>* other) {
       }
     }
   }
+}
+
+void Picture::guide_contour(Picture _other) {
+  auto other_gray = _other.get_data_gray();
+  
+  vector<int> segment = vector<int>();
+  vector<int> intensity_index = vector<int>();
+  map<int, int> intensity_map = map<int, int>();
+  for (int i = 0; i < hist_gray->data->size(); i++) {
+    if (hist_gray->data->at(i) > 0) {
+      segment.push_back(hist_gray->data->at(i));
+      intensity_index.push_back(i);
+    }
+  }
+  
+  for (int i = 0; i < segment.size(); i++) {
+    cout << "Intensity index: " << intensity_index.at(i);
+    map<int, int>laws_responses = map<int, int>();
+    for (int r = 0; r < dim_y; r++) {
+      for (int c = 0; c < dim_x; c++) {
+        if (data_gray->at(r).at(c) == intensity_index.at(i)) {
+          int laws_intensity = other_gray->at(r).at(c);
+          if (laws_responses.find(laws_intensity) != laws_responses.end()) {
+            laws_responses.at(laws_intensity)++;
+          } else {
+            laws_responses.insert(pair<int, int>(laws_intensity, 1));
+          }
+        }
+      }
+    }
+    
+    int max = 0;
+    int sought_index = -1;
+    int second_rank = -1;
+    vector<int> sorted_cumulative = vector<int>();
+    //for (int j = 0; j < laws_responses.size(); j++) {
+    for (auto j = laws_responses.begin(); j != laws_responses.end(); ++j) {
+      sorted_cumulative.push_back(j->second);
+      if (j->second > max) {
+        max = j->second;
+        sought_index = j->first;
+      }
+    }
+    
+    int second_max = 0;
+    for (auto j = laws_responses.begin(); j != laws_responses.end(); ++j) {
+      if (j->second == max) { continue; }
+      if (j->second > second_max) {
+        second_max = j->second;
+        second_rank = j->first;
+      }
+    }
+    
+    sort(sorted_cumulative.begin(), sorted_cumulative.end(), greater<int>());
+    
+    bool take_second = false;
+    if (sorted_cumulative.size() > 1) {
+      if ((float) sorted_cumulative.at(0) / (float) sorted_cumulative.at(1) > 2.0
+          && sorted_cumulative.at(0) > 10000
+          && sorted_cumulative.at(0) / sorted_cumulative.back() > 200) {
+        take_second = true;
+      } else if (sorted_cumulative.size() == 2 && sorted_cumulative.at(0) > 10000) {
+        take_second = true;
+      } else if (sorted_cumulative.at(0) < 2000
+          && (float) sorted_cumulative.at(0) / (float) sorted_cumulative.at(1) > 2.0) {
+        take_second = true;
+      } else if ((float) sorted_cumulative.at(0) / (float) sorted_cumulative.at(1) > 3
+          && sorted_cumulative.at(1) < 1000) {
+        take_second = true;
+      }
+    }
+    
+    if (take_second) {
+      sought_index = second_rank;
+      cout << " inverted! ";
+    }
+    
+    cout << " ==> " << sought_index << endl;
+    
+    intensity_map.insert(pair<int, int>(intensity_index.at(i), sought_index));
+  }
+  
+  initialize_result(0);
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      int premap = data_gray->at(r).at(c);
+      int target = intensity_map.at(premap);
+      result_gray->at(r).at(c) = target;
+    }
+  }
+  
+  int z = 0;
 }
 
 void Picture::write_gray(string out_path) {

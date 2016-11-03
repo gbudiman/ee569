@@ -72,6 +72,8 @@ public:
   cv::Mat to_cv2_mat();
   void slurp_cv2_mat(cv::Mat);
   void get_peak_hist(int, int);
+  void segment_base(int);
+  void guide_contour(Picture);
   
   void equalize(uint8_t);
   void histogram_match_gray(Histogram*);

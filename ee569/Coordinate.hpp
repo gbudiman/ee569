@@ -20,6 +20,7 @@ public:
   bool operator==(const Coordinate&);
   bool operator!=(const Coordinate&);
   bool distance_less_than(Coordinate, float);
+  bool has_four_connectivity(Coordinate);
   
   void move(int);
   
