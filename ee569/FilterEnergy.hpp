@@ -21,7 +21,7 @@ public:
   void normalize();
   std::pair<float, float> min_max(int);
   
-  cv::Mat generate_kmeans(int, int, int);
+  cv::Mat generate_kmeans(int, int, int, bool);
   std::vector<std::vector<uint8_t>> unwrap_kmeans(cv::Mat, int, int);
   
   std::vector<std::vector<std::vector<float>>> data;

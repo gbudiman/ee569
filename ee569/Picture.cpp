@@ -80,6 +80,16 @@ void Picture::slurp(Mat m) {
   }
 }
 
+void Picture::slurp_cv2_mat(Mat m) {
+  initialize_result(0);
+  
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      result_gray->at(r).at(c) = m.at<uint8_t>(r, c);
+    }
+  }
+}
+
 void Picture::write_to_file(string _path, bool strip_extension) {
   // strip extension will remove the extension
   // thus making it possible to append anything before the extension
@@ -326,6 +336,83 @@ void Picture::generate_cdf_from_histogram(uint8_t channel) {
     cdf += multi->data->at(i);
     cdfm->data->at(i) = cdf;
   }
+}
+
+struct hist_pair_comparator {
+  inline bool operator() (const pair<int, int>& s1, const pair<int, int>& s2) {
+    return s1.first > s2.first;
+  }
+};
+
+void Picture::get_peak_hist(int _count, int spread) {
+  vector<pair<int, int>> hist_mapped;
+  
+  auto hist_ptr = hist_gray->data;
+  for (int i = 0; i < 256; i++) {
+    uint8_t val = hist_ptr->at(i);
+    if (val == 0) { continue; }
+    hist_mapped.push_back(pair<int, int>(hist_ptr->at(i), i));
+  }
+
+  sort(hist_mapped.begin(), hist_mapped.end(), hist_pair_comparator());
+  
+  uint8_t last_cluster = 0;
+  int count = 0;
+  vector<uint8_t> clusters = vector<uint8_t>();
+  for (int i = 0; i < hist_mapped.size(); i++) {
+    uint8_t cluster_intensity = hist_mapped.at(i).second;
+    int cluster_count = hist_mapped.at(i).first;
+    
+    if (!within_cluster_distance(clusters, cluster_intensity, spread)) {
+      count++;
+      cout << "clustering " << (int) cluster_intensity << endl;
+      
+      clusters.push_back(cluster_intensity);
+      
+      if (count >= _count) {
+        break;
+      }
+
+    }
+  }
+  
+  int step = 255 / (count);
+  vector<pair<int, int>> cluster_pair;
+  for (int i = 0; i < clusters.size(); i++) {
+    //cout << (i + 1) * step << endl;
+    cluster_pair.push_back(pair<int, int>(clusters.at(i), (i + 1) * step));
+  }
+  
+  initialize_result(0);
+  for (int r = 0; r < dim_y; r++) {
+    for (int c = 0; c < dim_x; c++) {
+      float min_diff = numeric_limits<float>::max();
+      int data_intensity = (int) data_gray->at(r).at(c);
+      int index = -1;
+      
+      for (int i = 0; i < cluster_pair.size(); i++) {
+        int cluster_intensity = cluster_pair.at(i).first;
+        float diff = abs(cluster_intensity - data_intensity);
+        if (diff < min_diff) {
+          min_diff = diff;
+          index = i;
+        }
+      }
+      
+      result_gray->at(r).at(c) = cluster_pair.at(index).second;
+    }
+  }
+  int z= 0;
+}
+
+bool Picture::within_cluster_distance(vector<uint8_t> v, int val, int max_dist) {
+  bool result = false;
+  for (int i = 0; i < v.size(); i++) {
+    if (abs(val - v.at(i)) < max_dist) {
+      return true;
+    }
+  }
+  return result;
 }
 
 void Picture::generate_histogram() {
@@ -946,28 +1033,46 @@ void Picture::remap_histogram_gray(std::vector<int16_t> *luteq) {
 void Picture::apply_gaussian_filter(int radius, float sigma) {
   Kernel k = Kernel(radius, sigma);
   result = new vector<vector<RgbPixel>*>();
+  result_gray = new vector<vector<uint8_t>>();
   
   vector<vector<uint8_t>> mat_r = vector<vector<uint8_t>>();
   vector<vector<uint8_t>> mat_g = vector<vector<uint8_t>>();
   vector<vector<uint8_t>> mat_b = vector<vector<uint8_t>>();
+  RgbPixel p = RgbPixel(0,0,0);
+  uint8_t gray_level;
   
   for (uint32_t r = 0; r < dim_y; r++) {
     vector<RgbPixel> *row_data = new vector<RgbPixel>();
+    vector<uint8_t> row_gray = vector<uint8_t>();
 
     for (uint32_t c = 0; c < dim_x; c++) {
-      mat_r = create_patch_matrix(r, c, radius, CHANNEL_RED);
-      mat_g = create_patch_matrix(r, c, radius, CHANNEL_GREEN);
-      mat_b = create_patch_matrix(r, c, radius, CHANNEL_BLUE);
+      switch(type) {
+        case COLOR_RGB:
+          mat_r = create_patch_matrix(r, c, radius, CHANNEL_RED);
+          mat_g = create_patch_matrix(r, c, radius, CHANNEL_GREEN);
+          mat_b = create_patch_matrix(r, c, radius, CHANNEL_BLUE);
+          
+          k.convolve(mat_r);
+          k.convolve(mat_g);
+          k.convolve(mat_b);
+          
+          p = RgbPixel(k.convolve(mat_r), k.convolve(mat_g), k.convolve(mat_b));
+          row_data->push_back(p);
+          break;
+        case COLOR_GRAY:
+          mat_g = create_patch_matrix(r, c, radius, CHANNEL_GRAY);
+          gray_level = k.convolve(mat_g);
+          row_gray.push_back(gray_level);
+          break;
+      }
       
-      k.convolve(mat_r);
-      k.convolve(mat_g);
-      k.convolve(mat_b);
-      
-      RgbPixel p = RgbPixel(k.convolve(mat_r), k.convolve(mat_g), k.convolve(mat_b));
-      row_data->push_back(p);
     }
     
-    result->push_back(row_data);
+    switch(type) {
+      case COLOR_RGB: result->push_back(row_data); break;
+      case COLOR_GRAY: result_gray->push_back(row_gray); break;
+    }
+    
   }
 }
 
@@ -1003,6 +1108,7 @@ vector<vector<uint8_t>> Picture::create_patch_matrix(int r, int c, int radius, i
         case CHANNEL_RED: row_data.push_back(data->at(pos_r)->at(pos_c).r); break;
         case CHANNEL_GREEN: row_data.push_back(data->at(pos_r)->at(pos_c).g); break;
         case CHANNEL_BLUE: row_data.push_back(data->at(pos_r)->at(pos_c).b); break;
+        case CHANNEL_GRAY: row_data.push_back(data_gray->at(pos_r).at(pos_c)); break;
       }
     }
     
@@ -3607,6 +3713,15 @@ Mat Picture::to_cv2_mat() {
       }
       
       break;
+    case COLOR_GRAY:
+      result = Mat::zeros(dim_y, dim_x, CV_8UC1);
+      
+      for (int r = 0; r < dim_y; r++) {
+        for (int c = 0; c < dim_x; c++) {
+          result.at<uint8_t>(r, c) = data_gray->at(r).at(c);
+        }
+      }
+      break;
   }
   
   return result;
@@ -3650,6 +3765,61 @@ void Picture::compare_f_measure(Picture _base, Picture _other, int& true_positiv
       }
     }
   }
+}
+
+void Picture::spp_cluster(int segment_count) {
+  vector<int> levels = vector<int>();
+  vector<pair<int, Coordinate>> clusters = vector<pair<int, Coordinate>>();
+  
+  int step = 255 / (segment_count - 1);
+  int radius = 13;
+  for (int i = 0; i < segment_count; i++) {
+    levels.push_back(step * i);
+  }
+  
+  for (int r = radius; r < dim_y; r += radius) {
+    for (int c = radius; c < dim_x; c += radius) {
+      vector<uint8_t> s = extract_result_unwrapped_matrix(r, c, radius);
+      int threshold = 0.7 * ((2 * radius + 1) * (2 * radius + 1));
+      
+      vector<int> in_patch_levels = vector<int>(segment_count);
+      
+      for (int i = 0; i < s.size(); i++) {
+        in_patch_levels.at(s.at(i) / step) += 1;
+      }
+      
+      for (int i = 0; i < in_patch_levels.size(); i++) {
+        if (in_patch_levels.at(i) > threshold) {
+          printf("%d at (%d, %d)\n", i, r, c);
+          clusters.push_back(pair<int, Coordinate>(s.at(0) / step, Coordinate(r, c)));
+          break;
+        }
+      }
+      
+      
+    }
+  }
+  
+  float max_distance = 4 * radius;
+  vector<pair<int, vector<Coordinate>>> groups = vector<pair<int, vector<Coordinate>>>();
+  for (int i = 0; i < clusters.size(); i++) {
+    vector<Coordinate> group = vector<Coordinate>();
+    int base_cluster_id = clusters.at(i).first;
+    Coordinate base_cluster_coord = clusters.at(i).second;
+    
+    for (int j = i; j < clusters.size(); j++) {
+      if (clusters.at(j).first != base_cluster_id) { continue; }
+      Coordinate compare_cluster_coord = clusters.at(j).second;
+      
+      if (base_cluster_coord.distance_less_than(compare_cluster_coord, max_distance)) {
+        group.push_back(compare_cluster_coord);
+      }
+    }
+    
+    groups.push_back(pair<int, vector<Coordinate>>(base_cluster_id, group));
+  }
+  
+  int z = 0;
 }
 
 void Picture::load_rgb() {

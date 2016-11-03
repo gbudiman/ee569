@@ -62,6 +62,7 @@
 		07DCB8A41DA0654400AFC522 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A21DA0654400AFC522 /* BoundingBox.cpp */; };
 		07DCB8A71DA06B1B00AFC522 /* SpatialData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A51DA06B1B00AFC522 /* SpatialData.cpp */; };
 		07DCB8AA1DA0A21A00AFC522 /* BoundaryTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */; };
+		07E10AC81DC946B800B9C08C /* run_3_1_postprocess_segment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E10AC71DC946B800B9C08C /* run_3_1_postprocess_segment.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -193,6 +194,7 @@
 		07DCB8A61DA06B1B00AFC522 /* SpatialData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpatialData.hpp; sourceTree = "<group>"; };
 		07DCB8A81DA0A21A00AFC522 /* BoundaryTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundaryTracer.cpp; sourceTree = "<group>"; };
 		07DCB8A91DA0A21A00AFC522 /* BoundaryTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BoundaryTracer.hpp; sourceTree = "<group>"; };
+		07E10AC71DC946B800B9C08C /* run_3_1_postprocess_segment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = run_3_1_postprocess_segment.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 				07DCB8871D94AD6200AFC522 /* run_2_3_a_rice_grain.cpp */,
 				07DCB89D1D9FAB9300AFC522 /* run_2_3_b_mpeg7.cpp */,
 				071095121DAC7C5000F22D1B /* run_3_1_texture.cpp */,
+				07E10AC71DC946B800B9C08C /* run_3_1_postprocess_segment.cpp */,
 				07C98ADB1DAEF90300E5BB0D /* run_3_1_segmentation.cpp */,
 				07C98ADD1DAF5FF800E5BB0D /* run_3_2_salient_points.cpp */,
 				07C98AE21DB19C2900E5BB0D /* run_3_2_bag_of_words.cpp */,
@@ -507,6 +510,7 @@
 				070F66591DA5B47B0075BE4D /* KCluster.cpp in Sources */,
 				07DCB8AA1DA0A21A00AFC522 /* BoundaryTracer.cpp in Sources */,
 				079284B31D72895400BD6E8D /* CmykPixel.cpp in Sources */,
+				07E10AC81DC946B800B9C08C /* run_3_1_postprocess_segment.cpp in Sources */,
 				07C98AF11DB58D7500E5BB0D /* run_3_3_ground_truth.cpp in Sources */,
 				079284CC1D7B539C00BD6E8D /* run_1_3_a_median_filtering.cpp in Sources */,
 				07A489D11D8370BD009C1FD1 /* run_1_3_b_cascaded_filter.cpp in Sources */,
@@ -675,6 +679,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = /usr/local/opt/opencv3/include;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				LIBRARY_SEARCH_PATHS = /usr/local/opt/opencv3/lib;
@@ -707,6 +712,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				HEADER_SEARCH_PATHS = /usr/local/opt/opencv3/include;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				LIBRARY_SEARCH_PATHS = /usr/local/opt/opencv3/lib;

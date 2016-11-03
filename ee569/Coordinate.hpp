@@ -19,6 +19,7 @@ public:
   bool has_connectivity(Coordinate);
   bool operator==(const Coordinate&);
   bool operator!=(const Coordinate&);
+  bool distance_less_than(Coordinate, float);
   
   void move(int);
   

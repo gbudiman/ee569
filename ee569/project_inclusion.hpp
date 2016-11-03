@@ -55,6 +55,7 @@ void f_mpeg7(char*, int, int, char*, int, int, char*, int, int);
 void f_3_1_texture();
 void f_3_1_segmentation();
 void f_3_1_segmentation_with_bypass();
+void f_3_1_postprocess_segment();
 void f_3_2_salient_points();
 void f_3_2_bag_of_words();
 void f_3_3_canny();

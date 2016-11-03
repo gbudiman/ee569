@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   // Main entry
   // Set debug to value between 0 to 12 to run each function separately
   // without command line arguments
-  int debug = 32;
+  int debug = 38;
 
   if (RUN_ALL) {
   } else {
@@ -49,6 +49,7 @@ int main(int argc, char* argv[]) {
       case 35: f_3_3_canny(); break;
       case 36: f_3_3_structured_edge(); break;
       case 37: f_3_3_ground_truth(); break;
+      case 38: f_3_1_postprocess_segment();
     }
     
     return 0;
@@ -465,9 +466,11 @@ void print_help() {
 
 vector<string> expand_filter_names(vector<string> in) {
   vector<string> result = vector<string>();
+  int counter = 0;
   for (int i = 0; i < in.size(); i++) {
     for (int j = 0; j < in.size(); j++) {
-      result.push_back(in.at(j) + 'T' + in.at(i));
+      result.push_back(to_string(counter) + in.at(j) + 'T' + in.at(i));
+      counter++;
     }
   }
   

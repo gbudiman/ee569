@@ -46,6 +46,13 @@ void Coordinate::move(int direction) {
   }
 }
 
+bool Coordinate::distance_less_than(Coordinate other, float dist) {
+  int a = other.row - row;
+  int b = other.col - col;
+  
+  return sqrt(a * a + b * b) < dist;
+}
+
 uint32_t Coordinate::to_scalar() {
   return ((row << 16) | col);
 }

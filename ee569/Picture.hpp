@@ -70,6 +70,8 @@ public:
   void prepare_gnuplot_transfer_function(std::string, bool);
   
   cv::Mat to_cv2_mat();
+  void slurp_cv2_mat(cv::Mat);
+  void get_peak_hist(int, int);
   
   void equalize(uint8_t);
   void histogram_match_gray(Histogram*);
@@ -119,6 +121,8 @@ public:
   float compute_concentration(int, float);
   
   int label_connected_components(int);
+  
+  void spp_cluster(int);
   
   uint32_t get_dim_x();
   uint32_t get_dim_y();
@@ -208,6 +212,8 @@ private:
   uint32_t compute_connectivity(int);
   
   uint32_t move(uint32_t, int);
+  
+  bool within_cluster_distance(std::vector<uint8_t>, int, int);
   
   std::string path;
   uint32_t dim_x;

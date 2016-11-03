@@ -107,10 +107,11 @@ pair<float, float> FilterEnergy::min_max(int i) {
   return pair<float, float>(min, max);
 }
 
-Mat FilterEnergy::generate_kmeans(int x, int y, int label_count) {
+Mat FilterEnergy::generate_kmeans(int x, int y, int label_count, bool with_pca = false) {
   Mat m = Mat::zeros(x * y, 24, CV_32F);
   Mat projection_result;
   Mat best_labels;
+  Mat centers;
   
   for (int i = 1; i < data.size(); i++) {
     int z = 0;
@@ -122,10 +123,15 @@ Mat FilterEnergy::generate_kmeans(int x, int y, int label_count) {
     }
   }
   
-//  PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW);
-//  pca.project(m, projection_result);
-//  kmeans
-  kmeans(m, label_count, best_labels, TermCriteria(TermCriteria::EPS, 4000, 0.0001), 80, KMEANS_RANDOM_CENTERS);
+  if (with_pca) {
+    PCA pca = PCA(m, Mat(), PCA::DATA_AS_ROW, 3);
+    pca.project(m, projection_result);
+    kmeans(projection_result, label_count, best_labels, TermCriteria(TermCriteria::EPS, 4000, 0.0001), 12, KMEANS_PP_CENTERS, centers);
+  } else {
+    kmeans(m, label_count, best_labels, TermCriteria(TermCriteria::EPS, 4000, 0.0001), 12, KMEANS_PP_CENTERS, centers);
+  }
+  
+  cout << centers << endl;
   return best_labels;
 }
 
