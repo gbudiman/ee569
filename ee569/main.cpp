@@ -14,9 +14,9 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   // Main entry
-  // Set debug to value between 0 to 12 to run each function separately
+  // Set debug to value between 0 to 38 to run each function separately
   // without command line arguments
-  int debug = 38;
+  int debug = 32;
 
   if (RUN_ALL) {
   } else {
@@ -42,14 +42,14 @@ int main(int argc, char* argv[]) {
       case 25: f_2_3_a_rice_grain(); break;
       case 26: f_2_3_b_mpeg7(); break;
         
-      case 31: f_3_1_texture(); break;
-      case 32: f_3_1_segmentation(); break;
-      case 33: f_3_2_salient_points(); break;
-      case 34: f_3_2_bag_of_words(); break;
-      case 35: f_3_3_canny(); break;
-      case 36: f_3_3_structured_edge(); break;
+      case 31: f_3_1_texture(); break;          // Problem 1A
+      case 32: f_3_1_segmentation(); break;     // Problem 1B, must be run BEFORE Problem 1C
+      case 33: f_3_2_salient_points(); break;   // Problem 2A&B
+      case 34: f_3_2_bag_of_words(); break;     // Problem 2C
+      case 35: f_3_3_canny(); break;            // Problem 3A
+      case 36: f_3_3_structured_edge(); break;  // Not used... See MATLAB code edges_elephant.m
       case 37: f_3_3_ground_truth(); break;
-      case 38: f_3_1_postprocess_segment();
+      case 38: f_3_1_postprocess_segment();     // Problem 1C (Bonus)
     }
     
     return 0;

@@ -11,6 +11,7 @@ Finalized on 10/6/2016
 EE569 HW3
 Gloria Budiman gbudiman@usc.edu
 6528-1836-50
+Finalied on 11/3/2016
 
 ########################
 ### Note for HW3 Grading
@@ -56,13 +57,15 @@ Folder structure looks like the following during development:
 ###############
 NOTE FOR HW3: Make compilation is not supported. Please use included .xcodeproj file.
 
-Compiled on Mac El Capitan using g++-6 version 6.1.0
-C++14 is required. C++11 will not work
-
-As simple as
-> make
-
-It will compile all files for all problems (except BM3D)
+# --- obsolete information ---
+# Compiled on Mac El Capitan using g++-6 version 6.1.0
+# C++14 is required. C++11 will not work
+#
+# As simple as
+# > make
+# 
+# It will compile all files for all problems (except BM3D)
+# ----------------------------
 
 #############
 ### Execution

@@ -3570,7 +3570,7 @@ void Picture::guide_contour(Picture _other) {
   }
   
   for (int i = 0; i < segment.size(); i++) {
-    cout << "Intensity index: " << intensity_index.at(i);
+    //cout << "Intensity index: " << intensity_index.at(i);
     map<int, int>laws_responses = map<int, int>();
     for (int r = 0; r < dim_y; r++) {
       for (int c = 0; c < dim_x; c++) {
@@ -3628,10 +3628,10 @@ void Picture::guide_contour(Picture _other) {
     
     if (take_second) {
       sought_index = second_rank;
-      cout << " inverted! ";
+      //cout << " inverted! ";
     }
     
-    cout << " ==> " << sought_index << endl;
+    //cout << " ==> " << sought_index << endl;
     
     intensity_map.insert(pair<int, int>(intensity_index.at(i), sought_index));
   }
